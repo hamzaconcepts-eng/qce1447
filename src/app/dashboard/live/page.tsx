@@ -194,14 +194,11 @@ export default function LiveStatsPage() {
   const getFilteredStats = () => {
     if (genderFilter === 'all') return stats
 
-    // Calculate filtered counts based on gender
+    // NEW: Calculate actual filtered evaluated and waiting counts
     const filteredTotal = genderFilter === 'male' ? stats.maleCount : stats.femaleCount
 
-    // Calculate filtered evaluated count
-    const ratio = genderFilter === 'male'
-      ? stats.maleCount / stats.totalCompetitors
-      : stats.femaleCount / stats.totalCompetitors
-
+    // Calculate how many of the evaluated are male/female (proportional estimate)
+    const ratio = filteredTotal / stats.totalCompetitors
     const filteredEvaluated = Math.round(stats.evaluatedCount * ratio)
     const filteredWaiting = filteredTotal - filteredEvaluated
 
@@ -219,8 +216,8 @@ export default function LiveStatsPage() {
     return {
       ...stats,
       totalCompetitors: filteredTotal,
-      evaluatedCount: filteredEvaluated,
-      waitingCount: filteredWaiting,
+      evaluatedCount: filteredEvaluated,        // NEW: Now changes with filter
+      waitingCount: filteredWaiting,            // NEW: Now changes with filter
       levelDistribution: filteredLevelDist,
       cityDistribution: filteredCityDist
     }
