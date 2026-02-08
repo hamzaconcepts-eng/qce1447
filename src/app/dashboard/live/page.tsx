@@ -194,7 +194,7 @@ export default function LiveStatsPage() {
   const getFilteredStats = () => {
     if (genderFilter === 'all') return stats
 
-    // NEW: Calculate actual filtered evaluated and waiting counts
+    // Calculate actual filtered evaluated and waiting counts
     const filteredTotal = genderFilter === 'male' ? stats.maleCount : stats.femaleCount
 
     // Calculate how many of the evaluated are male/female (proportional estimate)
@@ -216,8 +216,8 @@ export default function LiveStatsPage() {
     return {
       ...stats,
       totalCompetitors: filteredTotal,
-      evaluatedCount: filteredEvaluated,        // NEW: Now changes with filter
-      waitingCount: filteredWaiting,            // NEW: Now changes with filter
+      evaluatedCount: filteredEvaluated,
+      waitingCount: filteredWaiting,
       levelDistribution: filteredLevelDist,
       cityDistribution: filteredCityDist
     }
@@ -767,7 +767,7 @@ export default function LiveStatsPage() {
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text'
                     }}>
-                      {stats.evaluatedCount}
+                      {displayStats.evaluatedCount}
                     </div>
                     <div className="stat-label">تم التقييم</div>
                   </div>
@@ -779,7 +779,7 @@ export default function LiveStatsPage() {
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text'
                     }}>
-                      {stats.waitingCount}
+                      {displayStats.waitingCount}
                     </div>
                     <div className="stat-label">في الانتظار</div>
                   </div>
