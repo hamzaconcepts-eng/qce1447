@@ -179,8 +179,9 @@ export default function LiveStatsPage() {
   }
 
   const getProgressPercentage = () => {
-    if (stats.totalCompetitors === 0) return 0
-    return Math.round((stats.evaluatedCount / stats.totalCompetitors) * 100)
+    const displayStats = getFilteredStats()
+    if (displayStats.totalCompetitors === 0) return 0
+    return Math.round((displayStats.evaluatedCount / displayStats.totalCompetitors) * 100)
   }
 
   const getMilestoneMessage = () => {
