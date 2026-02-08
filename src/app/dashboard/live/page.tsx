@@ -194,28 +194,35 @@ export default function LiveStatsPage() {
   const getFilteredStats = () => {
     if (genderFilter === 'all') return stats
 
+    // Calculate filtered counts based on gender
+    const filteredTotal = genderFilter === 'male' ? stats.maleCount : stats.femaleCount
+
+    // Calculate filtered evaluated count
+    const ratio = genderFilter === 'male'
+      ? stats.maleCount / stats.totalCompetitors
+      : stats.femaleCount / stats.totalCompetitors
+
+    const filteredEvaluated = Math.round(stats.evaluatedCount * ratio)
+    const filteredWaiting = filteredTotal - filteredEvaluated
+
     const filteredLevelDist: { [key: string]: number } = {}
     levels.forEach(level => {
       const count = stats.levelDistribution[level] || 0
-      const ratio = genderFilter === 'male'
-        ? stats.maleCount / stats.totalCompetitors
-        : stats.femaleCount / stats.totalCompetitors
       filteredLevelDist[level] = Math.round(count * ratio)
     })
 
     const filteredCityDist: { [key: string]: number } = {}
     Object.entries(stats.cityDistribution).forEach(([city, count]) => {
-      const ratio = genderFilter === 'male'
-        ? stats.maleCount / stats.totalCompetitors
-        : stats.femaleCount / stats.totalCompetitors
       filteredCityDist[city] = Math.round(count * ratio)
     })
 
     return {
       ...stats,
+      totalCompetitors: filteredTotal,
+      evaluatedCount: filteredEvaluated,
+      waitingCount: filteredWaiting,
       levelDistribution: filteredLevelDist,
-      cityDistribution: filteredCityDist,
-      totalCompetitors: genderFilter === 'male' ? stats.maleCount : stats.femaleCount
+      cityDistribution: filteredCityDist
     }
   }
 
