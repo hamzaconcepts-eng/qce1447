@@ -722,7 +722,7 @@ export default function LiveStatsPage() {
                       marginBottom: "clamp(5px, 0.5vh, 9px)",
                     }}
                   >
-                    إحصائيات حية • الدورة الخامسة - رمضان 1447هـ
+                    إحصائيات مباشرة • الدورة الخامسة - رمضان 1447هـ
                   </p>
                 </div>
 
