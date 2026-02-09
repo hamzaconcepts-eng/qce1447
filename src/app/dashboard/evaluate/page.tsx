@@ -1248,14 +1248,14 @@ export default function EvaluatePage() {
             </>
           ) : (
             <>
-              {/* Evaluation Screen - LANDSCAPE OPTIMIZED */}
+              {/* Evaluation Screen - LANDSCAPE OPTIMIZED - ORIGINAL STYLING */}
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'clamp(250px, 25vw, 350px) 1fr',
+                gridTemplateColumns: 'clamp(280px, 28vw, 380px) 1fr',
                 gridTemplateRows: '1fr auto',
-                height: 'calc(var(--vh, 1vh) * 90)',
+                height: 'calc(var(--vh, 1vh) * 88)',
                 gap: 'clamp(15px, 2vw, 25px)',
-                padding: 'clamp(10px, 1.5vh, 20px)',
+                padding: 'clamp(10px, 1.5vh, 15px)',
                 overflow: 'hidden'
               }}>
                 
@@ -1264,557 +1264,401 @@ export default function EvaluatePage() {
                   gridRow: '1 / 2',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: 'clamp(12px, 1.5vh, 20px)',
-                  overflowY: 'auto',
-                  paddingRight: 'clamp(5px, 0.5vw, 10px)'
+                  gap: 'clamp(10px, 1.3vh, 16px)',
+                  overflow: 'hidden'
                 }}>
                   
                   {/* Alerts */}
                   {showAlreadyEvaluated && (
                     <div style={{
                       background: '#fff3cd',
-                      padding: 'clamp(10px, 1.2vh, 15px)',
+                      padding: 'clamp(8px, 1vh, 12px)',
                       borderRadius: 'clamp(6px, 0.8vh, 10px)',
                       fontSize: 'clamp(11px, 1.2vw, 13px)',
                       textAlign: 'center',
                       color: '#856404',
-                      border: '2px solid #ffc107',
+                      border: '1px solid #ffc107',
                       lineHeight: '1.4'
                     }}>
-                      ⚠️ تم تقييم هذا المتسابق مسبقاً
+                      ⚠️ تم تقييم هذا المتسابق مسبقاً. أي تغييرات ستحدث الدرجة السابقة.
                     </div>
                   )}
 
                   {showSaveSuccess && (
                     <div style={{
                       background: '#d4edda',
-                      padding: 'clamp(10px, 1.2vh, 15px)',
+                      padding: 'clamp(8px, 1vh, 12px)',
                       borderRadius: 'clamp(6px, 0.8vh, 10px)',
                       fontSize: 'clamp(11px, 1.2vw, 13px)',
                       textAlign: 'center',
                       color: '#27ae60',
-                      fontWeight: '700'
+                      fontWeight: '600'
                     }}>
                       ✓ تم حفظ التقييم بنجاح
                     </div>
                   )}
 
-                  {/* Competitor Card */}
-                  <div style={{
-                    background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
-                    padding: 'clamp(15px, 2vh, 25px)',
-                    borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                    border: '2px solid #5fb3b3',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
-                  }}>
-                    <h2 style={{
-                      fontSize: 'clamp(18px, 2.2vw, 26px)',
-                      fontWeight: '800',
-                      color: '#1a3a3a',
-                      marginBottom: 'clamp(10px, 1.2vh, 15px)',
-                      textAlign: 'center',
-                      lineHeight: '1.3'
-                    }}>
-                      {selectedCompetitor.full_name}
-                    </h2>
-                    
+                  {/* Competitor Name & Details */}
+                  <div style={{ textAlign: 'center' }}>
                     <div style={{
-                      display: 'grid',
-                      gap: 'clamp(8px, 1vh, 12px)',
-                      fontSize: 'clamp(12px, 1.3vw, 14px)',
-                      color: '#555'
-                    }}>
-                      <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        padding: 'clamp(6px, 0.8vh, 10px)',
-                        background: '#f0f9f9',
-                        borderRadius: 'clamp(4px, 0.6vh, 8px)'
-                      }}>
-                        <span style={{ fontWeight: '600', color: '#1a3a3a' }}>الجنس:</span>
-                        <span>{selectedCompetitor.gender === 'male' ? 'ذكر' : 'أنثى'}</span>
-                      </div>
-                      
-                      <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        padding: 'clamp(6px, 0.8vh, 10px)',
-                        background: '#f0f9f9',
-                        borderRadius: 'clamp(4px, 0.6vh, 8px)'
-                      }}>
-                        <span style={{ fontWeight: '600', color: '#1a3a3a' }}>المستوى:</span>
-                        <span style={{ fontSize: 'clamp(10px, 1.1vw, 12px)' }}>
-                          {levels.indexOf(selectedCompetitor.level) !== -1 
-                            ? ['الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس'][levels.indexOf(selectedCompetitor.level)]
-                            : selectedCompetitor.level}
-                        </span>
-                      </div>
-                      
-                      <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        padding: 'clamp(6px, 0.8vh, 10px)',
-                        background: '#f0f9f9',
-                        borderRadius: 'clamp(4px, 0.6vh, 8px)'
-                      }}>
-                        <span style={{ fontWeight: '600', color: '#1a3a3a' }}>المدينة:</span>
-                        <span>{selectedCompetitor.city}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Score Display */}
-                  <div style={{
-                    background: 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)',
-                    padding: 'clamp(20px, 2.5vh, 35px)',
-                    borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                    textAlign: 'center',
-                    boxShadow: '0 6px 20px rgba(95, 179, 179, 0.3)'
-                  }}>
-                    <div style={{
-                      fontSize: 'clamp(12px, 1.3vw, 14px)',
-                      color: '#ffffff',
-                      opacity: 0.9,
-                      marginBottom: 'clamp(8px, 1vh, 12px)',
-                      fontWeight: '600'
-                    }}>
-                      الدرجة النهائية
-                    </div>
-                    <div style={{
-                      fontSize: 'clamp(48px, 6vw, 72px)',
-                      fontWeight: '800',
-                      color: '#ffffff',
-                      lineHeight: '1'
-                    }}>
-                      {finalScore}
-                    </div>
-                    <div style={{
-                      fontSize: 'clamp(14px, 1.5vw, 18px)',
-                      color: '#ffffff',
-                      opacity: 0.9,
-                      marginTop: 'clamp(6px, 0.8vh, 10px)',
-                      fontWeight: '600'
-                    }}>
-                      من 100
-                    </div>
-                  </div>
-
-                  {/* Print Button */}
-                  <button
-                    onClick={handlePrintScoreCard}
-                    style={{
-                      padding: 'clamp(12px, 1.5vh, 18px)',
-                      background: '#ffffff',
-                      color: '#5fb3b3',
-                      border: '2px solid #5fb3b3',
-                      borderRadius: 'clamp(8px, 1vh, 12px)',
-                      fontSize: 'clamp(13px, 1.4vw, 16px)',
-                      fontWeight: '700',
-                      fontFamily: 'Cairo, sans-serif',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: 'clamp(6px, 0.8vw, 10px)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = '#5fb3b3'
-                      e.currentTarget.style.color = 'white'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = '#ffffff'
-                      e.currentTarget.style.color = '#5fb3b3'
-                    }}
-                  >
-                    <span style={{ fontSize: 'clamp(16px, 1.8vw, 20px)' }}>📄</span>
-                    <span>طباعة بطاقة التقييم</span>
-                  </button>
+                      gap: 'clamp(8px, 1vw, 12px)',
+                      marginBottom: 'clamp(6px, 0.8vh, 10px)'
+                    }}>
+                      <h2 style={{
+                        fontSize: 'clamp(18px, 2.2vw, 26px)',
+                        fontWeight: '700',
+                        color: '#333333',
+                        margin: 0
+                      }}>
+                        {selectedCompetitor.full_name}
+                      </h2>
+                      <button
+                        onClick={handlePrintScoreCard}
+                        className="print-button-compact"
+                        style={{
+                          padding: 'clamp(4px, 0.6vh, 6px) clamp(8px, 1vw, 12px)',
+                          background: '#5fb3b3',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 'clamp(4px, 0.6vh, 6px)',
+                          fontSize: 'clamp(10px, 1.1vw, 12px)',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          fontFamily: 'Cairo, sans-serif'
+                        }}
+                      >
+                        📄 طباعة PDF
+                      </button>
+                    </div>
+                    <p style={{
+                      fontSize: 'clamp(11px, 1.3vw, 14px)',
+                      color: '#666666',
+                      lineHeight: '1.6',
+                      margin: 0
+                    }}>
+                      {selectedCompetitor.gender === 'male' ? 'ذكر' : 'أنثى'} • {selectedCompetitor.level} • {selectedCompetitor.city}
+                    </p>
+                  </div>
+
+                  {/* Score Display - ORIGINAL COLORS */}
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{
+                      fontSize: 'clamp(50px, 6vw, 80px)',
+                      fontWeight: '700',
+                      padding: 'clamp(20px, 2.5vh, 30px)',
+                      borderRadius: 'clamp(12px, 1.5vh, 20px)',
+                      width: '100%',
+                      background: finalScore >= 95 ? '#d4edda' : 
+                                 finalScore >= 90 ? '#fff3cd' : '#ffebee',
+                      color: finalScore >= 95 ? '#27ae60' : 
+                             finalScore >= 90 ? '#f39c12' : '#e74c3c'
+                    }}>
+                      {finalScore}
+                    </div>
+                  </div>
                 </div>
 
-                {/* RIGHT AREA - Error Buttons Grid */}
+                {/* RIGHT AREA - Error Buttons 2x2 Grid */}
                 <div style={{
                   gridRow: '1 / 2',
                   display: 'grid',
                   gridTemplateColumns: 'repeat(2, 1fr)',
                   gridTemplateRows: 'repeat(2, 1fr)',
-                  gap: 'clamp(15px, 2vw, 25px)',
-                  padding: 'clamp(10px, 1.5vh, 20px)',
+                  gap: 'clamp(12px, 1.8vw, 20px)',
                   overflow: 'hidden'
                 }}>
                   
-                  {/* تنبيه Button */}
+                  {/* تنبيه Button - ORIGINAL STYLE */}
                   <div style={{
-                    background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
-                    borderRadius: 'clamp(12px, 1.5vh, 18px)',
-                    border: '3px solid #e74c3c',
-                    padding: 'clamp(15px, 2vh, 25px)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    boxShadow: '0 4px 15px rgba(231, 76, 60, 0.15)',
-                    transition: 'all 0.2s'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                  >
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{
-                        fontSize: 'clamp(20px, 2.5vw, 28px)',
-                        fontWeight: '800',
-                        color: '#e74c3c',
-                        marginBottom: 'clamp(8px, 1vh, 12px)'
+                    background: '#ffffff',
+                    padding: 'clamp(15px, 2vh, 20px)',
+                    borderRadius: 'clamp(10px, 1.2vh, 15px)',
+                    border: '2px solid #e0e0e0'
+                  }}>
+                    <div style={{
+                      fontSize: 'clamp(16px, 2vw, 20px)',
+                      fontWeight: '600',
+                      color: '#333333',
+                      marginBottom: 'clamp(10px, 1.3vh, 15px)',
+                      textAlign: 'center'
+                    }}>
+                      تنبيه
+                      <div style={{ 
+                        fontSize: 'clamp(10px, 1.1vw, 12px)', 
+                        color: '#888', 
+                        marginTop: 'clamp(3px, 0.5vh, 5px)' 
                       }}>
-                        تنبيه
-                      </div>
-                      <div style={{
-                        fontSize: 'clamp(11px, 1.2vw, 13px)',
-                        color: '#666',
-                        lineHeight: '1.5'
-                      }}>
-                        {tanbihCount} خطأ = -{tanbihCount * 5} درجة
+                        ({tanbihCount} أخطاء = -{tanbihCount * 5} درجة)
                       </div>
                     </div>
-                    
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 'clamp(15px, 2vw, 25px)',
-                      marginTop: 'clamp(15px, 2vh, 25px)'
+                      justifyContent: 'space-between',
+                      gap: 'clamp(10px, 1.5vw, 15px)'
                     }}>
                       <button
                         onClick={() => incrementCount('tanbih')}
                         style={{
-                          width: 'clamp(50px, 6vw, 70px)',
-                          height: 'clamp(50px, 6vw, 70px)',
-                          background: '#e74c3c',
+                          flex: 1,
+                          padding: 'clamp(12px, 1.5vh, 15px)',
+                          background: '#5fb3b3',
                           color: 'white',
                           border: 'none',
-                          borderRadius: '50%',
-                          fontSize: 'clamp(24px, 3vw, 36px)',
+                          borderRadius: 'clamp(8px, 1vh, 10px)',
+                          fontSize: 'clamp(20px, 2.5vw, 28px)',
                           fontWeight: '700',
-                          cursor: 'pointer',
-                          boxShadow: '0 4px 12px rgba(231, 76, 60, 0.3)',
-                          transition: 'all 0.2s'
+                          cursor: 'pointer'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                       >
                         +
                       </button>
-                      
                       <div style={{
-                        fontSize: 'clamp(36px, 4.5vw, 56px)',
-                        fontWeight: '800',
-                        color: '#e74c3c',
-                        minWidth: 'clamp(50px, 6vw, 80px)',
+                        fontSize: 'clamp(28px, 3.5vw, 40px)',
+                        fontWeight: '700',
+                        color: '#666666',
+                        minWidth: 'clamp(40px, 5vw, 60px)',
                         textAlign: 'center'
                       }}>
                         {tanbihCount}
                       </div>
-                      
                       <button
                         onClick={() => decrementCount('tanbih')}
                         style={{
-                          width: 'clamp(50px, 6vw, 70px)',
-                          height: 'clamp(50px, 6vw, 70px)',
+                          flex: 1,
+                          padding: 'clamp(12px, 1.5vh, 15px)',
                           background: '#95a5a6',
                           color: 'white',
                           border: 'none',
-                          borderRadius: '50%',
-                          fontSize: 'clamp(24px, 3vw, 36px)',
+                          borderRadius: 'clamp(8px, 1vh, 10px)',
+                          fontSize: 'clamp(20px, 2.5vw, 28px)',
                           fontWeight: '700',
-                          cursor: 'pointer',
-                          boxShadow: '0 4px 12px rgba(149, 165, 166, 0.3)',
-                          transition: 'all 0.2s'
+                          cursor: 'pointer'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                       >
-                        −
+                        -
                       </button>
                     </div>
                   </div>
 
-                  {/* فتح Button */}
+                  {/* فتح Button - ORIGINAL STYLE */}
                   <div style={{
-                    background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
-                    borderRadius: 'clamp(12px, 1.5vh, 18px)',
-                    border: '3px solid #e67e22',
-                    padding: 'clamp(15px, 2vh, 25px)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    boxShadow: '0 4px 15px rgba(230, 126, 34, 0.15)',
-                    transition: 'all 0.2s'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                  >
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{
-                        fontSize: 'clamp(20px, 2.5vw, 28px)',
-                        fontWeight: '800',
-                        color: '#e67e22',
-                        marginBottom: 'clamp(8px, 1vh, 12px)'
+                    background: '#ffffff',
+                    padding: 'clamp(15px, 2vh, 20px)',
+                    borderRadius: 'clamp(10px, 1.2vh, 15px)',
+                    border: '2px solid #e0e0e0'
+                  }}>
+                    <div style={{
+                      fontSize: 'clamp(16px, 2vw, 20px)',
+                      fontWeight: '600',
+                      color: '#333333',
+                      marginBottom: 'clamp(10px, 1.3vh, 15px)',
+                      textAlign: 'center'
+                    }}>
+                      فتح
+                      <div style={{ 
+                        fontSize: 'clamp(10px, 1.1vw, 12px)', 
+                        color: '#888', 
+                        marginTop: 'clamp(3px, 0.5vh, 5px)' 
                       }}>
-                        فتح
-                      </div>
-                      <div style={{
-                        fontSize: 'clamp(11px, 1.2vw, 13px)',
-                        color: '#666',
-                        lineHeight: '1.5'
-                      }}>
-                        {fatehCount} خطأ = -{fatehCount * 2} درجة
+                        ({fatehCount} أخطاء = -{fatehCount * 2} درجة)
                       </div>
                     </div>
-                    
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 'clamp(15px, 2vw, 25px)',
-                      marginTop: 'clamp(15px, 2vh, 25px)'
+                      justifyContent: 'space-between',
+                      gap: 'clamp(10px, 1.5vw, 15px)'
                     }}>
                       <button
                         onClick={() => incrementCount('fateh')}
                         style={{
-                          width: 'clamp(50px, 6vw, 70px)',
-                          height: 'clamp(50px, 6vw, 70px)',
-                          background: '#e67e22',
+                          flex: 1,
+                          padding: 'clamp(12px, 1.5vh, 15px)',
+                          background: '#5fb3b3',
                           color: 'white',
                           border: 'none',
-                          borderRadius: '50%',
-                          fontSize: 'clamp(24px, 3vw, 36px)',
+                          borderRadius: 'clamp(8px, 1vh, 10px)',
+                          fontSize: 'clamp(20px, 2.5vw, 28px)',
                           fontWeight: '700',
-                          cursor: 'pointer',
-                          boxShadow: '0 4px 12px rgba(230, 126, 34, 0.3)',
-                          transition: 'all 0.2s'
+                          cursor: 'pointer'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                       >
                         +
                       </button>
-                      
                       <div style={{
-                        fontSize: 'clamp(36px, 4.5vw, 56px)',
-                        fontWeight: '800',
-                        color: '#e67e22',
-                        minWidth: 'clamp(50px, 6vw, 80px)',
+                        fontSize: 'clamp(28px, 3.5vw, 40px)',
+                        fontWeight: '700',
+                        color: '#666666',
+                        minWidth: 'clamp(40px, 5vw, 60px)',
                         textAlign: 'center'
                       }}>
                         {fatehCount}
                       </div>
-                      
                       <button
                         onClick={() => decrementCount('fateh')}
                         style={{
-                          width: 'clamp(50px, 6vw, 70px)',
-                          height: 'clamp(50px, 6vw, 70px)',
+                          flex: 1,
+                          padding: 'clamp(12px, 1.5vh, 15px)',
                           background: '#95a5a6',
                           color: 'white',
                           border: 'none',
-                          borderRadius: '50%',
-                          fontSize: 'clamp(24px, 3vw, 36px)',
+                          borderRadius: 'clamp(8px, 1vh, 10px)',
+                          fontSize: 'clamp(20px, 2.5vw, 28px)',
                           fontWeight: '700',
-                          cursor: 'pointer',
-                          boxShadow: '0 4px 12px rgba(149, 165, 166, 0.3)',
-                          transition: 'all 0.2s'
+                          cursor: 'pointer'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                       >
-                        −
+                        -
                       </button>
                     </div>
                   </div>
 
-                  {/* تشكيل Button */}
+                  {/* تشكيل Button - ORIGINAL STYLE */}
                   <div style={{
-                    background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
-                    borderRadius: 'clamp(12px, 1.5vh, 18px)',
-                    border: '3px solid #3498db',
-                    padding: 'clamp(15px, 2vh, 25px)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    boxShadow: '0 4px 15px rgba(52, 152, 219, 0.15)',
-                    transition: 'all 0.2s'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                  >
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{
-                        fontSize: 'clamp(20px, 2.5vw, 28px)',
-                        fontWeight: '800',
-                        color: '#3498db',
-                        marginBottom: 'clamp(8px, 1vh, 12px)'
+                    background: '#ffffff',
+                    padding: 'clamp(15px, 2vh, 20px)',
+                    borderRadius: 'clamp(10px, 1.2vh, 15px)',
+                    border: '2px solid #e0e0e0'
+                  }}>
+                    <div style={{
+                      fontSize: 'clamp(16px, 2vw, 20px)',
+                      fontWeight: '600',
+                      color: '#333333',
+                      marginBottom: 'clamp(10px, 1.3vh, 15px)',
+                      textAlign: 'center'
+                    }}>
+                      تشكيل
+                      <div style={{ 
+                        fontSize: 'clamp(10px, 1.1vw, 12px)', 
+                        color: '#888', 
+                        marginTop: 'clamp(3px, 0.5vh, 5px)' 
                       }}>
-                        تشكيل
-                      </div>
-                      <div style={{
-                        fontSize: 'clamp(11px, 1.2vw, 13px)',
-                        color: '#666',
-                        lineHeight: '1.5'
-                      }}>
-                        {tashkeelCount} خطأ = -{tashkeelCount * 1} درجة
+                        ({tashkeelCount} أخطاء = -{tashkeelCount * 1} درجة)
                       </div>
                     </div>
-                    
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 'clamp(15px, 2vw, 25px)',
-                      marginTop: 'clamp(15px, 2vh, 25px)'
+                      justifyContent: 'space-between',
+                      gap: 'clamp(10px, 1.5vw, 15px)'
                     }}>
                       <button
                         onClick={() => incrementCount('tashkeel')}
                         style={{
-                          width: 'clamp(50px, 6vw, 70px)',
-                          height: 'clamp(50px, 6vw, 70px)',
-                          background: '#3498db',
+                          flex: 1,
+                          padding: 'clamp(12px, 1.5vh, 15px)',
+                          background: '#5fb3b3',
                           color: 'white',
                           border: 'none',
-                          borderRadius: '50%',
-                          fontSize: 'clamp(24px, 3vw, 36px)',
+                          borderRadius: 'clamp(8px, 1vh, 10px)',
+                          fontSize: 'clamp(20px, 2.5vw, 28px)',
                           fontWeight: '700',
-                          cursor: 'pointer',
-                          boxShadow: '0 4px 12px rgba(52, 152, 219, 0.3)',
-                          transition: 'all 0.2s'
+                          cursor: 'pointer'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                       >
                         +
                       </button>
-                      
                       <div style={{
-                        fontSize: 'clamp(36px, 4.5vw, 56px)',
-                        fontWeight: '800',
-                        color: '#3498db',
-                        minWidth: 'clamp(50px, 6vw, 80px)',
+                        fontSize: 'clamp(28px, 3.5vw, 40px)',
+                        fontWeight: '700',
+                        color: '#666666',
+                        minWidth: 'clamp(40px, 5vw, 60px)',
                         textAlign: 'center'
                       }}>
                         {tashkeelCount}
                       </div>
-                      
                       <button
                         onClick={() => decrementCount('tashkeel')}
                         style={{
-                          width: 'clamp(50px, 6vw, 70px)',
-                          height: 'clamp(50px, 6vw, 70px)',
+                          flex: 1,
+                          padding: 'clamp(12px, 1.5vh, 15px)',
                           background: '#95a5a6',
                           color: 'white',
                           border: 'none',
-                          borderRadius: '50%',
-                          fontSize: 'clamp(24px, 3vw, 36px)',
+                          borderRadius: 'clamp(8px, 1vh, 10px)',
+                          fontSize: 'clamp(20px, 2.5vw, 28px)',
                           fontWeight: '700',
-                          cursor: 'pointer',
-                          boxShadow: '0 4px 12px rgba(149, 165, 166, 0.3)',
-                          transition: 'all 0.2s'
+                          cursor: 'pointer'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                       >
-                        −
+                        -
                       </button>
                     </div>
                   </div>
 
-                  {/* تجويد Button */}
+                  {/* تجويد Button - ORIGINAL STYLE */}
                   <div style={{
-                    background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
-                    borderRadius: 'clamp(12px, 1.5vh, 18px)',
-                    border: '3px solid #9b59b6',
-                    padding: 'clamp(15px, 2vh, 25px)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    boxShadow: '0 4px 15px rgba(155, 89, 182, 0.15)',
-                    transition: 'all 0.2s'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                  >
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{
-                        fontSize: 'clamp(20px, 2.5vw, 28px)',
-                        fontWeight: '800',
-                        color: '#9b59b6',
-                        marginBottom: 'clamp(8px, 1vh, 12px)'
+                    background: '#ffffff',
+                    padding: 'clamp(15px, 2vh, 20px)',
+                    borderRadius: 'clamp(10px, 1.2vh, 15px)',
+                    border: '2px solid #e0e0e0'
+                  }}>
+                    <div style={{
+                      fontSize: 'clamp(16px, 2vw, 20px)',
+                      fontWeight: '600',
+                      color: '#333333',
+                      marginBottom: 'clamp(10px, 1.3vh, 15px)',
+                      textAlign: 'center'
+                    }}>
+                      تجويد
+                      <div style={{ 
+                        fontSize: 'clamp(10px, 1.1vw, 12px)', 
+                        color: '#888', 
+                        marginTop: 'clamp(3px, 0.5vh, 5px)' 
                       }}>
-                        تجويد
-                      </div>
-                      <div style={{
-                        fontSize: 'clamp(11px, 1.2vw, 13px)',
-                        color: '#666',
-                        lineHeight: '1.5'
-                      }}>
-                        {tajweedCount} خطأ = -{tajweedCount * 1} درجة
+                        ({tajweedCount} أخطاء = -{tajweedCount * 1} درجة)
                       </div>
                     </div>
-                    
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 'clamp(15px, 2vw, 25px)',
-                      marginTop: 'clamp(15px, 2vh, 25px)'
+                      justifyContent: 'space-between',
+                      gap: 'clamp(10px, 1.5vw, 15px)'
                     }}>
                       <button
                         onClick={() => incrementCount('tajweed')}
                         style={{
-                          width: 'clamp(50px, 6vw, 70px)',
-                          height: 'clamp(50px, 6vw, 70px)',
-                          background: '#9b59b6',
+                          flex: 1,
+                          padding: 'clamp(12px, 1.5vh, 15px)',
+                          background: '#5fb3b3',
                           color: 'white',
                           border: 'none',
-                          borderRadius: '50%',
-                          fontSize: 'clamp(24px, 3vw, 36px)',
+                          borderRadius: 'clamp(8px, 1vh, 10px)',
+                          fontSize: 'clamp(20px, 2.5vw, 28px)',
                           fontWeight: '700',
-                          cursor: 'pointer',
-                          boxShadow: '0 4px 12px rgba(155, 89, 182, 0.3)',
-                          transition: 'all 0.2s'
+                          cursor: 'pointer'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                       >
                         +
                       </button>
-                      
                       <div style={{
-                        fontSize: 'clamp(36px, 4.5vw, 56px)',
-                        fontWeight: '800',
-                        color: '#9b59b6',
-                        minWidth: 'clamp(50px, 6vw, 80px)',
+                        fontSize: 'clamp(28px, 3.5vw, 40px)',
+                        fontWeight: '700',
+                        color: '#666666',
+                        minWidth: 'clamp(40px, 5vw, 60px)',
                         textAlign: 'center'
                       }}>
                         {tajweedCount}
                       </div>
-                      
                       <button
                         onClick={() => decrementCount('tajweed')}
                         style={{
-                          width: 'clamp(50px, 6vw, 70px)',
-                          height: 'clamp(50px, 6vw, 70px)',
+                          flex: 1,
+                          padding: 'clamp(12px, 1.5vh, 15px)',
                           background: '#95a5a6',
                           color: 'white',
                           border: 'none',
-                          borderRadius: '50%',
-                          fontSize: 'clamp(24px, 3vw, 36px)',
+                          borderRadius: 'clamp(8px, 1vh, 10px)',
+                          fontSize: 'clamp(20px, 2.5vw, 28px)',
                           fontWeight: '700',
-                          cursor: 'pointer',
-                          boxShadow: '0 4px 12px rgba(149, 165, 166, 0.3)',
-                          transition: 'all 0.2s'
+                          cursor: 'pointer'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                       >
-                        −
+                        -
                       </button>
                     </div>
                   </div>
@@ -1825,9 +1669,8 @@ export default function EvaluatePage() {
                   gridColumn: '1 / -1',
                   gridRow: '2 / 3',
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: 'clamp(10px, 1.5vw, 20px)',
-                  padding: 'clamp(10px, 1.5vh, 20px) 0 0 0'
+                  gridTemplateColumns: '2fr 1fr 1fr',
+                  gap: 'clamp(8px, 1.2vw, 12px)'
                 }}>
                   
                   {/* Save Button */}
@@ -1835,95 +1678,73 @@ export default function EvaluatePage() {
                     onClick={handleSave}
                     disabled={saving}
                     style={{
-                      padding: 'clamp(15px, 2vh, 22px)',
-                      background: saving ? '#95a5a6' : 'linear-gradient(135deg, #27ae60 0%, #229954 100%)',
+                      padding: 'clamp(12px, 1.8vh, 18px)',
+                      background: saving ? '#95a5a6' : '#5fb3b3',
                       color: 'white',
                       border: 'none',
-                      borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                      fontSize: 'clamp(16px, 1.8vw, 20px)',
-                      fontWeight: '800',
+                      borderRadius: 'clamp(8px, 1vh, 12px)',
+                      fontSize: 'clamp(14px, 1.7vw, 18px)',
+                      fontWeight: '700',
                       fontFamily: 'Cairo, sans-serif',
                       cursor: saving ? 'not-allowed' : 'pointer',
-                      boxShadow: '0 6px 20px rgba(39, 174, 96, 0.3)',
-                      transition: 'all 0.2s',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 'clamp(8px, 1vw, 12px)'
+                      transition: 'all 0.2s'
                     }}
-                    onMouseEnter={(e) => !saving && (e.currentTarget.style.transform = 'translateY(-2px)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
                   >
-                    <span style={{ fontSize: 'clamp(20px, 2.2vw, 26px)' }}>💾</span>
-                    <span>{saving ? 'جاري الحفظ...' : 'حفظ التقييم'}</span>
+                    {saving ? 'جاري الحفظ...' : 'حفظ التقييم'}
                   </button>
 
                   {/* Back to List Button */}
                   <button
                     onClick={handleBackToList}
                     style={{
-                      padding: 'clamp(15px, 2vh, 22px)',
+                      padding: 'clamp(12px, 1.8vh, 18px)',
                       background: '#ffffff',
                       color: '#5fb3b3',
-                      border: '3px solid #5fb3b3',
-                      borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                      fontSize: 'clamp(15px, 1.7vw, 18px)',
-                      fontWeight: '700',
+                      border: '2px solid #5fb3b3',
+                      borderRadius: 'clamp(8px, 1vh, 12px)',
+                      fontSize: 'clamp(13px, 1.5vw, 16px)',
+                      fontWeight: '600',
                       fontFamily: 'Cairo, sans-serif',
                       cursor: 'pointer',
-                      transition: 'all 0.2s',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 'clamp(8px, 1vw, 12px)'
+                      transition: 'all 0.2s'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.background = '#5fb3b3'
                       e.currentTarget.style.color = 'white'
-                      e.currentTarget.style.transform = 'translateY(-2px)'
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.background = '#ffffff'
                       e.currentTarget.style.color = '#5fb3b3'
-                      e.currentTarget.style.transform = 'translateY(0)'
                     }}
                   >
-                    <span style={{ fontSize: 'clamp(18px, 2vw, 22px)' }}>📋</span>
-                    <span>قائمة المتسابقين</span>
+                    قائمة المتسابقين
                   </button>
 
                   {/* Main Menu Button */}
                   <button
                     onClick={handleBack}
                     style={{
-                      padding: 'clamp(15px, 2vh, 22px)',
+                      padding: 'clamp(12px, 1.8vh, 18px)',
                       background: '#ffffff',
                       color: '#e74c3c',
-                      border: '3px solid #e74c3c',
-                      borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                      fontSize: 'clamp(15px, 1.7vw, 18px)',
-                      fontWeight: '700',
+                      border: '2px solid #e74c3c',
+                      borderRadius: 'clamp(8px, 1vh, 12px)',
+                      fontSize: 'clamp(13px, 1.5vw, 16px)',
+                      fontWeight: '600',
                       fontFamily: 'Cairo, sans-serif',
                       cursor: 'pointer',
-                      transition: 'all 0.2s',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 'clamp(8px, 1vw, 12px)'
+                      transition: 'all 0.2s'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.background = '#e74c3c'
                       e.currentTarget.style.color = 'white'
-                      e.currentTarget.style.transform = 'translateY(-2px)'
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.background = '#ffffff'
                       e.currentTarget.style.color = '#e74c3c'
-                      e.currentTarget.style.transform = 'translateY(0)'
                     }}
                   >
-                    <span style={{ fontSize: 'clamp(18px, 2vw, 22px)' }}>🏠</span>
-                    <span>القائمة الرئيسية</span>
+                    القائمة الرئيسية
                   </button>
                 </div>
               </div>
