@@ -1248,11 +1248,12 @@ export default function EvaluatePage() {
             </>
           ) : (
             <>
-              {/* Evaluation Screen - ZERO SCROLL VERSION */}
+              {/* Evaluation Screen - FINAL PERFECT VERSION */}
               <div style={{
                 position: 'relative',
                 display: 'grid',
                 gridTemplateColumns: '1fr clamp(300px, 30vw, 400px)',
+                gridTemplateRows: '1fr 1fr',
                 height: 'calc(var(--vh, 1vh) * 100)',
                 gap: 'clamp(15px, 2vw, 25px)',
                 padding: 'clamp(12px, 1.8vh, 20px)',
@@ -1302,18 +1303,18 @@ export default function EvaluatePage() {
                   </div>
                 )}
 
-                {/* LEFT AREA - Error Buttons 2x2 Grid */}
+                {/* TOP LEFT - Combined: تنبيه و فتح */}
                 <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
-                  gridTemplateRows: 'repeat(2, 1fr)',
+                  gridColumn: '1 / 2',
+                  gridRow: '1 / 2',
+                  display: 'flex',
                   gap: 'clamp(12px, 1.8vw, 20px)',
-                  height: '100%',
                   overflow: 'hidden'
                 }}>
                   
-                  {/* تنبيه Button */}
+                  {/* تنبيه */}
                   <div style={{
+                    flex: 1,
                     background: '#ffffff',
                     borderRadius: 'clamp(12px, 1.5vh, 18px)',
                     padding: 'clamp(15px, 2.2vh, 25px)',
@@ -1355,39 +1356,6 @@ export default function EvaluatePage() {
                       flex: 1
                     }}>
                       <button
-                        onClick={() => decrementCount('tanbih')}
-                        style={{
-                          flex: 1,
-                          height: '100%',
-                          background: '#95a5a6',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: 'clamp(10px, 1.3vh, 15px)',
-                          fontSize: 'clamp(32px, 4.2vw, 48px)',
-                          fontWeight: '700',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transition: 'all 0.2s',
-                          boxShadow: '0 3px 10px rgba(0,0,0,0.15)'
-                        }}
-                      >
-                        −
-                      </button>
-
-                      <div style={{
-                        fontSize: 'clamp(42px, 5.5vw, 64px)',
-                        fontWeight: '800',
-                        color: '#333',
-                        minWidth: 'clamp(50px, 6.5vw, 80px)',
-                        textAlign: 'center',
-                        lineHeight: '1'
-                      }}>
-                        {tanbihCount}
-                      </div>
-
-                      <button
                         onClick={() => incrementCount('tanbih')}
                         style={{
                           flex: 1,
@@ -1408,11 +1376,45 @@ export default function EvaluatePage() {
                       >
                         +
                       </button>
+
+                      <div style={{
+                        fontSize: 'clamp(42px, 5.5vw, 64px)',
+                        fontWeight: '800',
+                        color: '#333',
+                        minWidth: 'clamp(50px, 6.5vw, 80px)',
+                        textAlign: 'center',
+                        lineHeight: '1'
+                      }}>
+                        {tanbihCount}
+                      </div>
+
+                      <button
+                        onClick={() => decrementCount('tanbih')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: '#95a5a6',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 'clamp(10px, 1.3vh, 15px)',
+                          fontSize: 'clamp(32px, 4.2vw, 48px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.2s',
+                          boxShadow: '0 3px 10px rgba(0,0,0,0.15)'
+                        }}
+                      >
+                        −
+                      </button>
                     </div>
                   </div>
 
-                  {/* فتح Button */}
+                  {/* فتح */}
                   <div style={{
+                    flex: 1,
                     background: '#ffffff',
                     borderRadius: 'clamp(12px, 1.5vh, 18px)',
                     padding: 'clamp(15px, 2.2vh, 25px)',
@@ -1454,39 +1456,6 @@ export default function EvaluatePage() {
                       flex: 1
                     }}>
                       <button
-                        onClick={() => decrementCount('fateh')}
-                        style={{
-                          flex: 1,
-                          height: '100%',
-                          background: '#95a5a6',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: 'clamp(10px, 1.3vh, 15px)',
-                          fontSize: 'clamp(32px, 4.2vw, 48px)',
-                          fontWeight: '700',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transition: 'all 0.2s',
-                          boxShadow: '0 3px 10px rgba(0,0,0,0.15)'
-                        }}
-                      >
-                        −
-                      </button>
-
-                      <div style={{
-                        fontSize: 'clamp(42px, 5.5vw, 64px)',
-                        fontWeight: '800',
-                        color: '#333',
-                        minWidth: 'clamp(50px, 6.5vw, 80px)',
-                        textAlign: 'center',
-                        lineHeight: '1'
-                      }}>
-                        {fatehCount}
-                      </div>
-
-                      <button
                         onClick={() => incrementCount('fateh')}
                         style={{
                           flex: 1,
@@ -1507,11 +1476,55 @@ export default function EvaluatePage() {
                       >
                         +
                       </button>
+
+                      <div style={{
+                        fontSize: 'clamp(42px, 5.5vw, 64px)',
+                        fontWeight: '800',
+                        color: '#333',
+                        minWidth: 'clamp(50px, 6.5vw, 80px)',
+                        textAlign: 'center',
+                        lineHeight: '1'
+                      }}>
+                        {fatehCount}
+                      </div>
+
+                      <button
+                        onClick={() => decrementCount('fateh')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: '#95a5a6',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 'clamp(10px, 1.3vh, 15px)',
+                          fontSize: 'clamp(32px, 4.2vw, 48px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.2s',
+                          boxShadow: '0 3px 10px rgba(0,0,0,0.15)'
+                        }}
+                      >
+                        −
+                      </button>
                     </div>
                   </div>
+                </div>
 
-                  {/* تشكيل Button */}
+                {/* BOTTOM LEFT - Combined: تشكيل و تجويد */}
+                <div style={{
+                  gridColumn: '1 / 2',
+                  gridRow: '2 / 3',
+                  display: 'flex',
+                  gap: 'clamp(12px, 1.8vw, 20px)',
+                  overflow: 'hidden'
+                }}>
+                  
+                  {/* تشكيل */}
                   <div style={{
+                    flex: 1,
                     background: '#ffffff',
                     borderRadius: 'clamp(12px, 1.5vh, 18px)',
                     padding: 'clamp(15px, 2.2vh, 25px)',
@@ -1553,39 +1566,6 @@ export default function EvaluatePage() {
                       flex: 1
                     }}>
                       <button
-                        onClick={() => decrementCount('tashkeel')}
-                        style={{
-                          flex: 1,
-                          height: '100%',
-                          background: '#95a5a6',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: 'clamp(10px, 1.3vh, 15px)',
-                          fontSize: 'clamp(32px, 4.2vw, 48px)',
-                          fontWeight: '700',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transition: 'all 0.2s',
-                          boxShadow: '0 3px 10px rgba(0,0,0,0.15)'
-                        }}
-                      >
-                        −
-                      </button>
-
-                      <div style={{
-                        fontSize: 'clamp(42px, 5.5vw, 64px)',
-                        fontWeight: '800',
-                        color: '#333',
-                        minWidth: 'clamp(50px, 6.5vw, 80px)',
-                        textAlign: 'center',
-                        lineHeight: '1'
-                      }}>
-                        {tashkeelCount}
-                      </div>
-
-                      <button
                         onClick={() => incrementCount('tashkeel')}
                         style={{
                           flex: 1,
@@ -1606,11 +1586,45 @@ export default function EvaluatePage() {
                       >
                         +
                       </button>
+
+                      <div style={{
+                        fontSize: 'clamp(42px, 5.5vw, 64px)',
+                        fontWeight: '800',
+                        color: '#333',
+                        minWidth: 'clamp(50px, 6.5vw, 80px)',
+                        textAlign: 'center',
+                        lineHeight: '1'
+                      }}>
+                        {tashkeelCount}
+                      </div>
+
+                      <button
+                        onClick={() => decrementCount('tashkeel')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: '#95a5a6',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 'clamp(10px, 1.3vh, 15px)',
+                          fontSize: 'clamp(32px, 4.2vw, 48px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.2s',
+                          boxShadow: '0 3px 10px rgba(0,0,0,0.15)'
+                        }}
+                      >
+                        −
+                      </button>
                     </div>
                   </div>
 
-                  {/* تجويد Button */}
+                  {/* تجويد */}
                   <div style={{
+                    flex: 1,
                     background: '#ffffff',
                     borderRadius: 'clamp(12px, 1.5vh, 18px)',
                     padding: 'clamp(15px, 2.2vh, 25px)',
@@ -1652,39 +1666,6 @@ export default function EvaluatePage() {
                       flex: 1
                     }}>
                       <button
-                        onClick={() => decrementCount('tajweed')}
-                        style={{
-                          flex: 1,
-                          height: '100%',
-                          background: '#95a5a6',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: 'clamp(10px, 1.3vh, 15px)',
-                          fontSize: 'clamp(32px, 4.2vw, 48px)',
-                          fontWeight: '700',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transition: 'all 0.2s',
-                          boxShadow: '0 3px 10px rgba(0,0,0,0.15)'
-                        }}
-                      >
-                        −
-                      </button>
-
-                      <div style={{
-                        fontSize: 'clamp(42px, 5.5vw, 64px)',
-                        fontWeight: '800',
-                        color: '#333',
-                        minWidth: 'clamp(50px, 6.5vw, 80px)',
-                        textAlign: 'center',
-                        lineHeight: '1'
-                      }}>
-                        {tajweedCount}
-                      </div>
-
-                      <button
                         onClick={() => incrementCount('tajweed')}
                         style={{
                           flex: 1,
@@ -1705,22 +1686,86 @@ export default function EvaluatePage() {
                       >
                         +
                       </button>
+
+                      <div style={{
+                        fontSize: 'clamp(42px, 5.5vw, 64px)',
+                        fontWeight: '800',
+                        color: '#333',
+                        minWidth: 'clamp(50px, 6.5vw, 80px)',
+                        textAlign: 'center',
+                        lineHeight: '1'
+                      }}>
+                        {tajweedCount}
+                      </div>
+
+                      <button
+                        onClick={() => decrementCount('tajweed')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: '#95a5a6',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 'clamp(10px, 1.3vh, 15px)',
+                          fontSize: 'clamp(32px, 4.2vw, 48px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.2s',
+                          boxShadow: '0 3px 10px rgba(0,0,0,0.15)'
+                        }}
+                      >
+                        −
+                      </button>
                     </div>
                   </div>
                 </div>
 
-                {/* RIGHT SIDEBAR - Competitor Info */}
+                {/* TOP RIGHT - Logo, Title, Name, Details */}
                 <div style={{
+                  gridColumn: '2 / 3',
+                  gridRow: '1 / 2',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: 'clamp(12px, 1.8vh, 18px)',
-                  height: '100%',
+                  gap: 'clamp(10px, 1.5vh, 15px)',
                   overflow: 'hidden'
                 }}>
                   
+                  {/* Logo */}
+                  <div style={{
+                    width: 'clamp(50px, 7vw, 80px)',
+                    height: 'clamp(50px, 7vw, 80px)',
+                    margin: '0 auto',
+                    flexShrink: 0
+                  }}>
+                    <Image
+                      src="/images/logo.svg"
+                      alt="Logo"
+                      width={80}
+                      height={80}
+                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                      priority
+                    />
+                  </div>
+
+                  {/* Title */}
+                  <h1 style={{
+                    fontSize: 'clamp(16px, 2vw, 22px)',
+                    fontWeight: '700',
+                    color: '#1a3a3a',
+                    margin: 0,
+                    textAlign: 'center',
+                    lineHeight: '1.2',
+                    flexShrink: 0
+                  }}>
+                    تقييم المتسابقين
+                  </h1>
+
                   {/* Competitor Name */}
                   <h2 style={{
-                    fontSize: 'clamp(20px, 2.6vw, 30px)',
+                    fontSize: 'clamp(18px, 2.4vw, 26px)',
                     fontWeight: '800',
                     color: '#1a3a3a',
                     margin: 0,
@@ -1733,7 +1778,7 @@ export default function EvaluatePage() {
 
                   {/* Details */}
                   <p style={{
-                    fontSize: 'clamp(12px, 1.4vw, 15px)',
+                    fontSize: 'clamp(11px, 1.3vw, 14px)',
                     color: '#666',
                     margin: 0,
                     lineHeight: '1.5',
@@ -1747,15 +1792,17 @@ export default function EvaluatePage() {
                   <div style={{
                     background: finalScore >= 95 ? '#d4edda' : 
                                finalScore >= 90 ? '#fff3cd' : '#ffebee',
-                    padding: 'clamp(25px, 3.5vh, 45px)',
+                    padding: 'clamp(20px, 3vh, 35px)',
                     borderRadius: 'clamp(12px, 1.8vh, 20px)',
                     textAlign: 'center',
                     boxShadow: '0 6px 20px rgba(0,0,0,0.1)',
-                    flexShrink: 0,
-                    flex: '0 0 auto'
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
                     <div style={{
-                      fontSize: 'clamp(70px, 9vw, 110px)',
+                      fontSize: 'clamp(60px, 8vw, 100px)',
                       fontWeight: '800',
                       color: finalScore >= 95 ? '#27ae60' : 
                              finalScore >= 90 ? '#f39c12' : '#e74c3c',
@@ -1770,12 +1817,12 @@ export default function EvaluatePage() {
                     onClick={handleSave}
                     disabled={saving}
                     style={{
-                      padding: 'clamp(15px, 2.2vh, 22px)',
+                      padding: 'clamp(14px, 2vh, 20px)',
                       background: saving ? '#95a5a6' : 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)',
                       color: 'white',
                       border: 'none',
                       borderRadius: 'clamp(10px, 1.3vh, 15px)',
-                      fontSize: 'clamp(16px, 2vw, 22px)',
+                      fontSize: 'clamp(15px, 1.9vw, 20px)',
                       fontWeight: '700',
                       fontFamily: 'Cairo, sans-serif',
                       cursor: saving ? 'not-allowed' : 'pointer',
@@ -1791,12 +1838,12 @@ export default function EvaluatePage() {
                   <button
                     onClick={handlePrintScoreCard}
                     style={{
-                      padding: 'clamp(12px, 1.8vh, 16px)',
+                      padding: 'clamp(10px, 1.5vh, 14px)',
                       background: '#ffffff',
                       color: '#5fb3b3',
                       border: '2px solid #5fb3b3',
                       borderRadius: 'clamp(8px, 1vh, 12px)',
-                      fontSize: 'clamp(13px, 1.5vw, 16px)',
+                      fontSize: 'clamp(12px, 1.4vw, 15px)',
                       fontWeight: '700',
                       fontFamily: 'Cairo, sans-serif',
                       cursor: 'pointer',
@@ -1804,7 +1851,7 @@ export default function EvaluatePage() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: 'clamp(6px, 0.8vw, 10px)',
+                      gap: 'clamp(5px, 0.7vw, 8px)',
                       flexShrink: 0
                     }}
                     onMouseEnter={(e) => {
@@ -1819,17 +1866,26 @@ export default function EvaluatePage() {
                     <span>📄</span>
                     <span>طباعة PDF</span>
                   </button>
+                </div>
 
-                  {/* Back to Competitors Button */}
+                {/* BOTTOM RIGHT - Back Button (aligned to bottom evaluations) */}
+                <div style={{
+                  gridColumn: '2 / 3',
+                  gridRow: '2 / 3',
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  overflow: 'hidden'
+                }}>
                   <button
                     onClick={handleBackToList}
                     style={{
-                      padding: 'clamp(12px, 1.8vh, 16px)',
+                      width: '100%',
+                      padding: 'clamp(14px, 2vh, 20px)',
                       background: '#ffffff',
                       color: '#5fb3b3',
                       border: '2px solid #5fb3b3',
                       borderRadius: 'clamp(8px, 1vh, 12px)',
-                      fontSize: 'clamp(13px, 1.5vw, 16px)',
+                      fontSize: 'clamp(13px, 1.6vw, 17px)',
                       fontWeight: '700',
                       fontFamily: 'Cairo, sans-serif',
                       cursor: 'pointer',
