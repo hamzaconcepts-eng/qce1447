@@ -537,37 +537,44 @@ export default function RegisterPage() {
                     </label>
                     <div style={{ 
                       display: 'flex', 
-                      gap: 'clamp(8px, 1.2vw, 15px)',
-                      justifyContent: 'flex-end'
+                      gap: 'clamp(15px, 2vw, 25px)',
+                      justifyContent: 'flex-end',
+                      direction: 'rtl'
                     }}>
                       <label style={{
                         display: 'flex',
                         alignItems: 'center',
                         cursor: 'pointer',
-                        fontSize: 'clamp(12px, 1.4vw, 14px)'
+                        fontSize: 'clamp(12px, 1.4vw, 14px)',
+                        flexDirection: 'row-reverse',
+                        gap: 'clamp(6px, 0.8vw, 10px)'
                       }}>
-                        <span style={{ marginLeft: 'clamp(4px, 0.6vw, 8px)' }}>ذكر</span>
+                        <span>ذكر</span>
                         <input
                           type="radio"
                           name="gender"
                           value="male"
                           checked={gender === 'male'}
                           onChange={(e) => setGender(e.target.value)}
+                          style={{ cursor: 'pointer' }}
                         />
                       </label>
                       <label style={{
                         display: 'flex',
                         alignItems: 'center',
                         cursor: 'pointer',
-                        fontSize: 'clamp(12px, 1.4vw, 14px)'
+                        fontSize: 'clamp(12px, 1.4vw, 14px)',
+                        flexDirection: 'row-reverse',
+                        gap: 'clamp(6px, 0.8vw, 10px)'
                       }}>
-                        <span style={{ marginLeft: 'clamp(4px, 0.6vw, 8px)' }}>أنثى</span>
+                        <span>أنثى</span>
                         <input
                           type="radio"
                           name="gender"
                           value="female"
                           checked={gender === 'female'}
                           onChange={(e) => setGender(e.target.value)}
+                          style={{ cursor: 'pointer' }}
                         />
                       </label>
                     </div>
