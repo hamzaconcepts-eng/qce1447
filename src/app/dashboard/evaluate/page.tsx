@@ -409,25 +409,23 @@ export default function EvaluatePage() {
           * { margin: 0; padding: 0; box-sizing: border-box; }
           @page { 
             size: A4;
-            margin: 15mm;
+            margin: 0;
           }
           body { 
             font-family: 'Cairo', sans-serif; 
             direction: rtl;
-            background: #f5f5f5;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
+            background: white;
+            margin: 0;
+            padding: 0;
           }
           .certificate {
             background: white;
             width: 210mm;
-            max-height: 297mm;
+            height: 297mm;
             position: relative;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
             page-break-inside: avoid;
+            margin: 0;
+            padding: 0;
           }
           
           /* Minimal corner decorations */
@@ -439,6 +437,7 @@ export default function EvaluatePage() {
             height: 30px;
             border: 1.5px solid #5fb3b3;
             opacity: 0.25;
+            z-index: 10;
           }
           
           .certificate::before {
@@ -457,14 +456,14 @@ export default function EvaluatePage() {
           
           .header {
             background: linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%);
-            padding: 25px 30px;
+            padding: 30px 30px 25px;
             text-align: center;
           }
           
           .logo {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 12px;
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -479,45 +478,45 @@ export default function EvaluatePage() {
           
           .header h1 {
             color: white;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
           }
           
           .header .subtitle {
             color: rgba(255,255,255,0.95);
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 500;
+            margin-bottom: 8px;
+          }
+          
+          .header .edition {
+            color: rgba(255,255,255,0.9);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
           }
           
           .content {
-            padding: 25px 40px 20px;
+            padding: 30px 40px 25px;
           }
           
           /* Certificate Title */
           .cert-title {
             text-align: center;
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 700;
             color: #5fb3b3;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             letter-spacing: 1.5px;
           }
           
-          .edition {
-            text-align: center;
-            color: #6c757d;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 20px;
-          }
-          
           .participant-name {
-            font-size: 21px;
+            font-size: 22px;
             font-weight: 800;
             color: #1a3a3a;
             text-align: center;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             padding-bottom: 12px;
             border-bottom: 2px solid #5fb3b3;
           }
@@ -526,7 +525,7 @@ export default function EvaluatePage() {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             max-width: 500px;
             margin-left: auto;
             margin-right: auto;
@@ -534,7 +533,7 @@ export default function EvaluatePage() {
           
           .detail-card {
             background: #f8f9fa;
-            padding: 10px 14px;
+            padding: 10px 15px;
             border-radius: 6px;
             border-right: 3px solid #5fb3b3;
             text-align: right;
@@ -554,7 +553,7 @@ export default function EvaluatePage() {
           }
           
           .score-breakdown-container {
-            margin: 25px 0 18px;
+            margin: 25px 0 20px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 25px;
@@ -573,12 +572,12 @@ export default function EvaluatePage() {
           }
           
           .final-score {
-            font-size: 65px;
+            font-size: 68px;
             font-weight: 900;
-            padding: 22px;
+            padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-            margin-bottom: 18px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
           }
           
           .score-green { 
@@ -599,20 +598,20 @@ export default function EvaluatePage() {
           
           /* Signature Section */
           .signature-section {
-            margin-top: 15px;
-            padding-top: 15px;
+            margin-top: 18px;
+            padding-top: 18px;
             border-top: 1px solid #dee2e6;
             text-align: center;
           }
           
           .signature-space {
-            height: 40px;
+            height: 45px;
             margin-bottom: 8px;
           }
           
           .signature-line {
             border-top: 1.5px solid #1a3a3a;
-            width: 160px;
+            width: 170px;
             margin: 0 auto 8px;
           }
           
@@ -625,7 +624,7 @@ export default function EvaluatePage() {
           .breakdown-side {
             display: flex;
             flex-direction: column;
-            gap: 9px;
+            gap: 10px;
           }
           
           .breakdown-title {
@@ -638,13 +637,13 @@ export default function EvaluatePage() {
           
           .breakdown-item {
             background: white;
-            padding: 9px 13px;
+            padding: 10px 14px;
             border-radius: 6px;
             border: 1.5px solid #e9ecef;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.02);
           }
           
           .breakdown-label {
@@ -658,7 +657,7 @@ export default function EvaluatePage() {
           }
           
           .breakdown-count {
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 800;
             color: #1a3a3a;
           }
@@ -670,8 +669,12 @@ export default function EvaluatePage() {
           }
           
           .footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
             background: #f8f9fa;
-            padding: 14px 40px;
+            padding: 15px 40px;
             text-align: center;
             border-top: 1px solid #dee2e6;
           }
@@ -691,7 +694,7 @@ export default function EvaluatePage() {
           
           @media print {
             body {
-              background: white;
+              margin: 0;
               padding: 0;
             }
             .certificate {
@@ -700,7 +703,7 @@ export default function EvaluatePage() {
             }
             @page {
               size: A4;
-              margin: 15mm;
+              margin: 0;
             }
           }
         </style>
@@ -713,11 +716,11 @@ export default function EvaluatePage() {
             </div>
             <h1>مسابقة مركز رياض العلم</h1>
             <div class="subtitle">لحفظ القرآن الكريم</div>
+            <div class="edition">• الدورة الخامسة - رمضان 1447هـ •</div>
           </div>
           
           <div class="content">
             <div class="cert-title">شهادة تقييم</div>
-            <div class="edition">• الدورة الخامسة - رمضان 1447هـ •</div>
             <div class="participant-name">${selectedCompetitor.full_name}</div>
             
             <div class="details-grid">
