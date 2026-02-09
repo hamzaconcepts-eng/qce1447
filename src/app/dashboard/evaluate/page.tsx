@@ -1248,7 +1248,7 @@ export default function EvaluatePage() {
             </>
           ) : (
             <>
-              {/* Evaluation Screen - FINAL PERFECT VERSION */}
+              {/* Evaluation Screen - POLISHED FINAL VERSION */}
               <div style={{
                 position: 'relative',
                 display: 'grid',
@@ -1309,6 +1309,7 @@ export default function EvaluatePage() {
                   gridRow: '1 / 2',
                   display: 'flex',
                   gap: 'clamp(12px, 1.8vw, 20px)',
+                  height: '100%',
                   overflow: 'hidden'
                 }}>
                   
@@ -1519,6 +1520,7 @@ export default function EvaluatePage() {
                   gridRow: '2 / 3',
                   display: 'flex',
                   gap: 'clamp(12px, 1.8vw, 20px)',
+                  height: '100%',
                   overflow: 'hidden'
                 }}>
                   
@@ -1723,13 +1725,14 @@ export default function EvaluatePage() {
                   </div>
                 </div>
 
-                {/* TOP RIGHT - Logo, Title, Name, Details */}
+                {/* RIGHT COLUMN - Info, Score, Buttons (SPANS BOTH ROWS) */}
                 <div style={{
                   gridColumn: '2 / 3',
-                  gridRow: '1 / 2',
+                  gridRow: '1 / 3',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 'clamp(10px, 1.5vh, 15px)',
+                  height: '100%',
                   overflow: 'hidden'
                 }}>
                   
@@ -1750,11 +1753,11 @@ export default function EvaluatePage() {
                     />
                   </div>
 
-                  {/* Title */}
+                  {/* Page Title */}
                   <h1 style={{
-                    fontSize: 'clamp(16px, 2vw, 22px)',
-                    fontWeight: '700',
-                    color: '#1a3a3a',
+                    fontSize: 'clamp(15px, 1.9vw, 20px)',
+                    fontWeight: '600',
+                    color: '#666',
                     margin: 0,
                     textAlign: 'center',
                     lineHeight: '1.2',
@@ -1763,15 +1766,25 @@ export default function EvaluatePage() {
                     تقييم المتسابقين
                   </h1>
 
-                  {/* Competitor Name */}
+                  {/* Separator Line */}
+                  <div style={{
+                    width: '60%',
+                    height: '1px',
+                    background: 'linear-gradient(to right, transparent, #d0d0d0, transparent)',
+                    margin: '0 auto',
+                    flexShrink: 0
+                  }} />
+
+                  {/* Competitor Name - DISTINCTIVE */}
                   <h2 style={{
-                    fontSize: 'clamp(18px, 2.4vw, 26px)',
+                    fontSize: 'clamp(20px, 2.6vw, 30px)',
                     fontWeight: '800',
                     color: '#1a3a3a',
                     margin: 0,
                     lineHeight: '1.2',
                     textAlign: 'center',
-                    flexShrink: 0
+                    flexShrink: 0,
+                    letterSpacing: '-0.5px'
                   }}>
                     {selectedCompetitor.full_name}
                   </h2>
@@ -1788,7 +1801,7 @@ export default function EvaluatePage() {
                     {selectedCompetitor.gender === 'male' ? 'ذكر' : 'أنثى'} • {selectedCompetitor.level} • {selectedCompetitor.city}
                   </p>
 
-                  {/* Score Display */}
+                  {/* Score Display - FLEXIBLE HEIGHT */}
                   <div style={{
                     background: finalScore >= 95 ? '#d4edda' : 
                                finalScore >= 90 ? '#fff3cd' : '#ffebee',
@@ -1799,7 +1812,8 @@ export default function EvaluatePage() {
                     flex: 1,
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    minHeight: 0
                   }}>
                     <div style={{
                       fontSize: 'clamp(60px, 8vw, 100px)',
@@ -1866,21 +1880,12 @@ export default function EvaluatePage() {
                     <span>📄</span>
                     <span>طباعة PDF</span>
                   </button>
-                </div>
 
-                {/* BOTTOM RIGHT - Back Button (aligned to bottom evaluations) */}
-                <div style={{
-                  gridColumn: '2 / 3',
-                  gridRow: '2 / 3',
-                  display: 'flex',
-                  alignItems: 'flex-end',
-                  overflow: 'hidden'
-                }}>
+                  {/* Back to Competitors Button */}
                   <button
                     onClick={handleBackToList}
                     style={{
-                      width: '100%',
-                      padding: 'clamp(14px, 2vh, 20px)',
+                      padding: 'clamp(14px, 2vh, 18px)',
                       background: '#ffffff',
                       color: '#5fb3b3',
                       border: '2px solid #5fb3b3',
