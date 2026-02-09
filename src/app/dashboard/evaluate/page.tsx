@@ -1261,7 +1261,8 @@ export default function EvaluatePage() {
                 gap: 'clamp(8px, 1.2vw, 14px)',
                 padding: 'clamp(6px, 1vh, 12px)',
                 overflow: 'hidden',
-                boxSizing: 'border-box'
+                boxSizing: 'border-box',
+                background: 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)'
               }}>
                 
                 {/* FIXED ALERTS */}
