@@ -85,6 +85,17 @@ export default function ResultsPage() {
     setCurrentPage(1)
   }, [searchTerm, filterGender, filterLevel, filterScoreRange])
 
+  // Viewport height fix for mobile
+  useEffect(() => {
+    const setVH = () => {
+      const vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+    }
+    setVH()
+    window.addEventListener('resize', setVH)
+    return () => window.removeEventListener('resize', setVH)
+  }, [])
+
   const fetchResults = async () => {
     try {
       const supabase = createClient()
@@ -382,7 +393,7 @@ export default function ResultsPage() {
             font-weight: 800;
           }
           .subtitle {
-            font-size: 12px;
+            font-size: clamp(10px, 2vw, 12px);
             color: #666;
             font-weight: 600;
           }
@@ -395,7 +406,7 @@ export default function ResultsPage() {
             color: white;
             padding: 8px 12px;
             border-radius: 8px;
-            font-size: 12px;
+            font-size: clamp(10px, 2vw, 12px);
             font-weight: 700;
             margin-bottom: 10px;
             text-align: center;
@@ -407,7 +418,7 @@ export default function ResultsPage() {
             background: #f5f5f5;
             padding: 6px 10px;
             border-radius: 6px;
-            font-size: 11px;
+            font-size: clamp(9px, 1.8vw, 11px);
             font-weight: 700;
             color: #333;
             margin-bottom: 8px;
@@ -448,7 +459,7 @@ export default function ResultsPage() {
             margin: 0 10px;
           }
           .winner-name {
-            font-size: 11px;
+            font-size: clamp(9px, 1.8vw, 11px);
             font-weight: 700;
             color: #1a3a3a;
             margin-bottom: 2px;
@@ -568,15 +579,19 @@ export default function ResultsPage() {
   return (
     <>
       <style jsx global>{`
+        :root {
+          --vh: 1vh;
+        }
+
         body {
           background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
-          min-height: 100vh;
+          min-height: calc(var(--vh, 1vh) * 100);
         }
         
         .app-container {
           background: #ffffff;
-          padding: 30px;
-          border-radius: 20px;
+          padding: clamp(15px, 3vw, 30px);
+          border-radius: clamp(12px, 3vw, 20px);
           box-shadow: 0 20px 60px rgba(0,0,0,0.3);
           width: 100%;
           max-height: 90vh;
@@ -586,12 +601,12 @@ export default function ResultsPage() {
         .compact-table {
           width: 100%;
           border-collapse: collapse;
-          font-size: 12px;
+          font-size: clamp(10px, 2vw, 12px);
         }
 
         .compact-table th,
         .compact-table td {
-          padding: 6px 8px;
+          padding: clamp(4px, 1vw, 6px) clamp(4px, 1.5vw, 8px);
           text-align: center;
           border-bottom: 1px solid #e0e0e0;
           white-space: nowrap;
@@ -606,7 +621,7 @@ export default function ResultsPage() {
           position: sticky;
           top: 0;
           z-index: 10;
-          font-size: 11px;
+          font-size: clamp(9px, 1.8vw, 11px);
           cursor: pointer;
           user-select: none;
         }
