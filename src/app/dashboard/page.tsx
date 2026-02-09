@@ -14,6 +14,23 @@ export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null)
   const router = useRouter()
 
+  // Fix viewport height for mobile browsers
+  useEffect(() => {
+    const setVH = () => {
+      const vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+    }
+    
+    setVH()
+    window.addEventListener('resize', setVH)
+    window.addEventListener('orientationchange', setVH)
+    
+    return () => {
+      window.removeEventListener('resize', setVH)
+      window.removeEventListener('orientationchange', setVH)
+    }
+  }, [])
+
   useEffect(() => {
     const userStr = localStorage.getItem('user')
     if (!userStr) {
@@ -55,7 +72,7 @@ export default function DashboardPage() {
         }
 
         html, body {
-          height: 100vh;
+          height: calc(var(--vh, 1vh) * 100);
           width: 100vw;
           overflow: hidden;
           font-family: 'Cairo', sans-serif;
@@ -67,7 +84,7 @@ export default function DashboardPage() {
       `}</style>
       
       <div style={{
-        height: '100vh',
+        height: 'calc(var(--vh, 1vh) * 100)',
         width: '100vw',
         display: 'flex',
         justifyContent: 'center',

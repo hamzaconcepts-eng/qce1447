@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase'
@@ -12,6 +12,23 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+
+  // Fix viewport height for mobile browsers
+  useEffect(() => {
+    const setVH = () => {
+      const vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+    }
+    
+    setVH()
+    window.addEventListener('resize', setVH)
+    window.addEventListener('orientationchange', setVH)
+    
+    return () => {
+      window.removeEventListener('resize', setVH)
+      window.removeEventListener('orientationchange', setVH)
+    }
+  }, [])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -68,7 +85,7 @@ export default function LoginPage() {
         }
 
         html, body {
-          height: 100vh;
+          height: calc(var(--vh, 1vh) * 100);
           width: 100vw;
           overflow: hidden;
           font-family: 'Cairo', sans-serif;
@@ -80,7 +97,7 @@ export default function LoginPage() {
       `}</style>
       
       <div style={{
-        height: '100vh',
+        height: 'calc(var(--vh, 1vh) * 100)',
         width: '100vw',
         display: 'flex',
         justifyContent: 'center',
