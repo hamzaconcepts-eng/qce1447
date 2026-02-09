@@ -73,7 +73,7 @@ export default function LiveStatsPage() {
     const interval = setInterval(() => {
       fetchStats()
       fetchActiveEvaluations()
-    }, 5000) // Update every 5 seconds for live effect
+    }, 5000)
 
     const clockInterval = setInterval(() => setCurrentTime(new Date()), 1000)
 
@@ -195,10 +195,7 @@ export default function LiveStatsPage() {
   const getFilteredStats = () => {
     if (genderFilter === 'all') return stats
 
-    // Calculate actual filtered evaluated and waiting counts
     const filteredTotal = genderFilter === 'male' ? stats.maleCount : stats.femaleCount
-
-    // Calculate how many of the evaluated are male/female (proportional estimate)
     const ratio = filteredTotal / stats.totalCompetitors
     const filteredEvaluated = Math.round(stats.evaluatedCount * ratio)
     const filteredWaiting = filteredTotal - filteredEvaluated
@@ -232,29 +229,14 @@ export default function LiveStatsPage() {
   return (
     <>
       <style jsx global>{`
-        @keyframes countUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
         @keyframes pulse {
           0%, 100% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.8; transform: scale(1.05); }
         }
 
         @keyframes glow {
-          0%, 100% { box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
-          50% { box-shadow: 0 12px 30px rgba(95, 179, 179, 0.2); }
-        }
-
-        @keyframes fillBar {
-          0% { width: 0; }
-          100% { width: var(--target-width); }
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          0%, 100% { box-shadow: 0 0.4vh 1vh rgba(0,0,0,0.08); }
+          50% { box-shadow: 0 0.6vh 1.5vh rgba(95, 179, 179, 0.2); }
         }
 
         @keyframes slideUp {
@@ -273,17 +255,9 @@ export default function LiveStatsPage() {
         }
 
         @keyframes shimmer {
-          0% { 
-            background-position: -200% 0;
-            opacity: 0.6;
-          }
-          50% {
-            opacity: 1;
-          }
-          100% { 
-            background-position: 200% 0;
-            opacity: 0.6;
-          }
+          0% { background-position: -200% 0; opacity: 0.6; }
+          50% { opacity: 1; }
+          100% { background-position: 200% 0; opacity: 0.6; }
         }
 
         @keyframes heartbeat {
@@ -297,11 +271,18 @@ export default function LiveStatsPage() {
           50% { opacity: 0.3; }
         }
 
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
         body {
           background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
           margin: 0;
           padding: 0;
           overflow: hidden;
+          font-family: 'Cairo', sans-serif;
         }
 
         .screen-container {
@@ -311,48 +292,46 @@ export default function LiveStatsPage() {
           justify-content: center;
           align-items: center;
           background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
+          padding: 1vh 1vw;
         }
 
         .dashboard-box {
-          width: 1920px;
-          height: 1080px;
-          max-width: 100vw;
-          max-height: 100vh;
+          width: 100%;
+          height: 100%;
           background: #ffffff;
-          box-shadow: 0 25px 70px rgba(0,0,0,0.4);
-          animation: fadeIn 0.5s ease-out;
+          box-shadow: 0 1.2vh 3.5vh rgba(0,0,0,0.4);
           overflow: hidden;
           display: flex;
           flex-direction: column;
+          border-radius: clamp(8px, 0.8vh, 15px);
         }
 
         .content-wrapper {
           width: 100%;
           height: 100%;
-          padding: 25px 35px;
-          box-sizing: border-box;
-          overflow: hidden;
+          padding: clamp(10px, 1.2vh, 25px) clamp(15px, 1.8vw, 35px);
           display: flex;
           flex-direction: column;
+          gap: clamp(8px, 0.9vh, 18px);
         }
 
         .stat-card {
           background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-          border-radius: 15px;
-          padding: 18px;
-          box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+          border-radius: clamp(8px, 0.8vh, 15px);
+          padding: clamp(8px, 0.9vh, 18px);
+          box-shadow: 0 0.4vh 1vh rgba(0,0,0,0.08);
           transition: all 0.3s;
           animation: slideUp 0.6s ease-out, glow 3s ease-in-out infinite;
           text-align: center;
         }
 
         .stat-card:hover {
-          transform: translateY(-5px) scale(1.02);
-          box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+          transform: translateY(-0.3vh) scale(1.02);
+          box-shadow: 0 0.8vh 1.8vh rgba(0,0,0,0.15);
         }
 
         .stat-number {
-          font-size: 48px;
+          font-size: clamp(24px, 2.5vw, 48px);
           font-weight: 800;
           background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
           -webkit-background-clip: text;
@@ -363,15 +342,15 @@ export default function LiveStatsPage() {
         }
 
         .stat-label {
-          font-size: 15px;
+          font-size: clamp(10px, 0.8vw, 15px);
           color: #666;
           font-weight: 600;
-          margin-top: 8px;
+          margin-top: clamp(4px, 0.4vh, 8px);
         }
 
         .progress-circle {
-          width: 220px;
-          height: 220px;
+          width: clamp(120px, 11vw, 220px);
+          height: clamp(120px, 11vw, 220px);
           border-radius: 50%;
           background: conic-gradient(
             #5fb3b3 0deg,
@@ -382,13 +361,13 @@ export default function LiveStatsPage() {
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 10px 30px rgba(95, 179, 179, 0.3);
+          box-shadow: 0 0.5vh 1.5vh rgba(95, 179, 179, 0.3);
           animation: rotate 20s linear infinite;
         }
 
         .progress-inner {
-          width: 175px;
-          height: 175px;
+          width: calc(100% - clamp(30px, 2.5vw, 45px));
+          height: calc(100% - clamp(30px, 2.5vw, 45px));
           border-radius: 50%;
           background: white;
           display: flex;
@@ -399,7 +378,7 @@ export default function LiveStatsPage() {
         }
 
         .progress-percentage {
-          font-size: 52px;
+          font-size: clamp(26px, 2.7vw, 52px);
           font-weight: 800;
           background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
           -webkit-background-clip: text;
@@ -412,19 +391,19 @@ export default function LiveStatsPage() {
         .live-indicator {
           display: inline-flex;
           align-items: center;
-          gap: 7px;
+          gap: clamp(4px, 0.4vw, 7px);
           background: #fee;
-          padding: 7px 14px;
-          border-radius: 20px;
+          padding: clamp(4px, 0.4vh, 7px) clamp(7px, 0.7vw, 14px);
+          border-radius: clamp(10px, 1vh, 20px);
           font-weight: 700;
-          font-size: 15px;
+          font-size: clamp(10px, 0.8vw, 15px);
           color: #c00;
           animation: pulse 1.5s ease-in-out infinite;
         }
 
         .live-dot {
-          width: 9px;
-          height: 9px;
+          width: clamp(5px, 0.5vw, 9px);
+          height: clamp(5px, 0.5vw, 9px);
           background: #f00;
           border-radius: 50%;
           animation: pulse 1s ease-in-out infinite;
@@ -433,25 +412,19 @@ export default function LiveStatsPage() {
         .bar-chart-container {
           display: flex;
           flex-direction: column;
-          gap: 9px;
+          gap: clamp(4px, 0.5vh, 9px);
         }
 
         .bar-item {
           display: flex;
           align-items: center;
-          gap: 9px;
+          gap: clamp(4px, 0.5vw, 9px);
           animation: slideUp 0.5s ease-out;
         }
 
-        .bar-item:nth-child(1) .bar-fill { animation-delay: 0s; }
-        .bar-item:nth-child(2) .bar-fill { animation-delay: 0.3s; }
-        .bar-item:nth-child(3) .bar-fill { animation-delay: 0.6s; }
-        .bar-item:nth-child(4) .bar-fill { animation-delay: 0.9s; }
-        .bar-item:nth-child(5) .bar-fill { animation-delay: 1.2s; }
-
         .bar-label {
-          min-width: 165px;
-          font-size: 13px;
+          min-width: clamp(80px, 8.6vw, 165px);
+          font-size: clamp(9px, 0.7vw, 13px);
           font-weight: 600;
           color: #333;
           text-align: right;
@@ -459,70 +432,60 @@ export default function LiveStatsPage() {
 
         .bar-wrapper {
           flex: 1;
-          height: 32px;
+          height: clamp(16px, 1.7vh, 32px);
           background: #f0f0f0;
-          border-radius: 15px;
+          border-radius: clamp(8px, 0.8vh, 15px);
           overflow: hidden;
-          animation: glow 2s ease-in-out infinite;
         }
 
         .bar-fill {
           height: 100%;
-          background: linear-gradient(
-            90deg,
-            #5fb3b3 0%,
-            #4aa3a3 25%,
-            #5fb3b3 50%,
-            #4aa3a3 75%,
-            #5fb3b3 100%
-          );
+          background: linear-gradient(90deg, #5fb3b3 0%, #4aa3a3 25%, #5fb3b3 50%, #4aa3a3 75%, #5fb3b3 100%);
           background-size: 200% 100%;
-          border-radius: 15px;
+          border-radius: clamp(8px, 0.8vh, 15px);
           display: flex;
           align-items: center;
           justify-content: center;
           color: white;
-          font-size: 15px;
+          font-size: clamp(10px, 0.8vw, 15px);
           font-weight: 700;
-          animation: fillBar 2s cubic-bezier(0.4, 0, 0.2, 1), shimmer 4s ease-in-out infinite;
-          animation-fill-mode: forwards;
+          animation: shimmer 4s ease-in-out infinite;
         }
 
         .milestone-badge {
           background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
           color: #333;
-          padding: 10px 28px;
-          border-radius: 50px;
-          font-size: 20px;
+          padding: clamp(5px, 0.5vh, 10px) clamp(14px, 1.5vw, 28px);
+          border-radius: clamp(25px, 2.5vh, 50px);
+          font-size: clamp(12px, 1vw, 20px);
           font-weight: 800;
           text-align: center;
-          box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+          box-shadow: 0 0.5vh 1.5vh rgba(255, 215, 0, 0.4);
           animation: float 3s ease-in-out infinite, pulse 2s ease-in-out infinite;
         }
 
         .clock-display {
-          font-size: 42px;
+          font-size: clamp(20px, 2.2vw, 42px);
           font-weight: 700;
           color: #1a3a3a;
           font-family: 'Cairo', monospace;
           animation: pulse 2s ease-in-out infinite;
-          min-width: 180px;
           text-align: right;
         }
 
         .fullscreen-btn {
           position: fixed;
-          bottom: 25px;
-          right: 25px;
-          width: 55px;
-          height: 55px;
+          bottom: clamp(10px, 1.3vh, 25px);
+          right: clamp(10px, 1.3vw, 25px);
+          width: clamp(35px, 2.9vw, 55px);
+          height: clamp(35px, 2.9vw, 55px);
           border-radius: 50%;
           background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
           color: white;
           border: none;
           cursor: pointer;
-          font-size: 22px;
-          box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+          font-size: clamp(14px, 1.1vw, 22px);
+          box-shadow: 0 0.4vh 1vh rgba(0,0,0,0.3);
           transition: all 0.3s;
           z-index: 1000;
           animation: float 3s ease-in-out infinite;
@@ -530,45 +493,44 @@ export default function LiveStatsPage() {
 
         .fullscreen-btn:hover {
           transform: scale(1.15);
-          box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+          box-shadow: 0 0.6vh 1.5vh rgba(0,0,0,0.4);
         }
 
         .back-btn {
           position: fixed;
-          bottom: 25px;
-          left: 25px;
-          padding: 12px 25px;
+          bottom: clamp(10px, 1.3vh, 25px);
+          left: clamp(10px, 1.3vw, 25px);
+          padding: clamp(6px, 0.6vh, 12px) clamp(12px, 1.3vw, 25px);
           background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
           color: white;
           border: none;
-          border-radius: 10px;
+          border-radius: clamp(5px, 0.5vh, 10px);
           cursor: pointer;
-          font-size: 16px;
+          font-size: clamp(11px, 0.8vw, 16px);
           font-weight: 700;
           font-family: 'Cairo', sans-serif;
-          box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+          box-shadow: 0 0.4vh 1vh rgba(0,0,0,0.3);
           transition: all 0.3s;
           z-index: 1000;
           animation: float 3s ease-in-out infinite 0.5s;
         }
 
         .back-btn:hover {
-          transform: translateY(-5px) scale(1.05);
-          box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+          transform: translateY(-0.3vh) scale(1.05);
+          box-shadow: 0 0.6vh 1.5vh rgba(0,0,0,0.4);
         }
 
         .filter-button {
-          padding: 9px 22px;
+          padding: clamp(5px, 0.5vh, 9px) clamp(11px, 1.1vw, 22px);
           border: 2px solid #e0e0e0;
           background: white;
           color: #666;
-          border-radius: 10px;
-          font-size: 15px;
+          border-radius: clamp(5px, 0.5vh, 10px);
+          font-size: clamp(10px, 0.8vw, 15px);
           font-weight: 600;
           font-family: 'Cairo', sans-serif;
           cursor: pointer;
           transition: all 0.2s;
-          animation: slideUp 0.5s ease-out;
         }
 
         .filter-button.active {
@@ -580,7 +542,7 @@ export default function LiveStatsPage() {
 
         .filter-button:hover {
           border-color: #5fb3b3;
-          transform: translateY(-2px);
+          transform: translateY(-0.1vh);
         }
 
         .logo-container {
@@ -591,82 +553,37 @@ export default function LiveStatsPage() {
           animation: slideUp 0.6s ease-out, glow 3s ease-in-out infinite;
         }
 
-        .header-center {
-          flex: 1;
-          text-align: center;
-          min-width: 0;
+        /* Mobile/Phone specific */
+        @media (max-width: 600px) {
+          .screen-container {
+            padding: 0.5vh 0.5vw;
+          }
+          
+          .content-wrapper {
+            gap: clamp(6px, 0.7vh, 12px);
+          }
+
+          .main-grid {
+            grid-template-columns: 1fr !important;
+          }
+
+          .level-badge-text {
+            font-size: clamp(8px, 0.6vw, 11px) !important;
+          }
         }
 
-        .header-right {
-          display: flex;
-          flex-direction: column;
-          gap: 7px;
-          align-items: flex-end;
-          min-width: 200px;
+        /* Tablet specific */
+        @media (min-width: 601px) and (max-width: 1024px) {
+          .stats-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
         }
 
-        .evaluation-row {
-          display: flex;
-          align-items: center;
-          padding: 12px 15px;
-          background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-          border-radius: 12px;
-          margin-bottom: 10px;
-          border-right: 4px solid #5fb3b3;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-          transition: all 0.3s;
-        }
-
-        .evaluation-row:hover {
-          transform: translateX(-5px);
-          box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-        }
-
-        .evaluation-row.active {
-          background: linear-gradient(135deg, #e8f5f5 0%, #f0f8f8 100%);
-          border-right: 4px solid #27ae60;
-        }
-
-        .level-badge {
-          min-width: 100px;
-          padding: 8px 12px;
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
-          color: white;
-          border-radius: 8px;
-          font-size: 13px;
-          font-weight: 700;
-          text-align: center;
-        }
-
-        .competitor-name {
-          flex: 1;
-          padding: 0 15px;
-          font-size: 16px;
-          font-weight: 600;
-          color: #1a3a3a;
-        }
-
-        .competitor-name.empty {
-          color: #999;
-          font-style: italic;
-          font-weight: 400;
-        }
-
-        .status-indicator {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          font-size: 13px;
-          font-weight: 600;
-          color: #27ae60;
-        }
-
-        .status-dot {
-          width: 10px;
-          height: 10px;
-          background: #27ae60;
-          border-radius: 50%;
-          animation: blink 1.5s ease-in-out infinite;
+        /* Ensure no scrolling */
+        html, body {
+          overflow: hidden;
+          height: 100vh;
+          width: 100vw;
         }
       `}</style>
 
@@ -675,9 +592,19 @@ export default function LiveStatsPage() {
           <div className="content-wrapper">
 
             {/* Header */}
-            <div style={{ marginBottom: '18px', flexShrink: 0 }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '13px' }}>
-                <div className="logo-container" style={{ width: '65px', height: '65px' }}>
+            <div style={{ flexShrink: 0 }}>
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'space-between', 
+                marginBottom: 'clamp(6px, 0.7vh, 13px)',
+                gap: 'clamp(8px, 1vw, 20px)'
+              }}>
+                <div className="logo-container" style={{ 
+                  width: 'clamp(35px, 3.4vw, 65px)', 
+                  height: 'clamp(35px, 3.4vw, 65px)',
+                  flexShrink: 0
+                }}>
                   <Image
                     src="/images/logo.svg"
                     alt="Logo"
@@ -688,12 +615,12 @@ export default function LiveStatsPage() {
                   />
                 </div>
 
-                <div className="header-center">
+                <div style={{ flex: 1, textAlign: 'center', minWidth: 0 }}>
                   <h1 style={{
                     color: '#1a3a3a',
-                    fontSize: '32px',
+                    fontSize: 'clamp(14px, 1.7vw, 32px)',
                     fontWeight: '800',
-                    marginBottom: '7px',
+                    marginBottom: 'clamp(3px, 0.4vh, 7px)',
                     background: 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
@@ -702,12 +629,23 @@ export default function LiveStatsPage() {
                   }}>
                     مسابقة مركز رياض العلم لحفظ القرآن الكريم
                   </h1>
-                  <p style={{ color: '#666', fontSize: '16px', fontWeight: '600', marginBottom: '9px' }}>
+                  <p style={{ 
+                    color: '#666', 
+                    fontSize: 'clamp(9px, 0.8vw, 16px)', 
+                    fontWeight: '600', 
+                    marginBottom: 'clamp(5px, 0.5vh, 9px)' 
+                  }}>
                     إحصائيات حية • الدورة الخامسة - رمضان 1447هـ
                   </p>
                 </div>
 
-                <div className="header-right">
+                <div style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  gap: 'clamp(3px, 0.4vh, 7px)', 
+                  alignItems: 'flex-end',
+                  flexShrink: 0
+                }}>
                   <div className="live-indicator">
                     <span className="live-dot"></span>
                     <span>مباشر</span>
@@ -719,7 +657,7 @@ export default function LiveStatsPage() {
               </div>
 
               {/* Gender Filter */}
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '13px' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(6px, 0.7vw, 13px)' }}>
                 <button
                   className={`filter-button ${genderFilter === 'all' ? 'active' : ''}`}
                   onClick={() => setGenderFilter('all')}
@@ -742,18 +680,30 @@ export default function LiveStatsPage() {
             </div>
 
             {loading && (
-              <div style={{ textAlign: 'center', padding: '60px', color: '#666', fontSize: '22px', flex: 1 }}>
+              <div style={{ 
+                textAlign: 'center', 
+                padding: 'clamp(30px, 3vh, 60px)', 
+                color: '#666', 
+                fontSize: 'clamp(14px, 1.1vw, 22px)', 
+                flex: 1 
+              }}>
                 جاري التحميل...
               </div>
             )}
 
             {!loading && (
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '18px', minHeight: 0 }}>
+              <div style={{ 
+                flex: 1, 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: 'clamp(8px, 0.9vh, 18px)', 
+                minHeight: 0 
+              }}>
                 {/* Main Stats Cards */}
-                <div style={{
+                <div className="stats-grid" style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(4, 1fr)',
-                  gap: '13px',
+                  gap: 'clamp(6px, 0.7vw, 13px)',
                   flexShrink: 0
                 }}>
                   <div className="stat-card">
@@ -799,44 +749,52 @@ export default function LiveStatsPage() {
                 </div>
 
                 {/* Main Content Row */}
-                <div style={{
+                <div className="main-grid" style={{
                   display: 'grid',
                   gridTemplateColumns: '2fr 3fr',
-                  gap: '18px',
+                  gap: 'clamp(8px, 0.9vw, 18px)',
                   flex: 1,
                   minHeight: 0
                 }}>
 
                   {/* Left Column */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(8px, 0.9vh, 18px)' }}>
                     {/* Progress Circle */}
                     <div className="section-box" style={{
                       background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
-                      borderRadius: '15px',
-                      padding: '18px',
+                      borderRadius: 'clamp(8px, 0.8vh, 15px)',
+                      padding: 'clamp(9px, 0.9vh, 18px)',
                       textAlign: 'center',
-                      boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
+                      boxShadow: '0 0.4vh 1vh rgba(0,0,0,0.08)',
                       flex: 1,
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'center'
                     }}>
                       <h2 style={{
-                        fontSize: '18px',
+                        fontSize: 'clamp(12px, 0.9vw, 18px)',
                         fontWeight: '700',
                         color: '#1a3a3a',
-                        marginBottom: '15px'
+                        marginBottom: 'clamp(8px, 0.8vh, 15px)'
                       }}>
                         ⚡ نسبة الإنجاز
                       </h2>
-                      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: milestoneMsg ? '15px' : '0' }}>
+                      <div style={{ 
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        marginBottom: milestoneMsg ? 'clamp(8px, 0.8vh, 15px)' : '0' 
+                      }}>
                         <div
                           className="progress-circle"
                           style={{ '--progress': getProgressPercentage() } as React.CSSProperties}
                         >
                           <div className="progress-inner">
                             <div className="progress-percentage">{getProgressPercentage()}%</div>
-                            <div style={{ fontSize: '14px', color: '#666', fontWeight: '600' }}>مكتمل</div>
+                            <div style={{ 
+                              fontSize: 'clamp(9px, 0.7vw, 14px)', 
+                              color: '#666', 
+                              fontWeight: '600' 
+                            }}>مكتمل</div>
                           </div>
                         </div>
                       </div>
@@ -850,23 +808,29 @@ export default function LiveStatsPage() {
                     {/* Currently Being Evaluated */}
                     <div className="section-box" style={{
                       background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
-                      borderRadius: '15px',
-                      padding: '15px',
-                      boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
+                      borderRadius: 'clamp(8px, 0.8vh, 15px)',
+                      padding: 'clamp(8px, 0.8vh, 15px)',
+                      boxShadow: '0 0.4vh 1vh rgba(0,0,0,0.08)',
                       flex: 1,
                       display: 'flex',
                       flexDirection: 'column'
                     }}>
                       <h3 style={{
-                        fontSize: '16px',
+                        fontSize: 'clamp(11px, 0.8vw, 16px)',
                         fontWeight: '700',
                         color: '#1a3a3a',
-                        marginBottom: '12px',
+                        marginBottom: 'clamp(6px, 0.6vh, 12px)',
                         textAlign: 'center'
                       }}>
                         🎯 جاري التقييم الآن
                       </h3>
-                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '7px' }}>
+                      <div style={{ 
+                        flex: 1, 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        justifyContent: 'center', 
+                        gap: 'clamp(3px, 0.4vh, 7px)' 
+                      }}>
                         {levels.map((level, index) => {
                           const activeEval = activeEvaluations[level]
                           const isActive = activeEval && activeEval.competitor_name
@@ -877,26 +841,26 @@ export default function LiveStatsPage() {
                               style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                padding: '7px 10px',
+                                padding: 'clamp(4px, 0.4vh, 7px) clamp(5px, 0.5vw, 10px)',
                                 background: isActive
                                   ? 'linear-gradient(135deg, #e8f5f5 0%, #f0f8f8 100%)'
                                   : 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
-                                borderRadius: '8px',
+                                borderRadius: 'clamp(4px, 0.4vh, 8px)',
                                 borderRight: isActive ? '3px solid #27ae60' : '3px solid #5fb3b3',
-                                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                                boxShadow: '0 0.1vh 0.4vh rgba(0,0,0,0.04)',
                                 transition: 'all 0.3s',
-                                gap: '10px',
-                                minHeight: '38px'
+                                gap: 'clamp(5px, 0.5vw, 10px)',
+                                minHeight: 'clamp(20px, 2vh, 38px)'
                               }}
                             >
-                              <div style={{
-                                minWidth: '115px',
-                                maxWidth: '115px',
-                                padding: '5px 8px',
+                              <div className="level-badge-text" style={{
+                                minWidth: 'clamp(60px, 6vw, 115px)',
+                                maxWidth: 'clamp(60px, 6vw, 115px)',
+                                padding: 'clamp(3px, 0.3vh, 5px) clamp(4px, 0.4vw, 8px)',
                                 background: 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)',
                                 color: 'white',
-                                borderRadius: '6px',
-                                fontSize: '11px',
+                                borderRadius: 'clamp(3px, 0.3vh, 6px)',
+                                fontSize: 'clamp(8px, 0.6vw, 11px)',
                                 fontWeight: '700',
                                 textAlign: 'center',
                                 flexShrink: 0,
@@ -906,7 +870,7 @@ export default function LiveStatsPage() {
                               </div>
                               <div style={{
                                 flex: 1,
-                                fontSize: '14px',
+                                fontSize: 'clamp(9px, 0.7vw, 14px)',
                                 fontWeight: '600',
                                 color: isActive ? '#1a3a3a' : '#999',
                                 fontStyle: isActive ? 'normal' : 'italic',
@@ -922,15 +886,15 @@ export default function LiveStatsPage() {
                                 <div style={{
                                   display: 'flex',
                                   alignItems: 'center',
-                                  gap: '4px',
-                                  fontSize: '10px',
+                                  gap: 'clamp(2px, 0.2vw, 4px)',
+                                  fontSize: 'clamp(7px, 0.5vw, 10px)',
                                   fontWeight: '600',
                                   color: '#27ae60',
                                   flexShrink: 0
                                 }}>
                                   <span style={{
-                                    width: '8px',
-                                    height: '8px',
+                                    width: 'clamp(4px, 0.4vw, 8px)',
+                                    height: 'clamp(4px, 0.4vw, 8px)',
                                     background: '#27ae60',
                                     borderRadius: '50%',
                                     animation: 'blink 1.5s ease-in-out infinite'
@@ -946,20 +910,20 @@ export default function LiveStatsPage() {
                   </div>
 
                   {/* Right Column */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(8px, 0.9vh, 18px)' }}>
                     {/* Level Distribution */}
                     <div className="section-box" style={{
                       background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
-                      borderRadius: '15px',
-                      padding: '18px',
-                      boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
+                      borderRadius: 'clamp(8px, 0.8vh, 15px)',
+                      padding: 'clamp(9px, 0.9vh, 18px)',
+                      boxShadow: '0 0.4vh 1vh rgba(0,0,0,0.08)',
                       flex: 1
                     }}>
                       <h3 style={{
-                        fontSize: '18px',
+                        fontSize: 'clamp(12px, 0.9vw, 18px)',
                         fontWeight: '700',
                         color: '#1a3a3a',
-                        marginBottom: '13px',
+                        marginBottom: 'clamp(7px, 0.7vh, 13px)',
                         textAlign: 'center'
                       }}>
                         📊 التوزيع حسب المستوى
@@ -979,9 +943,8 @@ export default function LiveStatsPage() {
                                 <div
                                   className="bar-fill"
                                   style={{
-                                    '--target-width': `${percentage}%`,
                                     width: `${percentage}%`
-                                  } as React.CSSProperties}
+                                  }}
                                 >
                                   {count}
                                 </div>
@@ -995,16 +958,16 @@ export default function LiveStatsPage() {
                     {/* Top Cities */}
                     <div className="section-box" style={{
                       background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
-                      borderRadius: '15px',
-                      padding: '18px',
-                      boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
+                      borderRadius: 'clamp(8px, 0.8vh, 15px)',
+                      padding: 'clamp(9px, 0.9vh, 18px)',
+                      boxShadow: '0 0.4vh 1vh rgba(0,0,0,0.08)',
                       flex: 1
                     }}>
                       <h3 style={{
-                        fontSize: '18px',
+                        fontSize: 'clamp(12px, 0.9vw, 18px)',
                         fontWeight: '700',
                         color: '#1a3a3a',
-                        marginBottom: '13px',
+                        marginBottom: 'clamp(7px, 0.7vh, 13px)',
                         textAlign: 'center'
                       }}>
                         🌍 الولايات الأكثر مشاركة
@@ -1016,17 +979,16 @@ export default function LiveStatsPage() {
 
                           return (
                             <div key={city} className="bar-item">
-                              <div className="bar-label" style={{ minWidth: '140px' }}>
+                              <div className="bar-label" style={{ minWidth: 'clamp(70px, 7.3vw, 140px)' }}>
                                 {city}
                               </div>
                               <div className="bar-wrapper">
                                 <div
                                   className="bar-fill"
                                   style={{
-                                    '--target-width': `${percentage}%`,
                                     width: `${percentage}%`,
                                     background: 'linear-gradient(90deg, #3498db 0%, #2980b9 100%)'
-                                  } as React.CSSProperties}
+                                  }}
                                 >
                                   {count}
                                 </div>
