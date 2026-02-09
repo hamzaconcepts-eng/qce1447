@@ -988,44 +988,6 @@ export default function EvaluatePage() {
         
         <div className="app-container">
           
-          {/* Header */}
-          <div style={{ marginBottom: '30px', textAlign: 'center' }}>
-            <div style={{
-              width: '60px',
-              height: '60px',
-              margin: '0 auto 15px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <Image
-                src="/images/logo.svg"
-                alt="شعار مركز رياض العلم"
-                width={60}
-                height={60}
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                priority
-              />
-            </div>
-
-            <h1 style={{
-              color: '#333333',
-              fontSize: '22px',
-              fontWeight: '700',
-              marginBottom: '5px'
-            }}>
-              تقييم المتسابقين
-            </h1>
-
-            {!selectedCompetitor && (
-              <p style={{
-                color: '#666666',
-                fontSize: '14px'
-              }}>
-                إجمالي: {filteredCompetitors.length} متسابق | الصفحة {currentPage} من {totalPages}
-              </p>
-            )}
-          </div>
 
           {!selectedCompetitor ? (
             <>
