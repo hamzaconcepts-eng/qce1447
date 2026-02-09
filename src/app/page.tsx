@@ -61,38 +61,56 @@ export default function LoginPage() {
   return (
     <>
       <style jsx global>{`
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        html, body {
+          height: 100vh;
+          width: 100vw;
+          overflow: hidden;
+          font-family: 'Cairo', sans-serif;
+        }
+
         body {
           background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
-          min-height: 100vh;
         }
       `}</style>
       
       <div style={{
-        minHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '20px',
+        padding: 'clamp(10px, 2vh, 20px)',
         background: 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)'
       }}>
         
         <div style={{
           background: '#ffffff',
-          padding: '40px',
-          borderRadius: '20px',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+          padding: 'clamp(20px, 4vh, 40px) clamp(20px, 3vw, 40px)',
+          borderRadius: 'clamp(10px, 1.5vh, 20px)',
+          boxShadow: '0 1vh 3vh rgba(0,0,0,0.3)',
           width: '100%',
-          maxWidth: '450px'
+          maxWidth: 'clamp(300px, 90vw, 450px)',
+          maxHeight: '95vh',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column'
         }}>
           
           {/* Logo */}
           <div style={{
-            width: '150px',
-            height: '150px',
-            margin: '0 auto 20px',
+            width: 'clamp(80px, 15vw, 150px)',
+            height: 'clamp(80px, 15vw, 150px)',
+            margin: '0 auto clamp(10px, 2vh, 20px)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            flexShrink: 0
           }}>
             <Image
               src="/images/logo.svg"
@@ -107,11 +125,12 @@ export default function LoginPage() {
           {/* Title */}
           <h1 style={{
             color: '#333333',
-            marginBottom: '10px',
-            fontSize: '28px',
+            marginBottom: 'clamp(5px, 1vh, 10px)',
+            fontSize: 'clamp(16px, 2.5vw, 28px)',
             fontWeight: '700',
             lineHeight: '1.3',
-            textAlign: 'center'
+            textAlign: 'center',
+            flexShrink: 0
           }}>
             مسابقة مركز رياض العلم لحفظ القرآن الكريم
           </h1>
@@ -119,9 +138,10 @@ export default function LoginPage() {
           {/* Subtitle */}
           <p style={{
             color: '#666666',
-            marginBottom: '30px',
-            fontSize: '16px',
-            textAlign: 'center'
+            marginBottom: 'clamp(15px, 3vh, 30px)',
+            fontSize: 'clamp(12px, 1.5vw, 16px)',
+            textAlign: 'center',
+            flexShrink: 0
           }}>
             نظام الإدارة والتقييم
           </p>
@@ -131,28 +151,29 @@ export default function LoginPage() {
             <div style={{
               color: '#e74c3c',
               background: '#ffebee',
-              padding: '12px',
-              borderRadius: '8px',
-              marginBottom: '20px',
-              fontSize: '14px',
-              textAlign: 'center'
+              padding: 'clamp(8px, 1.2vh, 12px)',
+              borderRadius: 'clamp(4px, 0.8vh, 8px)',
+              marginBottom: 'clamp(10px, 2vh, 20px)',
+              fontSize: 'clamp(11px, 1.2vw, 14px)',
+              textAlign: 'center',
+              flexShrink: 0
             }}>
               {error}
             </div>
           )}
 
           {/* Form */}
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             {/* Username Field */}
-            <div style={{ marginBottom: '20px', textAlign: 'right' }}>
+            <div style={{ marginBottom: 'clamp(10px, 2vh, 20px)', textAlign: 'right' }}>
               <label 
                 htmlFor="username"
                 style={{
                   display: 'block',
                   color: '#555555',
-                  marginBottom: '8px',
+                  marginBottom: 'clamp(4px, 0.8vh, 8px)',
                   fontWeight: '600',
-                  fontSize: '14px'
+                  fontSize: 'clamp(11px, 1.2vw, 14px)'
                 }}
               >
                 اسم المستخدم
@@ -167,10 +188,10 @@ export default function LoginPage() {
                 disabled={loading}
                 style={{
                   width: '100%',
-                  padding: '15px',
+                  padding: 'clamp(10px, 1.5vh, 15px)',
                   border: '2px solid #e0e0e0',
-                  borderRadius: '10px',
-                  fontSize: '16px',
+                  borderRadius: 'clamp(5px, 1vh, 10px)',
+                  fontSize: 'clamp(13px, 1.5vw, 16px)',
                   textAlign: 'right',
                   fontFamily: 'Cairo, sans-serif',
                   transition: 'border-color 0.3s'
@@ -181,15 +202,15 @@ export default function LoginPage() {
             </div>
 
             {/* Password Field */}
-            <div style={{ marginBottom: '20px', textAlign: 'right' }}>
+            <div style={{ marginBottom: 'clamp(10px, 2vh, 20px)', textAlign: 'right' }}>
               <label 
                 htmlFor="password"
                 style={{
                   display: 'block',
                   color: '#555555',
-                  marginBottom: '8px',
+                  marginBottom: 'clamp(4px, 0.8vh, 8px)',
                   fontWeight: '600',
-                  fontSize: '14px'
+                  fontSize: 'clamp(11px, 1.2vw, 14px)'
                 }}
               >
                 كلمة المرور
@@ -204,10 +225,10 @@ export default function LoginPage() {
                 disabled={loading}
                 style={{
                   width: '100%',
-                  padding: '15px',
+                  padding: 'clamp(10px, 1.5vh, 15px)',
                   border: '2px solid #e0e0e0',
-                  borderRadius: '10px',
-                  fontSize: '16px',
+                  borderRadius: 'clamp(5px, 1vh, 10px)',
+                  fontSize: 'clamp(13px, 1.5vw, 16px)',
                   textAlign: 'right',
                   fontFamily: 'Cairo, sans-serif',
                   transition: 'border-color 0.3s'
@@ -223,16 +244,16 @@ export default function LoginPage() {
               disabled={loading}
               style={{
                 width: '100%',
-                padding: '15px',
+                padding: 'clamp(12px, 1.5vh, 15px)',
                 background: 'linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%)',
                 color: 'white',
                 border: 'none',
-                borderRadius: '10px',
-                fontSize: '18px',
+                borderRadius: 'clamp(5px, 1vh, 10px)',
+                fontSize: 'clamp(14px, 1.6vw, 18px)',
                 fontWeight: '700',
                 fontFamily: 'Cairo, sans-serif',
                 cursor: loading ? 'not-allowed' : 'pointer',
-                marginTop: '10px',
+                marginTop: 'clamp(5px, 1vh, 10px)',
                 opacity: loading ? 0.5 : 1,
                 transition: 'all 0.2s'
               }}
