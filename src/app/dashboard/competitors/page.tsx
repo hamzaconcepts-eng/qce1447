@@ -135,7 +135,8 @@ export default function CompetitorsPage() {
 
     if (searchTerm) {
       filtered = filtered.filter(c => 
-        c.full_name.toLowerCase().includes(searchTerm.toLowerCase())
+        c.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        c.mobile.includes(searchTerm)
       )
     }
 
@@ -577,7 +578,7 @@ export default function CompetitorsPage() {
           <div style={{ marginBottom: '20px' }}>
             <input
               type="text"
-              placeholder="بحث بالاسم..."
+              placeholder="بحث بالاسم أو رقم الهاتف..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{
