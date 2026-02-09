@@ -409,7 +409,7 @@ export default function EvaluatePage() {
           * { margin: 0; padding: 0; box-sizing: border-box; }
           @page { 
             size: letter;
-            margin: 12mm;
+            margin: 15mm;
           }
           body { 
             font-family: 'Cairo', sans-serif; 
@@ -419,14 +419,15 @@ export default function EvaluatePage() {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px;
+            padding: 10px;
           }
           .certificate {
             background: white;
             width: 8.5in;
-            height: 11in;
+            max-height: 11in;
             position: relative;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            page-break-inside: avoid;
           }
           
           /* Minimal corner decorations */
@@ -434,40 +435,43 @@ export default function EvaluatePage() {
           .certificate::after {
             content: '';
             position: absolute;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             border: 1.5px solid #5fb3b3;
             opacity: 0.25;
           }
           
           .certificate::before {
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             border-bottom: none;
             border-left: none;
           }
           
           .certificate::after {
-            bottom: 20px;
-            left: 20px;
+            bottom: 15px;
+            left: 15px;
             border-top: none;
             border-right: none;
           }
           
           .header {
             background: linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%);
-            padding: 35px 30px;
+            padding: 20px 25px;
             text-align: center;
           }
           
-          .logo-container {
-            width: 65px;
-            height: 65px;
-            margin: 0 auto 15px;
-            filter: brightness(0) invert(1);
+          .logo-circle {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 10px;
+            background: white;
+            border-radius: 50%;
+            padding: 6px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
           }
           
-          .logo-container img {
+          .logo-circle img {
             width: 100%;
             height: 100%;
             object-fit: contain;
@@ -475,87 +479,86 @@ export default function EvaluatePage() {
           
           .header h1 {
             color: white;
-            font-size: 19px;
+            font-size: 17px;
             font-weight: 700;
-            margin-bottom: 6px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 4px;
           }
           
           .header .subtitle {
             color: rgba(255,255,255,0.95);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
           }
           
           .content {
-            padding: 35px 45px 25px;
+            padding: 20px 35px 15px;
           }
           
           /* Certificate Title */
           .cert-title {
             text-align: center;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 700;
             color: #5fb3b3;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             letter-spacing: 1.5px;
           }
           
           .edition {
             text-align: center;
             color: #6c757d;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
-            margin-bottom: 30px;
+            margin-bottom: 18px;
           }
           
           .participant-name {
-            font-size: 23px;
+            font-size: 20px;
             font-weight: 800;
             color: #1a3a3a;
             text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
             border-bottom: 2px solid #5fb3b3;
           }
           
           .details-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
-            max-width: 400px;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+            max-width: 500px;
             margin-left: auto;
             margin-right: auto;
           }
           
           .detail-card {
             background: #f8f9fa;
-            padding: 10px 16px;
+            padding: 8px 12px;
             border-radius: 6px;
             border-right: 3px solid #5fb3b3;
             text-align: right;
           }
           
           .detail-label {
-            font-size: 11px;
+            font-size: 10px;
             color: #6c757d;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             font-weight: 600;
           }
           
           .detail-value {
-            font-size: 14px;
+            font-size: 13px;
             color: #1a3a3a;
             font-weight: 700;
           }
           
           .score-breakdown-container {
-            margin: 30px 0 25px;
+            margin: 20px 0 15px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            align-items: center;
+            gap: 20px;
+            align-items: start;
           }
           
           .score-section {
@@ -563,18 +566,19 @@ export default function EvaluatePage() {
           }
           
           .score-label {
-            font-size: 13px;
+            font-size: 12px;
             color: #495057;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-weight: 700;
           }
           
           .final-score {
-            font-size: 68px;
+            font-size: 60px;
             font-weight: 900;
-            padding: 25px;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
           }
           
           .score-green { 
@@ -593,33 +597,54 @@ export default function EvaluatePage() {
             border: 2px solid #dc3545;
           }
           
+          /* Signature Section */
+          .signature-section {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #dee2e6;
+            text-align: center;
+          }
+          
+          .signature-label {
+            font-size: 10px;
+            color: #6c757d;
+            margin-bottom: 8px;
+            font-weight: 600;
+          }
+          
+          .signature-line {
+            border-top: 1.5px solid #1a3a3a;
+            width: 150px;
+            margin: 0 auto;
+          }
+          
           .breakdown-side {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
           }
           
           .breakdown-title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             color: #495057;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             text-align: right;
           }
           
           .breakdown-item {
             background: white;
-            padding: 10px 14px;
+            padding: 8px 12px;
             border-radius: 6px;
             border: 1.5px solid #e9ecef;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
           }
           
           .breakdown-label {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             color: #495057;
           }
@@ -629,49 +654,20 @@ export default function EvaluatePage() {
           }
           
           .breakdown-count {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 800;
             color: #1a3a3a;
           }
           
           .breakdown-deduction {
-            font-size: 10px;
+            font-size: 9px;
             color: #6c757d;
             font-weight: 600;
           }
           
-          .signature-section {
-            margin-top: 35px;
-            padding-top: 20px;
-            border-top: 1px solid #e9ecef;
-            display: flex;
-            justify-content: center;
-          }
-          
-          .signature-box {
-            text-align: center;
-            min-width: 200px;
-          }
-          
-          .signature-line {
-            border-bottom: 2px solid #1a3a3a;
-            height: 50px;
-            margin-bottom: 8px;
-          }
-          
-          .signature-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: #495057;
-          }
-          
           .footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
             background: #f8f9fa;
-            padding: 18px 45px;
+            padding: 12px 35px;
             text-align: center;
             border-top: 1px solid #dee2e6;
           }
@@ -679,13 +675,13 @@ export default function EvaluatePage() {
           .footer-dates {
             display: flex;
             justify-content: center;
-            gap: 35px;
+            gap: 25px;
             flex-wrap: wrap;
           }
           
           .footer-date {
             color: #6c757d;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
           }
           
@@ -696,6 +692,10 @@ export default function EvaluatePage() {
             }
             .certificate {
               box-shadow: none;
+              page-break-inside: avoid;
+            }
+            @page {
+              margin: 15mm;
             }
           }
         </style>
@@ -703,7 +703,7 @@ export default function EvaluatePage() {
       <body>
         <div class="certificate">
           <div class="header">
-            <div class="logo-container">
+            <div class="logo-circle">
               <img src="/images/logo.svg" alt="شعار مركز رياض العلم">
             </div>
             <h1>مسابقة مركز رياض العلم</h1>
@@ -736,6 +736,11 @@ export default function EvaluatePage() {
                   'score-red'
                 }">
                   ${finalScore}
+                </div>
+                
+                <div class="signature-section">
+                  <div class="signature-label">توقيع لجنة التحكيم</div>
+                  <div class="signature-line"></div>
                 </div>
               </div>
               
@@ -773,13 +778,6 @@ export default function EvaluatePage() {
                     <div class="breakdown-deduction">-${tajweedCount * 0.5} درجة</div>
                   </div>
                 </div>
-              </div>
-            </div>
-            
-            <div class="signature-section">
-              <div class="signature-box">
-                <div class="signature-line"></div>
-                <div class="signature-label">مركز رياض العلم</div>
               </div>
             </div>
           </div>
