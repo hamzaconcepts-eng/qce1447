@@ -383,12 +383,27 @@ export default function EvaluatePage() {
     const printWindow = window.open('', '_blank')
     if (!printWindow) return
 
+    // Get current dates
+    const now = new Date()
+    const gregorianDate = now.toLocaleDateString('ar-SA', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+    
+    // Hijri date using Islamic calendar
+    const hijriDate = now.toLocaleDateString('ar-SA-u-ca-islamic', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
+
     const scoreHTML = `
       <!DOCTYPE html>
       <html dir="rtl" lang="ar">
       <head>
         <meta charset="UTF-8">
-        <title>بطاقة التقييم - ${selectedCompetitor.full_name}</title>
+        <title>شهادة تقييم - ${selectedCompetitor.full_name}</title>
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -399,61 +414,60 @@ export default function EvaluatePage() {
           body { 
             font-family: 'Cairo', sans-serif; 
             direction: rtl;
-            background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
-            min-height: calc(var(--vh, 1vh) * 100);
+            background: #f5f5f5;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 8mm;
+            padding: 15px;
           }
           .certificate {
             background: white;
             width: 8.5in;
             height: 11in;
-            padding: 0;
             position: relative;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
           }
           
+          /* Minimal corner decorations */
           .certificate::before,
           .certificate::after {
             content: '';
             position: absolute;
-            width: 60px;
-            height: 60px;
-            border: 2px solid #5fb3b3;
-            opacity: 0.4;
+            width: 35px;
+            height: 35px;
+            border: 1.5px solid #5fb3b3;
+            opacity: 0.25;
           }
           
           .certificate::before {
-            top: 12px;
-            right: 12px;
+            top: 20px;
+            right: 20px;
             border-bottom: none;
             border-left: none;
           }
           
           .certificate::after {
-            bottom: 12px;
-            left: 12px;
+            bottom: 20px;
+            left: 20px;
             border-top: none;
             border-right: none;
           }
           
           .header {
             background: linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%);
-            padding: 25px 30px;
+            padding: 35px 30px;
             text-align: center;
           }
           
           .logo-circle {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 12px;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
             background: white;
             border-radius: 50%;
-            padding: 8px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            padding: 7px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
           }
           
           .logo-circle img {
@@ -464,84 +478,86 @@ export default function EvaluatePage() {
           
           .header h1 {
             color: white;
-            font-size: 22px;
-            font-weight: 800;
-            margin-bottom: 5px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
           }
           
           .header .subtitle {
             color: rgba(255,255,255,0.95);
-            font-size: 15px;
-            font-weight: 600;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            font-size: 14px;
+            font-weight: 500;
           }
           
           .content {
-            padding: 25px 35px 20px;
+            padding: 35px 45px;
+          }
+          
+          /* Certificate Title */
+          .cert-title {
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            color: #5fb3b3;
+            margin-bottom: 25px;
+            letter-spacing: 1.5px;
           }
           
           .edition {
             text-align: center;
-            color: #5fb3b3;
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: 0.5px;
+            color: #6c757d;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 30px;
           }
           
           .participant-name {
-            font-size: 26px;
+            font-size: 23px;
             font-weight: 800;
             color: #1a3a3a;
             text-align: center;
-            margin-bottom: 18px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #5fb3b3;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #5fb3b3;
           }
           
           .details-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
           }
           
           .detail-card {
             background: #f8f9fa;
-            padding: 8px 12px;
-            border-radius: 8px;
+            padding: 10px 16px;
+            border-radius: 6px;
             border-right: 3px solid #5fb3b3;
             text-align: right;
           }
           
           .detail-label {
-            font-size: 10px;
+            font-size: 11px;
             color: #6c757d;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             font-weight: 600;
           }
           
           .detail-value {
-            font-size: 13px;
+            font-size: 14px;
             color: #1a3a3a;
             font-weight: 700;
           }
           
-          .level-card {
-            grid-column: span 2;
-            background: #f0f9f9;
-            padding: 10px 12px;
-            border-radius: 8px;
-            border-right: 3px solid #1a3a3a;
-            text-align: right;
-          }
-          
           .score-breakdown-container {
-            margin: 20px 0 25px;
+            margin: 35px 0;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 18px;
+            gap: 30px;
             align-items: center;
           }
           
@@ -550,65 +566,63 @@ export default function EvaluatePage() {
           }
           
           .score-label {
-            font-size: 12px;
+            font-size: 13px;
             color: #495057;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             font-weight: 700;
-            letter-spacing: 1px;
           }
           
           .final-score {
-            font-size: 65px;
-            font-weight: 800;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            font-size: 68px;
+            font-weight: 900;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
           }
           
           .score-green { 
             background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); 
             color: #155724;
-            border: 3px solid #28a745;
+            border: 2px solid #28a745;
           }
           .score-yellow { 
             background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%); 
             color: #856404;
-            border: 3px solid #ffc107;
+            border: 2px solid #ffc107;
           }
           .score-red { 
             background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); 
             color: #721c24;
-            border: 3px solid #dc3545;
+            border: 2px solid #dc3545;
           }
           
           .breakdown-side {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
           }
           
           .breakdown-title {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
             color: #495057;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             text-align: right;
-            letter-spacing: 0.5px;
           }
           
           .breakdown-item {
             background: white;
-            padding: 8px 10px;
-            border-radius: 8px;
-            border: 2px solid #e9ecef;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1.5px solid #e9ecef;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
           }
           
           .breakdown-label {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
             color: #495057;
           }
@@ -624,7 +638,7 @@ export default function EvaluatePage() {
           }
           
           .breakdown-deduction {
-            font-size: 9px;
+            font-size: 10px;
             color: #6c757d;
             font-weight: 600;
           }
@@ -635,9 +649,16 @@ export default function EvaluatePage() {
             left: 0;
             right: 0;
             background: #f8f9fa;
-            padding: 12px 35px;
+            padding: 18px 45px;
             text-align: center;
-            border-top: 2px solid #e9ecef;
+            border-top: 1px solid #dee2e6;
+          }
+          
+          .footer-dates {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            flex-wrap: wrap;
           }
           
           .footer-date {
@@ -653,8 +674,6 @@ export default function EvaluatePage() {
             }
             .certificate {
               box-shadow: none;
-              width: 8.5in;
-              height: 11in;
             }
           }
         </style>
@@ -670,21 +689,17 @@ export default function EvaluatePage() {
           </div>
           
           <div class="content">
+            <div class="cert-title">شهادة تقييم</div>
             <div class="edition">• الدورة الخامسة - رمضان 1447هـ •</div>
             <div class="participant-name">${selectedCompetitor.full_name}</div>
             
             <div class="details-grid">
               <div class="detail-card">
-                <div class="detail-label">الجنس</div>
-                <div class="detail-value">${selectedCompetitor.gender === 'male' ? 'ذكر' : 'أنثى'}</div>
-              </div>
-              
-              <div class="detail-card">
-                <div class="detail-label">المدينة</div>
+                <div class="detail-label">الولاية</div>
                 <div class="detail-value">${selectedCompetitor.city}</div>
               </div>
               
-              <div class="level-card">
+              <div class="detail-card">
                 <div class="detail-label">المستوى</div>
                 <div class="detail-value">${selectedCompetitor.level}</div>
               </div>
@@ -741,7 +756,10 @@ export default function EvaluatePage() {
           </div>
           
           <div class="footer">
-            <div class="footer-date">تاريخ التقييم: ${new Date().toLocaleDateString('ar-SA')}</div>
+            <div class="footer-dates">
+              <div class="footer-date">التاريخ الهجري: ${hijriDate}</div>
+              <div class="footer-date">التاريخ الميلادي: ${gregorianDate}</div>
+            </div>
           </div>
         </div>
       </body>
@@ -750,10 +768,10 @@ export default function EvaluatePage() {
 
     printWindow.document.write(scoreHTML)
     printWindow.document.close()
-    printWindow.focus()
+    
     setTimeout(() => {
       printWindow.print()
-    }, 500)
+    }, 250)
   }
 
   const resetFilters = () => {
