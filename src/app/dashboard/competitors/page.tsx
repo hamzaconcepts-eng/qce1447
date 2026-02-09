@@ -134,10 +134,27 @@ export default function CompetitorsPage() {
     let filtered = [...competitors]
 
     if (searchTerm) {
-      filtered = filtered.filter(c => 
-        c.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        c.mobile.includes(searchTerm)
-      )
+      filtered = filtered.filter(c => {
+        const searchLower = searchTerm.toLowerCase().trim()
+        const nameLower = c.full_name.toLowerCase()
+        
+        // Direct match (includes)
+        if (nameLower.includes(searchLower)) return true
+        
+        // Phone match
+        if (c.mobile.includes(searchTerm)) return true
+        
+        // Smart name matching - split search terms and check all words
+        const searchWords = searchLower.split(/\s+/)
+        const nameWords = nameLower.split(/\s+/)
+        
+        // Check if all search words exist in name (any order)
+        const allWordsMatch = searchWords.every(searchWord =>
+          nameWords.some(nameWord => nameWord.includes(searchWord))
+        )
+        
+        return allWordsMatch
+      })
     }
 
     if (filterGender) {

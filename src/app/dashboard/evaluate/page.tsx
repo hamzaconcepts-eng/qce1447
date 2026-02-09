@@ -1248,7 +1248,7 @@ export default function EvaluatePage() {
             </>
           ) : (
             <>
-              {/* Evaluation Screen - LANDSCAPE OPTIMIZED - ORIGINAL STYLING */}
+              {/* Evaluation Screen - LANDSCAPE OPTIMIZED - ORIGINAL STYLING V2 */}
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'clamp(280px, 28vw, 380px) 1fr',
@@ -1298,41 +1298,16 @@ export default function EvaluatePage() {
                     </div>
                   )}
 
-                  {/* Competitor Name & Details */}
+                  {/* Competitor Name & Details - ONE LINE */}
                   <div style={{ textAlign: 'center' }}>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 'clamp(8px, 1vw, 12px)',
-                      marginBottom: 'clamp(6px, 0.8vh, 10px)'
+                    <h2 style={{
+                      fontSize: 'clamp(18px, 2.2vw, 26px)',
+                      fontWeight: '700',
+                      color: '#333333',
+                      margin: '0 0 clamp(6px, 0.8vh, 10px) 0'
                     }}>
-                      <h2 style={{
-                        fontSize: 'clamp(18px, 2.2vw, 26px)',
-                        fontWeight: '700',
-                        color: '#333333',
-                        margin: 0
-                      }}>
-                        {selectedCompetitor.full_name}
-                      </h2>
-                      <button
-                        onClick={handlePrintScoreCard}
-                        className="print-button-compact"
-                        style={{
-                          padding: 'clamp(4px, 0.6vh, 6px) clamp(8px, 1vw, 12px)',
-                          background: '#5fb3b3',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: 'clamp(4px, 0.6vh, 6px)',
-                          fontSize: 'clamp(10px, 1.1vw, 12px)',
-                          fontWeight: '600',
-                          cursor: 'pointer',
-                          fontFamily: 'Cairo, sans-serif'
-                        }}
-                      >
-                        📄 طباعة PDF
-                      </button>
-                    </div>
+                      {selectedCompetitor.full_name}
+                    </h2>
                     <p style={{
                       fontSize: 'clamp(11px, 1.3vw, 14px)',
                       color: '#666666',
@@ -1359,6 +1334,59 @@ export default function EvaluatePage() {
                       {finalScore}
                     </div>
                   </div>
+
+                  {/* Save Button - Below Score */}
+                  <button
+                    onClick={handleSave}
+                    disabled={saving}
+                    style={{
+                      padding: 'clamp(14px, 2vh, 20px)',
+                      background: saving ? '#95a5a6' : '#5fb3b3',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: 'clamp(8px, 1vh, 12px)',
+                      fontSize: 'clamp(15px, 1.8vw, 20px)',
+                      fontWeight: '700',
+                      fontFamily: 'Cairo, sans-serif',
+                      cursor: saving ? 'not-allowed' : 'pointer',
+                      transition: 'all 0.2s',
+                      boxShadow: '0 4px 12px rgba(95, 179, 179, 0.3)'
+                    }}
+                  >
+                    {saving ? 'جاري الحفظ...' : 'حفظ التقييم'}
+                  </button>
+
+                  {/* Print Button - Below Save (Smaller) */}
+                  <button
+                    onClick={handlePrintScoreCard}
+                    style={{
+                      padding: 'clamp(8px, 1.2vh, 12px)',
+                      background: '#ffffff',
+                      color: '#5fb3b3',
+                      border: '2px solid #5fb3b3',
+                      borderRadius: 'clamp(6px, 0.8vh, 10px)',
+                      fontSize: 'clamp(12px, 1.4vw, 15px)',
+                      fontWeight: '600',
+                      fontFamily: 'Cairo, sans-serif',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: 'clamp(5px, 0.7vw, 8px)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = '#5fb3b3'
+                      e.currentTarget.style.color = 'white'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = '#ffffff'
+                      e.currentTarget.style.color = '#5fb3b3'
+                    }}
+                  >
+                    <span>📄</span>
+                    <span>طباعة PDF</span>
+                  </button>
                 </div>
 
                 {/* RIGHT AREA - Error Buttons 2x2 Grid */}
@@ -1371,7 +1399,7 @@ export default function EvaluatePage() {
                   overflow: 'hidden'
                 }}>
                   
-                  {/* تنبيه Button - ORIGINAL STYLE */}
+                  {/* تنبيه Button - FIXED: -1 not -5 */}
                   <div style={{
                     background: '#ffffff',
                     padding: 'clamp(15px, 2vh, 20px)',
@@ -1379,19 +1407,20 @@ export default function EvaluatePage() {
                     border: '2px solid #e0e0e0'
                   }}>
                     <div style={{
-                      fontSize: 'clamp(16px, 2vw, 20px)',
-                      fontWeight: '600',
+                      fontSize: 'clamp(20px, 2.5vw, 28px)',
+                      fontWeight: '800',
                       color: '#333333',
                       marginBottom: 'clamp(10px, 1.3vh, 15px)',
                       textAlign: 'center'
                     }}>
                       تنبيه
                       <div style={{ 
-                        fontSize: 'clamp(10px, 1.1vw, 12px)', 
+                        fontSize: 'clamp(11px, 1.2vw, 13px)', 
                         color: '#888', 
-                        marginTop: 'clamp(3px, 0.5vh, 5px)' 
+                        marginTop: 'clamp(3px, 0.5vh, 5px)',
+                        fontWeight: '400'
                       }}>
-                        ({tanbihCount} أخطاء = -{tanbihCount * 5} درجة)
+                        ({tanbihCount} أخطاء = -{tanbihCount * 1} درجة)
                       </div>
                     </div>
                     <div style={{
@@ -1404,12 +1433,12 @@ export default function EvaluatePage() {
                         onClick={() => incrementCount('tanbih')}
                         style={{
                           flex: 1,
-                          padding: 'clamp(12px, 1.5vh, 15px)',
+                          padding: 'clamp(18px, 2.5vh, 25px)',
                           background: '#5fb3b3',
                           color: 'white',
                           border: 'none',
-                          borderRadius: 'clamp(8px, 1vh, 10px)',
-                          fontSize: 'clamp(20px, 2.5vw, 28px)',
+                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
+                          fontSize: 'clamp(28px, 3.5vw, 40px)',
                           fontWeight: '700',
                           cursor: 'pointer'
                         }}
@@ -1417,10 +1446,10 @@ export default function EvaluatePage() {
                         +
                       </button>
                       <div style={{
-                        fontSize: 'clamp(28px, 3.5vw, 40px)',
+                        fontSize: 'clamp(32px, 4vw, 48px)',
                         fontWeight: '700',
                         color: '#666666',
-                        minWidth: 'clamp(40px, 5vw, 60px)',
+                        minWidth: 'clamp(45px, 5.5vw, 70px)',
                         textAlign: 'center'
                       }}>
                         {tanbihCount}
@@ -1429,12 +1458,12 @@ export default function EvaluatePage() {
                         onClick={() => decrementCount('tanbih')}
                         style={{
                           flex: 1,
-                          padding: 'clamp(12px, 1.5vh, 15px)',
+                          padding: 'clamp(18px, 2.5vh, 25px)',
                           background: '#95a5a6',
                           color: 'white',
                           border: 'none',
-                          borderRadius: 'clamp(8px, 1vh, 10px)',
-                          fontSize: 'clamp(20px, 2.5vw, 28px)',
+                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
+                          fontSize: 'clamp(28px, 3.5vw, 40px)',
                           fontWeight: '700',
                           cursor: 'pointer'
                         }}
@@ -1444,7 +1473,7 @@ export default function EvaluatePage() {
                     </div>
                   </div>
 
-                  {/* فتح Button - ORIGINAL STYLE */}
+                  {/* فتح Button */}
                   <div style={{
                     background: '#ffffff',
                     padding: 'clamp(15px, 2vh, 20px)',
@@ -1452,17 +1481,18 @@ export default function EvaluatePage() {
                     border: '2px solid #e0e0e0'
                   }}>
                     <div style={{
-                      fontSize: 'clamp(16px, 2vw, 20px)',
-                      fontWeight: '600',
+                      fontSize: 'clamp(20px, 2.5vw, 28px)',
+                      fontWeight: '800',
                       color: '#333333',
                       marginBottom: 'clamp(10px, 1.3vh, 15px)',
                       textAlign: 'center'
                     }}>
                       فتح
                       <div style={{ 
-                        fontSize: 'clamp(10px, 1.1vw, 12px)', 
+                        fontSize: 'clamp(11px, 1.2vw, 13px)', 
                         color: '#888', 
-                        marginTop: 'clamp(3px, 0.5vh, 5px)' 
+                        marginTop: 'clamp(3px, 0.5vh, 5px)',
+                        fontWeight: '400'
                       }}>
                         ({fatehCount} أخطاء = -{fatehCount * 2} درجة)
                       </div>
@@ -1477,12 +1507,12 @@ export default function EvaluatePage() {
                         onClick={() => incrementCount('fateh')}
                         style={{
                           flex: 1,
-                          padding: 'clamp(12px, 1.5vh, 15px)',
+                          padding: 'clamp(18px, 2.5vh, 25px)',
                           background: '#5fb3b3',
                           color: 'white',
                           border: 'none',
-                          borderRadius: 'clamp(8px, 1vh, 10px)',
-                          fontSize: 'clamp(20px, 2.5vw, 28px)',
+                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
+                          fontSize: 'clamp(28px, 3.5vw, 40px)',
                           fontWeight: '700',
                           cursor: 'pointer'
                         }}
@@ -1490,10 +1520,10 @@ export default function EvaluatePage() {
                         +
                       </button>
                       <div style={{
-                        fontSize: 'clamp(28px, 3.5vw, 40px)',
+                        fontSize: 'clamp(32px, 4vw, 48px)',
                         fontWeight: '700',
                         color: '#666666',
-                        minWidth: 'clamp(40px, 5vw, 60px)',
+                        minWidth: 'clamp(45px, 5.5vw, 70px)',
                         textAlign: 'center'
                       }}>
                         {fatehCount}
@@ -1502,12 +1532,12 @@ export default function EvaluatePage() {
                         onClick={() => decrementCount('fateh')}
                         style={{
                           flex: 1,
-                          padding: 'clamp(12px, 1.5vh, 15px)',
+                          padding: 'clamp(18px, 2.5vh, 25px)',
                           background: '#95a5a6',
                           color: 'white',
                           border: 'none',
-                          borderRadius: 'clamp(8px, 1vh, 10px)',
-                          fontSize: 'clamp(20px, 2.5vw, 28px)',
+                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
+                          fontSize: 'clamp(28px, 3.5vw, 40px)',
                           fontWeight: '700',
                           cursor: 'pointer'
                         }}
@@ -1517,7 +1547,7 @@ export default function EvaluatePage() {
                     </div>
                   </div>
 
-                  {/* تشكيل Button - ORIGINAL STYLE */}
+                  {/* تشكيل Button */}
                   <div style={{
                     background: '#ffffff',
                     padding: 'clamp(15px, 2vh, 20px)',
@@ -1525,17 +1555,18 @@ export default function EvaluatePage() {
                     border: '2px solid #e0e0e0'
                   }}>
                     <div style={{
-                      fontSize: 'clamp(16px, 2vw, 20px)',
-                      fontWeight: '600',
+                      fontSize: 'clamp(20px, 2.5vw, 28px)',
+                      fontWeight: '800',
                       color: '#333333',
                       marginBottom: 'clamp(10px, 1.3vh, 15px)',
                       textAlign: 'center'
                     }}>
                       تشكيل
                       <div style={{ 
-                        fontSize: 'clamp(10px, 1.1vw, 12px)', 
+                        fontSize: 'clamp(11px, 1.2vw, 13px)', 
                         color: '#888', 
-                        marginTop: 'clamp(3px, 0.5vh, 5px)' 
+                        marginTop: 'clamp(3px, 0.5vh, 5px)',
+                        fontWeight: '400'
                       }}>
                         ({tashkeelCount} أخطاء = -{tashkeelCount * 1} درجة)
                       </div>
@@ -1550,12 +1581,12 @@ export default function EvaluatePage() {
                         onClick={() => incrementCount('tashkeel')}
                         style={{
                           flex: 1,
-                          padding: 'clamp(12px, 1.5vh, 15px)',
+                          padding: 'clamp(18px, 2.5vh, 25px)',
                           background: '#5fb3b3',
                           color: 'white',
                           border: 'none',
-                          borderRadius: 'clamp(8px, 1vh, 10px)',
-                          fontSize: 'clamp(20px, 2.5vw, 28px)',
+                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
+                          fontSize: 'clamp(28px, 3.5vw, 40px)',
                           fontWeight: '700',
                           cursor: 'pointer'
                         }}
@@ -1563,10 +1594,10 @@ export default function EvaluatePage() {
                         +
                       </button>
                       <div style={{
-                        fontSize: 'clamp(28px, 3.5vw, 40px)',
+                        fontSize: 'clamp(32px, 4vw, 48px)',
                         fontWeight: '700',
                         color: '#666666',
-                        minWidth: 'clamp(40px, 5vw, 60px)',
+                        minWidth: 'clamp(45px, 5.5vw, 70px)',
                         textAlign: 'center'
                       }}>
                         {tashkeelCount}
@@ -1575,12 +1606,12 @@ export default function EvaluatePage() {
                         onClick={() => decrementCount('tashkeel')}
                         style={{
                           flex: 1,
-                          padding: 'clamp(12px, 1.5vh, 15px)',
+                          padding: 'clamp(18px, 2.5vh, 25px)',
                           background: '#95a5a6',
                           color: 'white',
                           border: 'none',
-                          borderRadius: 'clamp(8px, 1vh, 10px)',
-                          fontSize: 'clamp(20px, 2.5vw, 28px)',
+                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
+                          fontSize: 'clamp(28px, 3.5vw, 40px)',
                           fontWeight: '700',
                           cursor: 'pointer'
                         }}
@@ -1590,7 +1621,7 @@ export default function EvaluatePage() {
                     </div>
                   </div>
 
-                  {/* تجويد Button - ORIGINAL STYLE */}
+                  {/* تجويد Button */}
                   <div style={{
                     background: '#ffffff',
                     padding: 'clamp(15px, 2vh, 20px)',
@@ -1598,17 +1629,18 @@ export default function EvaluatePage() {
                     border: '2px solid #e0e0e0'
                   }}>
                     <div style={{
-                      fontSize: 'clamp(16px, 2vw, 20px)',
-                      fontWeight: '600',
+                      fontSize: 'clamp(20px, 2.5vw, 28px)',
+                      fontWeight: '800',
                       color: '#333333',
                       marginBottom: 'clamp(10px, 1.3vh, 15px)',
                       textAlign: 'center'
                     }}>
                       تجويد
                       <div style={{ 
-                        fontSize: 'clamp(10px, 1.1vw, 12px)', 
+                        fontSize: 'clamp(11px, 1.2vw, 13px)', 
                         color: '#888', 
-                        marginTop: 'clamp(3px, 0.5vh, 5px)' 
+                        marginTop: 'clamp(3px, 0.5vh, 5px)',
+                        fontWeight: '400'
                       }}>
                         ({tajweedCount} أخطاء = -{tajweedCount * 1} درجة)
                       </div>
@@ -1623,12 +1655,12 @@ export default function EvaluatePage() {
                         onClick={() => incrementCount('tajweed')}
                         style={{
                           flex: 1,
-                          padding: 'clamp(12px, 1.5vh, 15px)',
+                          padding: 'clamp(18px, 2.5vh, 25px)',
                           background: '#5fb3b3',
                           color: 'white',
                           border: 'none',
-                          borderRadius: 'clamp(8px, 1vh, 10px)',
-                          fontSize: 'clamp(20px, 2.5vw, 28px)',
+                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
+                          fontSize: 'clamp(28px, 3.5vw, 40px)',
                           fontWeight: '700',
                           cursor: 'pointer'
                         }}
@@ -1636,10 +1668,10 @@ export default function EvaluatePage() {
                         +
                       </button>
                       <div style={{
-                        fontSize: 'clamp(28px, 3.5vw, 40px)',
+                        fontSize: 'clamp(32px, 4vw, 48px)',
                         fontWeight: '700',
                         color: '#666666',
-                        minWidth: 'clamp(40px, 5vw, 60px)',
+                        minWidth: 'clamp(45px, 5.5vw, 70px)',
                         textAlign: 'center'
                       }}>
                         {tajweedCount}
@@ -1648,12 +1680,12 @@ export default function EvaluatePage() {
                         onClick={() => decrementCount('tajweed')}
                         style={{
                           flex: 1,
-                          padding: 'clamp(12px, 1.5vh, 15px)',
+                          padding: 'clamp(18px, 2.5vh, 25px)',
                           background: '#95a5a6',
                           color: 'white',
                           border: 'none',
-                          borderRadius: 'clamp(8px, 1vh, 10px)',
-                          fontSize: 'clamp(20px, 2.5vw, 28px)',
+                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
+                          fontSize: 'clamp(28px, 3.5vw, 40px)',
                           fontWeight: '700',
                           cursor: 'pointer'
                         }}
@@ -1664,34 +1696,14 @@ export default function EvaluatePage() {
                   </div>
                 </div>
 
-                {/* BOTTOM ACTION BAR */}
+                {/* BOTTOM ACTION BAR - 2 buttons only */}
                 <div style={{
                   gridColumn: '1 / -1',
                   gridRow: '2 / 3',
                   display: 'grid',
-                  gridTemplateColumns: '2fr 1fr 1fr',
-                  gap: 'clamp(8px, 1.2vw, 12px)'
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: 'clamp(10px, 1.5vw, 15px)'
                 }}>
-                  
-                  {/* Save Button */}
-                  <button
-                    onClick={handleSave}
-                    disabled={saving}
-                    style={{
-                      padding: 'clamp(12px, 1.8vh, 18px)',
-                      background: saving ? '#95a5a6' : '#5fb3b3',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: 'clamp(8px, 1vh, 12px)',
-                      fontSize: 'clamp(14px, 1.7vw, 18px)',
-                      fontWeight: '700',
-                      fontFamily: 'Cairo, sans-serif',
-                      cursor: saving ? 'not-allowed' : 'pointer',
-                      transition: 'all 0.2s'
-                    }}
-                  >
-                    {saving ? 'جاري الحفظ...' : 'حفظ التقييم'}
-                  </button>
 
                   {/* Back to List Button */}
                   <button
