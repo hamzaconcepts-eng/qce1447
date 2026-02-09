@@ -844,31 +844,6 @@ export default function ResultsPage() {
           margin: 0;
         }
 
-        .cert-print-button {
-          width: 100%;
-          margin-bottom: clamp(15px, 3vw, 20px);
-          padding: clamp(12px, 2.8vw, 16px);
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
-          color: white;
-          border: none;
-          border-radius: 8px;
-          font-size: clamp(14px, 3.2vw, 17px);
-          font-weight: 700;
-          font-family: 'Cairo', sans-serif;
-          cursor: pointer;
-          box-shadow: 0 4px 15px rgba(95,179,179,0.3);
-          transition: all 0.2s;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: clamp(6px, 1.5vw, 10px);
-        }
-
-        .cert-print-button:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(95,179,179,0.4);
-        }
-
       `}</style>
 
       <div style={{
@@ -1014,11 +989,40 @@ export default function ResultsPage() {
                   </div>
                 </div>
 
-                {/* Print Button */}
-                <div style={{ marginBottom: '15px' }}>
+                {/* Print Buttons */}
+                <div style={{ marginBottom: '15px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
                   <button onClick={handlePrintAllResults} style={{ padding: '8px 15px', background: '#3498db', color: 'white', border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: '600', fontFamily: 'Cairo, sans-serif', cursor: 'pointer' }}>
                     طباعة النتائج
                   </button>
+                  
+                  {selectedResults.length > 0 && (
+                    <button 
+                      onClick={handlePrintCertificates}
+                      style={{ 
+                        padding: '8px 15px', 
+                        background: 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)', 
+                        color: 'white', 
+                        border: 'none', 
+                        borderRadius: '6px', 
+                        fontSize: '13px', 
+                        fontWeight: '600', 
+                        fontFamily: 'Cairo, sans-serif', 
+                        cursor: 'pointer',
+                        boxShadow: '0 3px 10px rgba(95,179,179,0.3)',
+                        transition: 'all 0.2s'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)'
+                        e.currentTarget.style.boxShadow = '0 5px 15px rgba(95,179,179,0.4)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)'
+                        e.currentTarget.style.boxShadow = '0 3px 10px rgba(95,179,179,0.3)'
+                      }}
+                    >
+                      📄 طباعة الشهادات ({selectedResults.length})
+                    </button>
+                  )}
                 </div>
 
                 {/* Table */}
