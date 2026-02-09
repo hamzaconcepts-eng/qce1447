@@ -460,17 +460,14 @@ export default function EvaluatePage() {
             text-align: center;
           }
           
-          .logo-circle {
-            width: 60px;
-            height: 60px;
+          .logo-container {
+            width: 65px;
+            height: 65px;
             margin: 0 auto 15px;
-            background: white;
-            border-radius: 50%;
-            padding: 7px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            filter: brightness(0) invert(1);
           }
           
-          .logo-circle img {
+          .logo-container img {
             width: 100%;
             height: 100%;
             object-fit: contain;
@@ -491,7 +488,7 @@ export default function EvaluatePage() {
           }
           
           .content {
-            padding: 35px 45px;
+            padding: 35px 45px 25px;
           }
           
           /* Certificate Title */
@@ -554,7 +551,7 @@ export default function EvaluatePage() {
           }
           
           .score-breakdown-container {
-            margin: 35px 0;
+            margin: 30px 0 25px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
@@ -643,6 +640,31 @@ export default function EvaluatePage() {
             font-weight: 600;
           }
           
+          .signature-section {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            justify-content: center;
+          }
+          
+          .signature-box {
+            text-align: center;
+            min-width: 200px;
+          }
+          
+          .signature-line {
+            border-bottom: 2px solid #1a3a3a;
+            height: 50px;
+            margin-bottom: 8px;
+          }
+          
+          .signature-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #495057;
+          }
+          
           .footer {
             position: absolute;
             bottom: 0;
@@ -681,7 +703,7 @@ export default function EvaluatePage() {
       <body>
         <div class="certificate">
           <div class="header">
-            <div class="logo-circle">
+            <div class="logo-container">
               <img src="/images/logo.svg" alt="شعار مركز رياض العلم">
             </div>
             <h1>مسابقة مركز رياض العلم</h1>
@@ -751,6 +773,13 @@ export default function EvaluatePage() {
                     <div class="breakdown-deduction">-${tajweedCount * 0.5} درجة</div>
                   </div>
                 </div>
+              </div>
+            </div>
+            
+            <div class="signature-section">
+              <div class="signature-box">
+                <div class="signature-line"></div>
+                <div class="signature-label">مركز رياض العلم</div>
               </div>
             </div>
           </div>
