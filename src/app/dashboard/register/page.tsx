@@ -524,7 +524,7 @@ export default function RegisterPage() {
                     />
                   </div>
 
-                  <div style={{ marginBottom: 'clamp(12px, 1.8vh, 20px)' }}>
+                  <div style={{ marginBottom: 'clamp(12px, 1.8vh, 20px)', textAlign: 'right' }}>
                     <label style={{
                       display: 'block',
                       marginBottom: 'clamp(4px, 0.6vh, 8px)',
@@ -536,9 +536,8 @@ export default function RegisterPage() {
                       الجنس
                     </label>
                     <div style={{ 
-                      display: 'flex', 
+                      display: 'inline-flex', 
                       gap: 'clamp(15px, 2vw, 25px)',
-                      justifyContent: 'flex-end',
                       direction: 'rtl'
                     }}>
                       <label style={{
@@ -546,10 +545,8 @@ export default function RegisterPage() {
                         alignItems: 'center',
                         cursor: 'pointer',
                         fontSize: 'clamp(12px, 1.4vw, 14px)',
-                        flexDirection: 'row-reverse',
                         gap: 'clamp(6px, 0.8vw, 10px)'
                       }}>
-                        <span>ذكر</span>
                         <input
                           type="radio"
                           name="gender"
@@ -558,16 +555,15 @@ export default function RegisterPage() {
                           onChange={(e) => setGender(e.target.value)}
                           style={{ cursor: 'pointer' }}
                         />
+                        <span>ذكر</span>
                       </label>
                       <label style={{
                         display: 'flex',
                         alignItems: 'center',
                         cursor: 'pointer',
                         fontSize: 'clamp(12px, 1.4vw, 14px)',
-                        flexDirection: 'row-reverse',
                         gap: 'clamp(6px, 0.8vw, 10px)'
                       }}>
-                        <span>أنثى</span>
                         <input
                           type="radio"
                           name="gender"
@@ -576,6 +572,7 @@ export default function RegisterPage() {
                           onChange={(e) => setGender(e.target.value)}
                           style={{ cursor: 'pointer' }}
                         />
+                        <span>أنثى</span>
                       </label>
                     </div>
                   </div>
