@@ -557,11 +557,14 @@ export default function EvaluatePage() {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 25px;
-            align-items: start;
+            align-items: end;
           }
           
           .score-section {
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
           }
           
           .score-label {
@@ -577,7 +580,7 @@ export default function EvaluatePage() {
             padding: 25px;
             border-radius: 10px;
             box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-            margin-bottom: 20px;
+            margin-bottom: auto;
           }
           
           .score-green { 
@@ -596,23 +599,22 @@ export default function EvaluatePage() {
             border: 2px solid #dc3545;
           }
           
-          /* Signature Section */
+          /* Signature Section - Aligned to bottom */
           .signature-section {
-            margin-top: 18px;
-            padding-top: 18px;
-            border-top: 1px solid #dee2e6;
+            margin-top: auto;
+            padding-top: 15px;
             text-align: center;
           }
           
           .signature-space {
-            height: 45px;
-            margin-bottom: 8px;
+            height: 35px;
+            margin-bottom: 6px;
           }
           
           .signature-line {
             border-top: 1.5px solid #1a3a3a;
             width: 170px;
-            margin: 0 auto 8px;
+            margin: 0 auto 6px;
           }
           
           .signature-name {
@@ -625,6 +627,7 @@ export default function EvaluatePage() {
             display: flex;
             flex-direction: column;
             gap: 10px;
+            height: 100%;
           }
           
           .breakdown-title {
