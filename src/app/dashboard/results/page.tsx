@@ -998,27 +998,17 @@ export default function ResultsPage() {
                       onClick={handlePrintCertificates}
                       style={{ 
                         padding: '8px 15px', 
-                        background: 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)', 
+                        background: '#3498db', 
                         color: 'white', 
                         border: 'none', 
                         borderRadius: '6px', 
                         fontSize: '13px', 
                         fontWeight: '600', 
                         fontFamily: 'Cairo, sans-serif', 
-                        cursor: 'pointer',
-                        boxShadow: '0 3px 10px rgba(95,179,179,0.3)',
-                        transition: 'all 0.2s'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-2px)'
-                        e.currentTarget.style.boxShadow = '0 5px 15px rgba(95,179,179,0.4)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)'
-                        e.currentTarget.style.boxShadow = '0 3px 10px rgba(95,179,179,0.3)'
+                        cursor: 'pointer'
                       }}
                     >
-                      📄 طباعة الشهادات ({selectedResults.length})
+                      طباعة الشهادات ({selectedResults.length})
                     </button>
                   )}
                 </div>
