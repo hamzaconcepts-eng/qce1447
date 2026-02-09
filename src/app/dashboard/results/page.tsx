@@ -88,7 +88,6 @@ export default function ResultsPage() {
     setCurrentPage(1)
   }, [searchTerm, filterGender, filterLevel, filterScoreRange])
 
-
   // Viewport height fix for mobile
   useEffect(() => {
     const setVH = () => {
@@ -410,7 +409,7 @@ export default function ResultsPage() {
             color: white;
             padding: 8px 12px;
             border-radius: 8px;
-            font-size: 12px;
+            font-size: clamp(10px, 2vw, 12px);
             font-weight: 700;
             margin-bottom: 10px;
             text-align: center;
@@ -422,7 +421,7 @@ export default function ResultsPage() {
             background: #f5f5f5;
             padding: 6px 10px;
             border-radius: 6px;
-            font-size: 11px;
+            font-size: clamp(9px, 1.8vw, 11px);
             font-weight: 700;
             color: #333;
             margin-bottom: 8px;
@@ -463,7 +462,7 @@ export default function ResultsPage() {
             margin: 0 10px;
           }
           .winner-name {
-            font-size: 11px;
+            font-size: clamp(9px, 1.8vw, 11px);
             font-weight: 700;
             color: #1a3a3a;
             margin-bottom: 2px;
@@ -577,7 +576,7 @@ export default function ResultsPage() {
   }
 
 
-  // Certificate printing functions
+  // Certificate printing
   const handlePrintCertificates = () => {
     if (selectedResults.length === 0) {
       alert('الرجاء اختيار متسابق واحد على الأقل')
@@ -593,7 +592,7 @@ export default function ResultsPage() {
     })
   }
 
-  const printCertificate = (competitor: Result) => {
+  const printCertificate = (competitor: any) => {
     const printWindow = window.open('', '_blank')
     if (!printWindow) return
 
@@ -610,7 +609,13 @@ export default function ResultsPage() {
       day: 'numeric'
     })
 
-    const scoreHTML = `<!DOCTYPE html>
+    const tanbihCount = competitor.tanbih_count
+    const fatehCount = competitor.fateh_count
+    const tashkeelCount = competitor.tashkeel_count
+    const tajweedCount = competitor.tajweed_count
+    const finalScore = competitor.final_score
+
+    const scoreHTML = `      <!DOCTYPE html>
       <html dir="rtl" lang="ar">
       <head>
         <meta charset="UTF-8">
@@ -618,47 +623,308 @@ export default function ResultsPage() {
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
-          @page { size: A4; margin: 0; }
-          body { font-family: 'Cairo', sans-serif; direction: rtl; background: white; margin: 0; padding: 0; }
-          .certificate { background: white; width: 210mm; height: 297mm; position: relative; page-break-inside: avoid; margin: 0; padding: 0; }
-          .certificate::before, .certificate::after { content: ''; position: absolute; width: 30px; height: 30px; border: 1.5px solid #5fb3b3; opacity: 0.25; z-index: 10; }
-          .certificate::before { top: 15px; right: 15px; border-bottom: none; border-left: none; }
-          .certificate::after { bottom: 15px; left: 15px; border-top: none; border-right: none; }
-          .header { background: linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%); padding: 30px 30px 25px; text-align: center; }
-          .logo { width: 65px; height: 65px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; }
-          .logo img { width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1); }
-          .header h1 { color: white; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
-          .header .subtitle { color: rgba(255,255,255,0.95); font-size: 15px; font-weight: 500; margin-bottom: 8px; }
-          .header .edition { color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
-          .content { padding: 30px 40px 25px; }
-          .cert-title { text-align: center; font-size: 18px; font-weight: 700; color: #5fb3b3; margin-bottom: 20px; letter-spacing: 1.5px; }
-          .participant-name { font-size: 22px; font-weight: 800; color: #1a3a3a; text-align: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #5fb3b3; }
-          .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; max-width: 500px; margin-left: auto; margin-right: auto; }
-          .detail-card { background: #f8f9fa; padding: 10px 15px; border-radius: 6px; border-right: 3px solid #5fb3b3; text-align: right; }
-          .detail-label { font-size: 11px; color: #6c757d; margin-bottom: 4px; font-weight: 600; }
-          .detail-value { font-size: 14px; color: #1a3a3a; font-weight: 700; }
-          .score-breakdown-container { margin: 25px 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 25px; align-items: end; }
-          .score-section { text-align: center; display: flex; flex-direction: column; height: 100%; }
-          .score-label { font-size: 13px; color: #495057; margin-bottom: 12px; font-weight: 700; }
-          .final-score { font-size: 68px; font-weight: 900; padding: 25px; border-radius: 10px; box-shadow: 0 3px 12px rgba(0,0,0,0.06); margin-bottom: auto; }
-          .score-green { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); color: #155724; border: 2px solid #28a745; }
-          .score-yellow { background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%); color: #856404; border: 2px solid #ffc107; }
-          .score-red { background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); color: #721c24; border: 2px solid #dc3545; }
-          .signature-section { margin-top: auto; padding-top: 15px; text-align: center; }
-          .signature-space { height: 35px; margin-bottom: 6px; }
-          .signature-line { border-top: 1.5px solid #1a3a3a; width: 170px; margin: 0 auto 6px; }
-          .signature-name { font-size: 12px; color: #495057; font-weight: 600; }
-          .breakdown-side { display: flex; flex-direction: column; gap: 10px; height: 100%; }
-          .breakdown-title { font-size: 13px; font-weight: 700; color: #495057; margin-bottom: 6px; text-align: right; }
-          .breakdown-item { background: white; padding: 10px 14px; border-radius: 6px; border: 1.5px solid #e9ecef; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 4px rgba(0,0,0,0.02); }
-          .breakdown-label { font-size: 13px; font-weight: 700; color: #495057; }
-          .breakdown-value { text-align: left; }
-          .breakdown-count { font-size: 18px; font-weight: 800; color: #1a3a3a; }
-          .breakdown-deduction { font-size: 10px; color: #6c757d; font-weight: 600; }
-          .footer { position: absolute; bottom: 0; left: 0; right: 0; background: #f8f9fa; padding: 15px 40px; text-align: center; border-top: 1px solid #dee2e6; }
-          .footer-dates { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
-          .footer-date { color: #6c757d; font-size: 11px; font-weight: 600; }
-          @media print { body { margin: 0; padding: 0; } .certificate { box-shadow: none; page-break-inside: avoid; } @page { size: A4; margin: 0; } }
+          @page { 
+            size: A4;
+            margin: 0;
+          }
+          body { 
+            font-family: 'Cairo', sans-serif; 
+            direction: rtl;
+            background: white;
+            margin: 0;
+            padding: 0;
+          }
+          .certificate {
+            background: white;
+            width: 210mm;
+            height: 297mm;
+            position: relative;
+            page-break-inside: avoid;
+            margin: 0;
+            padding: 0;
+          }
+          
+          /* Minimal corner decorations */
+          .certificate::before,
+          .certificate::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 1.5px solid #5fb3b3;
+            opacity: 0.25;
+            z-index: 10;
+          }
+          
+          .certificate::before {
+            top: 15px;
+            right: 15px;
+            border-bottom: none;
+            border-left: none;
+          }
+          
+          .certificate::after {
+            bottom: 15px;
+            left: 15px;
+            border-top: none;
+            border-right: none;
+          }
+          
+          .header {
+            background: linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%);
+            padding: 30px 30px 25px;
+            text-align: center;
+          }
+          
+          .logo {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          
+          .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+          }
+          
+          .header h1 {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+          }
+          
+          .header .subtitle {
+            color: rgba(255,255,255,0.95);
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 8px;
+          }
+          
+          .header .edition {
+            color: rgba(255,255,255,0.9);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+          }
+          
+          .content {
+            padding: 30px 40px 25px;
+          }
+          
+          /* Certificate Title */
+          .cert-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #5fb3b3;
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
+          }
+          
+          .participant-name {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1a3a3a;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #5fb3b3;
+          }
+          
+          .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+          
+          .detail-card {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border-right: 3px solid #5fb3b3;
+            text-align: right;
+          }
+          
+          .detail-label {
+            font-size: 11px;
+            color: #6c757d;
+            margin-bottom: 4px;
+            font-weight: 600;
+          }
+          
+          .detail-value {
+            font-size: 14px;
+            color: #1a3a3a;
+            font-weight: 700;
+          }
+          
+          .score-breakdown-container {
+            margin: 25px 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            align-items: end;
+          }
+          
+          .score-section {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+          }
+          
+          .score-label {
+            font-size: 13px;
+            color: #495057;
+            margin-bottom: 12px;
+            font-weight: 700;
+          }
+          
+          .final-score {
+            font-size: 68px;
+            font-weight: 900;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            margin-bottom: auto;
+          }
+          
+          .score-green { 
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); 
+            color: #155724;
+            border: 2px solid #28a745;
+          }
+          .score-yellow { 
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%); 
+            color: #856404;
+            border: 2px solid #ffc107;
+          }
+          .score-red { 
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); 
+            color: #721c24;
+            border: 2px solid #dc3545;
+          }
+          
+          /* Signature Section - Aligned to bottom */
+          .signature-section {
+            margin-top: auto;
+            padding-top: 15px;
+            text-align: center;
+          }
+          
+          .signature-space {
+            height: 35px;
+            margin-bottom: 6px;
+          }
+          
+          .signature-line {
+            border-top: 1.5px solid #1a3a3a;
+            width: 170px;
+            margin: 0 auto 6px;
+          }
+          
+          .signature-name {
+            font-size: 12px;
+            color: #495057;
+            font-weight: 600;
+          }
+          
+          .breakdown-side {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: 100%;
+          }
+          
+          .breakdown-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #495057;
+            margin-bottom: 6px;
+            text-align: right;
+          }
+          
+          .breakdown-item {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1.5px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+          }
+          
+          .breakdown-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #495057;
+          }
+          
+          .breakdown-value {
+            text-align: left;
+          }
+          
+          .breakdown-count {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1a3a3a;
+          }
+          
+          .breakdown-deduction {
+            font-size: 10px;
+            color: #6c757d;
+            font-weight: 600;
+          }
+          
+          .footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #f8f9fa;
+            padding: 15px 40px;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+          }
+          
+          .footer-dates {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+          }
+          
+          .footer-date {
+            color: #6c757d;
+            font-size: 11px;
+            font-weight: 600;
+          }
+          
+          @media print {
+            body {
+              margin: 0;
+              padding: 0;
+            }
+            .certificate {
+              box-shadow: none;
+              page-break-inside: avoid;
+            }
+            @page {
+              size: A4;
+              margin: 0;
+            }
+          }
         </style>
       </head>
       <body>
@@ -671,64 +937,79 @@ export default function ResultsPage() {
             <div class="subtitle">لحفظ القرآن الكريم</div>
             <div class="edition">• الدورة الخامسة - رمضان 1447هـ •</div>
           </div>
+          
           <div class="content">
             <div class="cert-title">شهادة تقييم</div>
             <div class="participant-name">${competitor.full_name}</div>
+            
             <div class="details-grid">
               <div class="detail-card">
                 <div class="detail-label">الولاية</div>
                 <div class="detail-value">${competitor.city}</div>
               </div>
+              
               <div class="detail-card">
                 <div class="detail-label">المستوى</div>
                 <div class="detail-value">${competitor.level}</div>
               </div>
             </div>
+            
             <div class="score-breakdown-container">
               <div class="score-section">
                 <div class="score-label">• الدرجة النهائية •</div>
-                <div class="final-score ${competitor.final_score >= 95 ? 'score-green' : competitor.final_score >= 90 ? 'score-yellow' : 'score-red'}">
-                  ${competitor.final_score}
+                <div class="final-score ${
+                  finalScore >= 95 ? 'score-green' : 
+                  finalScore >= 90 ? 'score-yellow' : 
+                  'score-red'
+                }">
+                  ${finalScore}
                 </div>
+                
                 <div class="signature-section">
                   <div class="signature-space"></div>
                   <div class="signature-line"></div>
                   <div class="signature-name">مركز رياض العلم</div>
                 </div>
               </div>
+              
               <div class="breakdown-side">
                 <div class="breakdown-title">تفصيل الأخطاء</div>
+                
                 <div class="breakdown-item">
                   <div class="breakdown-label">تنبيه</div>
                   <div class="breakdown-value">
-                    <div class="breakdown-count">${competitor.tanbih_count}</div>
-                    <div class="breakdown-deduction">-${competitor.tanbih_count} درجة</div>
+                    <div class="breakdown-count">${tanbihCount}</div>
+                    <div class="breakdown-deduction">-${tanbihCount} درجة</div>
                   </div>
                 </div>
+                
                 <div class="breakdown-item">
                   <div class="breakdown-label">فتح</div>
                   <div class="breakdown-value">
-                    <div class="breakdown-count">${competitor.fateh_count}</div>
-                    <div class="breakdown-deduction">-${competitor.fateh_count * 2} درجة</div>
+                    <div class="breakdown-count">${fatehCount}</div>
+                    <div class="breakdown-deduction">-${fatehCount * 2} درجة</div>
                   </div>
                 </div>
+                
                 <div class="breakdown-item">
                   <div class="breakdown-label">تشكيل</div>
                   <div class="breakdown-value">
-                    <div class="breakdown-count">${competitor.tashkeel_count}</div>
-                    <div class="breakdown-deduction">-${competitor.tashkeel_count} درجة</div>
+                    <div class="breakdown-count">${tashkeelCount}</div>
+                    <div class="breakdown-deduction">-${tashkeelCount} درجة</div>
                   </div>
                 </div>
+                
                 <div class="breakdown-item">
                   <div class="breakdown-label">تجويد</div>
                   <div class="breakdown-value">
-                    <div class="breakdown-count">${competitor.tajweed_count}</div>
-                    <div class="breakdown-deduction">-${competitor.tajweed_count * 0.5} درجة</div>
+                    <div class="breakdown-count">${tajweedCount}</div>
+                    <div class="breakdown-deduction">-${tajweedCount * 0.5} درجة</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          
           <div class="footer">
             <div class="footer-dates">
               <div class="footer-date">التاريخ الهجري: ${hijriDate}</div>
@@ -737,7 +1018,9 @@ export default function ResultsPage() {
           </div>
         </div>
       </body>
-      </html>`
+      </html>
+    `
+`
 
     printWindow.document.write(scoreHTML)
     printWindow.document.close()
@@ -792,12 +1075,12 @@ export default function ResultsPage() {
         .compact-table {
           width: 100%;
           border-collapse: collapse;
-          font-size: 12px;
+          font-size: clamp(10px, 2vw, 12px);
         }
 
         .compact-table th,
         .compact-table td {
-          padding: 6px 8px;
+          padding: clamp(4px, 1vw, 6px) clamp(4px, 1.5vw, 8px);
           text-align: center;
           border-bottom: 1px solid #e0e0e0;
           white-space: nowrap;
@@ -812,7 +1095,7 @@ export default function ResultsPage() {
           position: sticky;
           top: 0;
           z-index: 10;
-          font-size: 11px;
+          font-size: clamp(9px, 1.8vw, 11px);
           cursor: pointer;
           user-select: none;
         }
@@ -954,15 +1237,41 @@ export default function ResultsPage() {
           background: linear-gradient(135deg, #FFF5E6 0%, #FFFAF0 100%);
         }
 
-        .checkbox-cell {
-          width: 35px;
+        .checkbox-column {
+          width: 40px;
           text-align: center;
         }
 
-        .checkbox-cell input[type="checkbox"] {
-          width: clamp(14px, 3vw, 18px);
-          height: clamp(14px, 3vw, 18px);
+        .checkbox-column input[type="checkbox"] {
+          width: 18px;
+          height: 18px;
           cursor: pointer;
+          margin: 0;
+        }
+
+        .cert-print-button {
+          width: 100%;
+          margin-bottom: clamp(15px, 3vw, 20px);
+          padding: clamp(12px, 2.8vw, 16px);
+          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: clamp(14px, 3.2vw, 17px);
+          font-weight: 700;
+          font-family: 'Cairo', sans-serif;
+          cursor: pointer;
+          box-shadow: 0 4px 15px rgba(95,179,179,0.3);
+          transition: all 0.2s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: clamp(6px, 1.5vw, 10px);
+        }
+
+        .cert-print-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(95,179,179,0.4);
         }
 
       `}</style>
@@ -978,7 +1287,6 @@ export default function ResultsPage() {
           
           {/* Header */}
           <div style={{ marginBottom: '25px', textAlign: 'center' }}>
-
           {/* Back Button - Top */}
           <button
             onClick={() => router.push('/dashboard')}
@@ -1007,7 +1315,6 @@ export default function ResultsPage() {
           >
             العودة للقائمة الرئيسية
           </button>
-
 
             <div style={{ width: '50px', height: '50px', margin: '0 auto 10px' }}>
               <Image
@@ -1131,14 +1438,6 @@ export default function ResultsPage() {
                     <table className="compact-table">
                       <thead>
                         <tr>
-                          <th className="checkbox-cell">
-                            <input
-                              type="checkbox"
-                              checked={selectedResults.length === currentResults.length && currentResults.length > 0}
-                              onChange={toggleSelectAll}
-                              title="تحديد الكل"
-                            />
-                          </th>
                           <th style={{ width: '40px' }}>الترتيب</th>
                           <th onClick={() => handleSort('full_name')}>
                             الاسم
@@ -1180,7 +1479,13 @@ export default function ResultsPage() {
                       <tbody>
                         {currentResults.map((result, index) => (
                           <tr key={result.id}>
-                            <td style={{ fontWeight: '600', color: '#5fb3b3' }}>{startIndex + index + 1}</td>
+                            <td className="checkbox-column">
+                            <input
+                              type="checkbox"
+                              checked={selectedResults.includes(result.id)}
+                              onChange={() => toggleSelect(result.id)}
+                            />
+                          </td>
                             <td className="name-cell">{result.full_name}</td>
                             <td>{result.gender === 'male' ? 'ذكر' : 'أنثى'}</td>
                             <td className="level-cell">{result.level.split(':')[0]}</td>
