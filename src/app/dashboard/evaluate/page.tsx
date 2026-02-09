@@ -1248,7 +1248,7 @@ export default function EvaluatePage() {
             </>
           ) : (
             <>
-              {/* Evaluation Screen - BEAUTIFUL PROFESSIONAL FINAL */}
+              {/* Evaluation Screen - CORRECT LAYOUT */}
               <div style={{
                 position: 'fixed',
                 top: 0,
@@ -1308,210 +1308,52 @@ export default function EvaluatePage() {
                   </div>
                 )}
 
-                {/* TOP ROW */}
+                {/* TOP LEFT - Evaluation Rules */}
                 <div style={{
                   gridColumn: '1 / 2',
                   gridRow: '1 / 2',
-                  display: 'flex',
-                  gap: 'clamp(8px, 1.2vw, 14px)',
-                  height: 'auto',
+                  background: '#f8f9fa',
+                  borderRadius: '10px',
+                  padding: 'clamp(10px, 1.5vh, 16px)',
+                  border: '1.5px solid #e0e0e0',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
                   overflow: 'hidden'
                 }}>
-                  
-                  {/* تنبيه */}
-                  <div style={{
-                    flex: 1,
-                    background: '#ffffff',
-                    borderRadius: '10px',
-                    padding: 'clamp(12px, 1.8vh, 18px)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
-                    border: '1.5px solid #e0e0e0',
-                    overflow: 'hidden',
-                    boxSizing: 'border-box'
+                  <h3 style={{
+                    fontSize: 'clamp(13px, 1.6vw, 17px)',
+                    fontWeight: '700',
+                    color: '#1a3a3a',
+                    margin: '0 0 clamp(6px, 0.8vh, 10px) 0',
+                    textAlign: 'center',
+                    lineHeight: '1.2'
                   }}>
-                    <div style={{ textAlign: 'center', marginBottom: '6px', flexShrink: 0 }}>
-                      <div style={{
-                        fontSize: 'clamp(18px, 2.3vw, 26px)',
-                        fontWeight: '800',
-                        color: '#333',
-                        marginBottom: '3px',
-                        lineHeight: '1'
-                      }}>
-                        تنبيه
-                      </div>
-                      <div style={{
-                        fontSize: 'clamp(10px, 1.1vw, 12px)',
-                        color: '#888',
-                        fontWeight: '400',
-                        lineHeight: '1'
-                      }}>
-                        {tanbihCount === 0 ? '(-0)' : `(-${tanbihCount})`}
-                      </div>
-                    </div>
-
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      gap: 'clamp(8px, 1.2vw, 12px)',
-                      marginTop: 'auto'
-                    }}>
-                      <button
-                        onClick={() => incrementCount('tanbih')}
-                        style={{
-                          flex: 1,
-                          padding: 'clamp(20px, 3vh, 30px) clamp(10px, 1.5vw, 15px)',
-                          background: 'linear-gradient(135deg, #5fb3b3 0%, #4a9d9d 100%)',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '10px',
-                          fontSize: 'clamp(28px, 3.8vw, 42px)',
-                          fontWeight: '700',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          boxShadow: '0 2px 8px rgba(95,179,179,0.25)'
-                        }}
-                      >
-                        +
-                      </button>
-
-                      <div style={{
-                        fontSize: 'clamp(36px, 5vw, 56px)',
-                        fontWeight: '800',
-                        color: '#333',
-                        minWidth: 'clamp(45px, 6vw, 70px)',
-                        textAlign: 'center',
-                        lineHeight: '1'
-                      }}>
-                        {tanbihCount}
-                      </div>
-
-                      <button
-                        onClick={() => decrementCount('tanbih')}
-                        style={{
-                          flex: 1,
-                          padding: 'clamp(20px, 3vh, 30px) clamp(10px, 1.5vw, 15px)',
-                          background: '#95a5a6',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '10px',
-                          fontSize: 'clamp(28px, 3.8vw, 42px)',
-                          fontWeight: '700',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
-                        }}
-                      >
-                        −
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* فتح */}
+                    ضوابط التقييم
+                  </h3>
                   <div style={{
-                    flex: 1,
-                    background: '#ffffff',
-                    borderRadius: '10px',
-                    padding: 'clamp(12px, 1.8vh, 18px)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
-                    border: '1.5px solid #e0e0e0',
-                    overflow: 'hidden',
-                    boxSizing: 'border-box'
+                    fontSize: 'clamp(9px, 1.05vw, 11px)',
+                    color: '#555',
+                    lineHeight: '1.6',
+                    textAlign: 'right'
                   }}>
-                    <div style={{ textAlign: 'center', marginBottom: '6px', flexShrink: 0 }}>
-                      <div style={{
-                        fontSize: 'clamp(18px, 2.3vw, 26px)',
-                        fontWeight: '800',
-                        color: '#333',
-                        marginBottom: '3px',
-                        lineHeight: '1'
-                      }}>
-                        فتح
-                      </div>
-                      <div style={{
-                        fontSize: 'clamp(10px, 1.1vw, 12px)',
-                        color: '#888',
-                        fontWeight: '400',
-                        lineHeight: '1'
-                      }}>
-                        {fatehCount === 0 ? '(-0)' : `(-${fatehCount * 2})`}
-                      </div>
-                    </div>
-
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      gap: 'clamp(8px, 1.2vw, 12px)',
-                      marginTop: 'auto'
-                    }}>
-                      <button
-                        onClick={() => incrementCount('fateh')}
-                        style={{
-                          flex: 1,
-                          padding: 'clamp(20px, 3vh, 30px) clamp(10px, 1.5vw, 15px)',
-                          background: 'linear-gradient(135deg, #5fb3b3 0%, #4a9d9d 100%)',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '10px',
-                          fontSize: 'clamp(28px, 3.8vw, 42px)',
-                          fontWeight: '700',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          boxShadow: '0 2px 8px rgba(95,179,179,0.25)'
-                        }}
-                      >
-                        +
-                      </button>
-
-                      <div style={{
-                        fontSize: 'clamp(36px, 5vw, 56px)',
-                        fontWeight: '800',
-                        color: '#333',
-                        minWidth: 'clamp(45px, 6vw, 70px)',
-                        textAlign: 'center',
-                        lineHeight: '1'
-                      }}>
-                        {fatehCount}
-                      </div>
-
-                      <button
-                        onClick={() => decrementCount('fateh')}
-                        style={{
-                          flex: 1,
-                          padding: 'clamp(20px, 3vh, 30px) clamp(10px, 1.5vw, 15px)',
-                          background: '#95a5a6',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '10px',
-                          fontSize: 'clamp(28px, 3.8vw, 42px)',
-                          fontWeight: '700',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
-                        }}
-                      >
-                        −
-                      </button>
-                    </div>
+                    <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
+                      • يُعطى كل متسابق <strong>3 أسئلة</strong> من القرآن الكريم
+                    </p>
+                    <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
+                      • <strong>تنبيه:</strong> خصم درجة واحدة (-1) لكل خطأ
+                    </p>
+                    <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
+                      • <strong>فتح:</strong> خصم درجتين (-2) لكل خطأ
+                    </p>
+                    <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
+                      • <strong>تشكيل:</strong> خصم درجة واحدة (-1) لكل خطأ
+                    </p>
+                    <p style={{ margin: 0 }}>
+                      • <strong>تجويد:</strong> خصم نصف درجة (-0.5) لكل خطأ
+                    </p>
                   </div>
                 </div>
 
-                {/* TOP RIGHT - Logo, Title, Name, Score, Buttons */}
+                {/* TOP RIGHT - Logo, Title, Name, Details */}
                 <div style={{
                   gridColumn: '2 / 3',
                   gridRow: '1 / 2',
@@ -1580,7 +1422,411 @@ export default function EvaluatePage() {
                   }}>
                     {selectedCompetitor.gender === 'male' ? 'ذكر' : 'أنثى'} • {selectedCompetitor.level} • {selectedCompetitor.city}
                   </p>
+                </div>
 
+                {/* BOTTOM LEFT - 2x2 Grid of ALL Evaluation Criteria */}
+                <div style={{
+                  gridColumn: '1 / 2',
+                  gridRow: '2 / 3',
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gridTemplateRows: '1fr 1fr',
+                  gap: 'clamp(8px, 1.2vw, 14px)',
+                  overflow: 'hidden'
+                }}>
+                  
+                  {/* تنبيه */}
+                  <div style={{
+                    background: '#ffffff',
+                    borderRadius: '10px',
+                    padding: 'clamp(10px, 1.5vh, 16px)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
+                    border: '1.5px solid #e0e0e0',
+                    overflow: 'hidden',
+                    boxSizing: 'border-box'
+                  }}>
+                    <div style={{ textAlign: 'center', marginBottom: '5px', flexShrink: 0 }}>
+                      <div style={{
+                        fontSize: 'clamp(16px, 2.1vw, 23px)',
+                        fontWeight: '800',
+                        color: '#333',
+                        marginBottom: '2px',
+                        lineHeight: '1'
+                      }}>
+                        تنبيه
+                      </div>
+                      <div style={{
+                        fontSize: 'clamp(9px, 1vw, 11px)',
+                        color: '#888',
+                        fontWeight: '400',
+                        lineHeight: '1'
+                      }}>
+                        {tanbihCount === 0 ? '(-0)' : `(-${tanbihCount})`}
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: 'clamp(6px, 1vw, 10px)',
+                      flex: 1
+                    }}>
+                      <button
+                        onClick={() => incrementCount('tanbih')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: 'linear-gradient(135deg, #5fb3b3 0%, #4a9d9d 100%)',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '8px',
+                          fontSize: 'clamp(24px, 3.4vw, 38px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 2px 8px rgba(95,179,179,0.25)'
+                        }}
+                      >
+                        +
+                      </button>
+
+                      <div style={{
+                        fontSize: 'clamp(32px, 4.5vw, 52px)',
+                        fontWeight: '800',
+                        color: '#333',
+                        minWidth: 'clamp(40px, 5.5vw, 65px)',
+                        textAlign: 'center',
+                        lineHeight: '1'
+                      }}>
+                        {tanbihCount}
+                      </div>
+
+                      <button
+                        onClick={() => decrementCount('tanbih')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: '#95a5a6',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '8px',
+                          fontSize: 'clamp(24px, 3.4vw, 38px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
+                        }}
+                      >
+                        −
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* فتح */}
+                  <div style={{
+                    background: '#ffffff',
+                    borderRadius: '10px',
+                    padding: 'clamp(10px, 1.5vh, 16px)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
+                    border: '1.5px solid #e0e0e0',
+                    overflow: 'hidden',
+                    boxSizing: 'border-box'
+                  }}>
+                    <div style={{ textAlign: 'center', marginBottom: '5px', flexShrink: 0 }}>
+                      <div style={{
+                        fontSize: 'clamp(16px, 2.1vw, 23px)',
+                        fontWeight: '800',
+                        color: '#333',
+                        marginBottom: '2px',
+                        lineHeight: '1'
+                      }}>
+                        فتح
+                      </div>
+                      <div style={{
+                        fontSize: 'clamp(9px, 1vw, 11px)',
+                        color: '#888',
+                        fontWeight: '400',
+                        lineHeight: '1'
+                      }}>
+                        {fatehCount === 0 ? '(-0)' : `(-${fatehCount * 2})`}
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: 'clamp(6px, 1vw, 10px)',
+                      flex: 1
+                    }}>
+                      <button
+                        onClick={() => incrementCount('fateh')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: 'linear-gradient(135deg, #5fb3b3 0%, #4a9d9d 100%)',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '8px',
+                          fontSize: 'clamp(24px, 3.4vw, 38px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 2px 8px rgba(95,179,179,0.25)'
+                        }}
+                      >
+                        +
+                      </button>
+
+                      <div style={{
+                        fontSize: 'clamp(32px, 4.5vw, 52px)',
+                        fontWeight: '800',
+                        color: '#333',
+                        minWidth: 'clamp(40px, 5.5vw, 65px)',
+                        textAlign: 'center',
+                        lineHeight: '1'
+                      }}>
+                        {fatehCount}
+                      </div>
+
+                      <button
+                        onClick={() => decrementCount('fateh')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: '#95a5a6',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '8px',
+                          fontSize: 'clamp(24px, 3.4vw, 38px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
+                        }}
+                      >
+                        −
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* تشكيل */}
+                  <div style={{
+                    background: '#ffffff',
+                    borderRadius: '10px',
+                    padding: 'clamp(10px, 1.5vh, 16px)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
+                    border: '1.5px solid #e0e0e0',
+                    overflow: 'hidden',
+                    boxSizing: 'border-box'
+                  }}>
+                    <div style={{ textAlign: 'center', marginBottom: '5px', flexShrink: 0 }}>
+                      <div style={{
+                        fontSize: 'clamp(16px, 2.1vw, 23px)',
+                        fontWeight: '800',
+                        color: '#333',
+                        marginBottom: '2px',
+                        lineHeight: '1'
+                      }}>
+                        تشكيل
+                      </div>
+                      <div style={{
+                        fontSize: 'clamp(9px, 1vw, 11px)',
+                        color: '#888',
+                        fontWeight: '400',
+                        lineHeight: '1'
+                      }}>
+                        {tashkeelCount === 0 ? '(-0)' : `(-${tashkeelCount})`}
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: 'clamp(6px, 1vw, 10px)',
+                      flex: 1
+                    }}>
+                      <button
+                        onClick={() => incrementCount('tashkeel')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: 'linear-gradient(135deg, #5fb3b3 0%, #4a9d9d 100%)',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '8px',
+                          fontSize: 'clamp(24px, 3.4vw, 38px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 2px 8px rgba(95,179,179,0.25)'
+                        }}
+                      >
+                        +
+                      </button>
+
+                      <div style={{
+                        fontSize: 'clamp(32px, 4.5vw, 52px)',
+                        fontWeight: '800',
+                        color: '#333',
+                        minWidth: 'clamp(40px, 5.5vw, 65px)',
+                        textAlign: 'center',
+                        lineHeight: '1'
+                      }}>
+                        {tashkeelCount}
+                      </div>
+
+                      <button
+                        onClick={() => decrementCount('tashkeel')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: '#95a5a6',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '8px',
+                          fontSize: 'clamp(24px, 3.4vw, 38px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
+                        }}
+                      >
+                        −
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* تجويد */}
+                  <div style={{
+                    background: '#ffffff',
+                    borderRadius: '10px',
+                    padding: 'clamp(10px, 1.5vh, 16px)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
+                    border: '1.5px solid #e0e0e0',
+                    overflow: 'hidden',
+                    boxSizing: 'border-box'
+                  }}>
+                    <div style={{ textAlign: 'center', marginBottom: '5px', flexShrink: 0 }}>
+                      <div style={{
+                        fontSize: 'clamp(16px, 2.1vw, 23px)',
+                        fontWeight: '800',
+                        color: '#333',
+                        marginBottom: '2px',
+                        lineHeight: '1'
+                      }}>
+                        تجويد
+                      </div>
+                      <div style={{
+                        fontSize: 'clamp(9px, 1vw, 11px)',
+                        color: '#888',
+                        fontWeight: '400',
+                        lineHeight: '1'
+                      }}>
+                        {tajweedCount === 0 ? '(-0)' : `(-${tajweedCount * 0.5})`}
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: 'clamp(6px, 1vw, 10px)',
+                      flex: 1
+                    }}>
+                      <button
+                        onClick={() => incrementCount('tajweed')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: 'linear-gradient(135deg, #5fb3b3 0%, #4a9d9d 100%)',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '8px',
+                          fontSize: 'clamp(24px, 3.4vw, 38px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 2px 8px rgba(95,179,179,0.25)'
+                        }}
+                      >
+                        +
+                      </button>
+
+                      <div style={{
+                        fontSize: 'clamp(32px, 4.5vw, 52px)',
+                        fontWeight: '800',
+                        color: '#333',
+                        minWidth: 'clamp(40px, 5.5vw, 65px)',
+                        textAlign: 'center',
+                        lineHeight: '1'
+                      }}>
+                        {tajweedCount}
+                      </div>
+
+                      <button
+                        onClick={() => decrementCount('tajweed')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: '#95a5a6',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '8px',
+                          fontSize: 'clamp(24px, 3.4vw, 38px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
+                        }}
+                      >
+                        −
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* BOTTOM RIGHT - Score & Buttons */}
+                <div style={{
+                  gridColumn: '2 / 3',
+                  gridRow: '2 / 3',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 'clamp(6px, 1vh, 10px)',
+                  overflow: 'hidden'
+                }}>
+                  
+                  {/* Score Display - EXPANDABLE */}
                   <div style={{
                     background: finalScore >= 95 ? '#d4edda' : finalScore >= 90 ? '#fff3cd' : '#ffebee',
                     padding: 'clamp(18px, 2.8vh, 32px)',
@@ -1603,6 +1849,7 @@ export default function EvaluatePage() {
                     </div>
                   </div>
 
+                  {/* Save Button */}
                   <button
                     onClick={handleSave}
                     disabled={saving}
@@ -1623,6 +1870,7 @@ export default function EvaluatePage() {
                     {saving ? 'جاري الحفظ...' : 'حفظ التقييم'}
                   </button>
 
+                  {/* Print PDF Button */}
                   <button
                     onClick={handlePrintScoreCard}
                     style={{
@@ -1654,6 +1902,7 @@ export default function EvaluatePage() {
                     <span>طباعة الشهادة PDF</span>
                   </button>
 
+                  {/* Back Button */}
                   <button
                     onClick={handleBackToList}
                     style={{
@@ -1680,262 +1929,6 @@ export default function EvaluatePage() {
                     العودة إلى قائمة المتسابقين
                   </button>
                 </div>
-
-                {/* BOTTOM LEFT - Evaluation Rules + تشكيل و تجويد */}
-                <div style={{
-                  gridColumn: '1 / 2',
-                  gridRow: '2 / 3',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 'clamp(8px, 1.2vw, 14px)',
-                  overflow: 'hidden'
-                }}>
-                  
-                  <div style={{
-                    background: '#f8f9fa',
-                    borderRadius: '10px',
-                    padding: 'clamp(10px, 1.5vh, 16px)',
-                    border: '1.5px solid #e0e0e0',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-                    flexShrink: 0
-                  }}>
-                    <h3 style={{
-                      fontSize: 'clamp(13px, 1.6vw, 17px)',
-                      fontWeight: '700',
-                      color: '#1a3a3a',
-                      margin: '0 0 clamp(6px, 0.8vh, 10px) 0',
-                      textAlign: 'center',
-                      lineHeight: '1.2'
-                    }}>
-                      ضوابط التقييم
-                    </h3>
-                    <div style={{
-                      fontSize: 'clamp(9px, 1.05vw, 11px)',
-                      color: '#555',
-                      lineHeight: '1.6',
-                      textAlign: 'right'
-                    }}>
-                      <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                        • يُعطى كل متسابق <strong>3 أسئلة</strong> من القرآن الكريم
-                      </p>
-                      <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                        • <strong>تنبيه:</strong> خصم درجة واحدة (-1) لكل خطأ
-                      </p>
-                      <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                        • <strong>فتح:</strong> خصم درجتين (-2) لكل خطأ
-                      </p>
-                      <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                        • <strong>تشكيل:</strong> خصم درجة واحدة (-1) لكل خطأ
-                      </p>
-                      <p style={{ margin: 0 }}>
-                        • <strong>تجويد:</strong> خصم نصف درجة (-0.5) لكل خطأ
-                      </p>
-                    </div>
-                  </div>
-
-                  <div style={{
-                    display: 'flex',
-                    gap: 'clamp(8px, 1.2vw, 14px)',
-                    flex: 1,
-                    overflow: 'hidden'
-                  }}>
-                    
-                    <div style={{
-                      flex: 1,
-                      background: '#ffffff',
-                      borderRadius: '10px',
-                      padding: 'clamp(10px, 1.5vh, 16px)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'space-between',
-                      boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
-                      border: '1.5px solid #e0e0e0',
-                      overflow: 'hidden',
-                      boxSizing: 'border-box'
-                    }}>
-                      <div style={{ textAlign: 'center', marginBottom: '5px', flexShrink: 0 }}>
-                        <div style={{
-                          fontSize: 'clamp(16px, 2.1vw, 23px)',
-                          fontWeight: '800',
-                          color: '#333',
-                          marginBottom: '2px',
-                          lineHeight: '1'
-                        }}>
-                          تشكيل
-                        </div>
-                        <div style={{
-                          fontSize: 'clamp(9px, 1vw, 11px)',
-                          color: '#888',
-                          fontWeight: '400',
-                          lineHeight: '1'
-                        }}>
-                          {tashkeelCount === 0 ? '(-0)' : `(-${tashkeelCount})`}
-                        </div>
-                      </div>
-
-                      <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: 'clamp(6px, 1vw, 10px)',
-                        flex: 1
-                      }}>
-                        <button
-                          onClick={() => incrementCount('tashkeel')}
-                          style={{
-                            flex: 1,
-                            height: '100%',
-                            background: 'linear-gradient(135deg, #5fb3b3 0%, #4a9d9d 100%)',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '8px',
-                            fontSize: 'clamp(24px, 3.4vw, 38px)',
-                            fontWeight: '700',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: '0 2px 8px rgba(95,179,179,0.25)'
-                          }}
-                        >
-                          +
-                        </button>
-
-                        <div style={{
-                          fontSize: 'clamp(32px, 4.5vw, 52px)',
-                          fontWeight: '800',
-                          color: '#333',
-                          minWidth: 'clamp(40px, 5.5vw, 65px)',
-                          textAlign: 'center',
-                          lineHeight: '1'
-                        }}>
-                          {tashkeelCount}
-                        </div>
-
-                        <button
-                          onClick={() => decrementCount('tashkeel')}
-                          style={{
-                            flex: 1,
-                            height: '100%',
-                            background: '#95a5a6',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '8px',
-                            fontSize: 'clamp(24px, 3.4vw, 38px)',
-                            fontWeight: '700',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
-                          }}
-                        >
-                          −
-                        </button>
-                      </div>
-                    </div>
-
-                    <div style={{
-                      flex: 1,
-                      background: '#ffffff',
-                      borderRadius: '10px',
-                      padding: 'clamp(10px, 1.5vh, 16px)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'space-between',
-                      boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
-                      border: '1.5px solid #e0e0e0',
-                      overflow: 'hidden',
-                      boxSizing: 'border-box'
-                    }}>
-                      <div style={{ textAlign: 'center', marginBottom: '5px', flexShrink: 0 }}>
-                        <div style={{
-                          fontSize: 'clamp(16px, 2.1vw, 23px)',
-                          fontWeight: '800',
-                          color: '#333',
-                          marginBottom: '2px',
-                          lineHeight: '1'
-                        }}>
-                          تجويد
-                        </div>
-                        <div style={{
-                          fontSize: 'clamp(9px, 1vw, 11px)',
-                          color: '#888',
-                          fontWeight: '400',
-                          lineHeight: '1'
-                        }}>
-                          {tajweedCount === 0 ? '(-0)' : `(-${tajweedCount * 0.5})`}
-                        </div>
-                      </div>
-
-                      <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: 'clamp(6px, 1vw, 10px)',
-                        flex: 1
-                      }}>
-                        <button
-                          onClick={() => incrementCount('tajweed')}
-                          style={{
-                            flex: 1,
-                            height: '100%',
-                            background: 'linear-gradient(135deg, #5fb3b3 0%, #4a9d9d 100%)',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '8px',
-                            fontSize: 'clamp(24px, 3.4vw, 38px)',
-                            fontWeight: '700',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: '0 2px 8px rgba(95,179,179,0.25)'
-                          }}
-                        >
-                          +
-                        </button>
-
-                        <div style={{
-                          fontSize: 'clamp(32px, 4.5vw, 52px)',
-                          fontWeight: '800',
-                          color: '#333',
-                          minWidth: 'clamp(40px, 5.5vw, 65px)',
-                          textAlign: 'center',
-                          lineHeight: '1'
-                        }}>
-                          {tajweedCount}
-                        </div>
-
-                        <button
-                          onClick={() => decrementCount('tajweed')}
-                          style={{
-                            flex: 1,
-                            height: '100%',
-                            background: '#95a5a6',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '8px',
-                            fontSize: 'clamp(24px, 3.4vw, 38px)',
-                            fontWeight: '700',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
-                          }}
-                        >
-                          −
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div style={{
-                  gridColumn: '2 / 3',
-                  gridRow: '2 / 3'
-                }} />
               </div>
             </>
           )}
