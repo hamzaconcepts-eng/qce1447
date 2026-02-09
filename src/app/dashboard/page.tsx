@@ -48,47 +48,56 @@ export default function DashboardPage() {
   return (
     <>
       <style jsx global>{`
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        html, body {
+          height: 100vh;
+          width: 100vw;
+          overflow: hidden;
+          font-family: 'Cairo', sans-serif;
+        }
+
         body {
           background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
-          min-height: 100vh;
-        }
-        
-        .app-container {
-          background: #ffffff;
-          padding: 40px;
-          border-radius: 20px;
-          box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-          width: 100%;
-          max-width: 1400px;
-        }
-        
-        @media (max-width: 480px) {
-          .app-container {
-            padding: 25px 20px;
-            border-radius: 15px;
-          }
         }
       `}</style>
       
       <div style={{
-        minHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '20px',
+        padding: 'clamp(10px, 2vh, 20px)',
         background: 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)'
       }}>
         
-        <div className="app-container">
+        <div style={{
+          background: '#ffffff',
+          padding: 'clamp(20px, 3vh, 40px) clamp(20px, 3vw, 40px)',
+          borderRadius: 'clamp(10px, 1.5vh, 20px)',
+          boxShadow: '0 1vh 3vh rgba(0,0,0,0.3)',
+          width: '100%',
+          maxWidth: 'clamp(350px, 90vw, 700px)',
+          maxHeight: '95vh',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
           
           {/* Logo */}
           <div style={{
-            width: '100px',
-            height: '100px',
-            margin: '0 auto 20px',
+            width: 'clamp(60px, 10vw, 100px)',
+            height: 'clamp(60px, 10vw, 100px)',
+            margin: '0 auto clamp(10px, 1.5vh, 20px)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            flexShrink: 0
           }}>
             <Image
               src="/images/logo.svg"
@@ -103,11 +112,12 @@ export default function DashboardPage() {
           {/* Title */}
           <h1 style={{
             color: '#333333',
-            marginBottom: '10px',
-            fontSize: '26px',
+            marginBottom: 'clamp(5px, 1vh, 10px)',
+            fontSize: 'clamp(14px, 2.2vw, 26px)',
             fontWeight: '700',
             lineHeight: '1.3',
-            textAlign: 'center'
+            textAlign: 'center',
+            flexShrink: 0
           }}>
             مسابقة مركز رياض العلم لحفظ القرآن الكريم
           </h1>
@@ -115,25 +125,23 @@ export default function DashboardPage() {
           {/* User Info Header */}
           <div style={{
             background: '#f0f9f9',
-            padding: '15px',
-            borderRadius: '10px',
-            marginTop: '20px',
-            marginBottom: '30px',
+            padding: 'clamp(10px, 1.5vh, 15px)',
+            borderRadius: 'clamp(5px, 1vh, 10px)',
             border: '1px solid #c7e6e6',
-            maxWidth: '500px',
-            margin: '20px auto 30px'
+            marginBottom: 'clamp(15px, 2vh, 25px)',
+            flexShrink: 0
           }}>
             <p style={{
               color: '#555555',
-              fontSize: '14px',
-              marginBottom: '5px',
+              fontSize: 'clamp(10px, 1.2vw, 14px)',
+              marginBottom: 'clamp(3px, 0.5vh, 5px)',
               textAlign: 'center'
             }}>
               مرحباً،
             </p>
             <p style={{
               color: '#1a3a3a',
-              fontSize: '18px',
+              fontSize: 'clamp(14px, 1.6vw, 18px)',
               fontWeight: '700',
               textAlign: 'center'
             }}>
@@ -141,22 +149,24 @@ export default function DashboardPage() {
             </p>
             <p style={{
               color: '#5fb3b3',
-              fontSize: '14px',
+              fontSize: 'clamp(11px, 1.2vw, 14px)',
               fontWeight: '600',
-              marginTop: '5px',
+              marginTop: 'clamp(3px, 0.5vh, 5px)',
               textAlign: 'center'
             }}>
               {getRoleInArabic(user.role)}
             </p>
           </div>
 
-          {/* Main Buttons */}
+          {/* Main Buttons - Scrollable if needed */}
           <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            gap: '12px',
-            maxWidth: '500px',
-            margin: '0 auto'
+            flex: 1,
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'clamp(8px, 1vh, 12px)',
+            paddingRight: '5px'
           }}>
             
             {/* Register New Competitor - Admin Only */}
@@ -165,19 +175,20 @@ export default function DashboardPage() {
               disabled={!canRegister}
               style={{
                 width: '100%',
-                padding: '15px',
+                padding: 'clamp(10px, 1.5vh, 15px)',
                 background: canRegister 
                   ? 'linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%)'
                   : '#e0e0e0',
                 color: canRegister ? 'white' : '#999999',
                 border: 'none',
-                borderRadius: '10px',
-                fontSize: '16px',
+                borderRadius: 'clamp(5px, 1vh, 10px)',
+                fontSize: 'clamp(12px, 1.4vw, 16px)',
                 fontWeight: '700',
                 fontFamily: 'Cairo, sans-serif',
                 cursor: canRegister ? 'pointer' : 'not-allowed',
                 transition: 'all 0.2s',
-                opacity: canRegister ? 1 : 0.6
+                opacity: canRegister ? 1 : 0.6,
+                flexShrink: 0
               }}
               onMouseEnter={(e) => canRegister && (e.currentTarget.style.transform = 'translateY(-2px)')}
               onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
@@ -191,19 +202,20 @@ export default function DashboardPage() {
               disabled={!canView}
               style={{
                 width: '100%',
-                padding: '15px',
+                padding: 'clamp(10px, 1.5vh, 15px)',
                 background: canView 
                   ? 'linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%)'
                   : '#e0e0e0',
                 color: canView ? 'white' : '#999999',
                 border: 'none',
-                borderRadius: '10px',
-                fontSize: '16px',
+                borderRadius: 'clamp(5px, 1vh, 10px)',
+                fontSize: 'clamp(12px, 1.4vw, 16px)',
                 fontWeight: '700',
                 fontFamily: 'Cairo, sans-serif',
                 cursor: canView ? 'pointer' : 'not-allowed',
                 transition: 'all 0.2s',
-                opacity: canView ? 1 : 0.6
+                opacity: canView ? 1 : 0.6,
+                flexShrink: 0
               }}
               onMouseEnter={(e) => canView && (e.currentTarget.style.transform = 'translateY(-2px)')}
               onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
@@ -217,19 +229,20 @@ export default function DashboardPage() {
               disabled={!canEvaluate}
               style={{
                 width: '100%',
-                padding: '15px',
+                padding: 'clamp(10px, 1.5vh, 15px)',
                 background: canEvaluate 
                   ? 'linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%)'
                   : '#e0e0e0',
                 color: canEvaluate ? 'white' : '#999999',
                 border: 'none',
-                borderRadius: '10px',
-                fontSize: '16px',
+                borderRadius: 'clamp(5px, 1vh, 10px)',
+                fontSize: 'clamp(12px, 1.4vw, 16px)',
                 fontWeight: '700',
                 fontFamily: 'Cairo, sans-serif',
                 cursor: canEvaluate ? 'pointer' : 'not-allowed',
                 transition: 'all 0.2s',
-                opacity: canEvaluate ? 1 : 0.6
+                opacity: canEvaluate ? 1 : 0.6,
+                flexShrink: 0
               }}
               onMouseEnter={(e) => canEvaluate && (e.currentTarget.style.transform = 'translateY(-2px)')}
               onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
@@ -242,16 +255,17 @@ export default function DashboardPage() {
               onClick={() => router.push('/dashboard/results')}
               style={{
                 width: '100%',
-                padding: '15px',
+                padding: 'clamp(10px, 1.5vh, 15px)',
                 background: 'linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%)',
                 color: 'white',
                 border: 'none',
-                borderRadius: '10px',
-                fontSize: '16px',
+                borderRadius: 'clamp(5px, 1vh, 10px)',
+                fontSize: 'clamp(12px, 1.4vw, 16px)',
                 fontWeight: '700',
                 fontFamily: 'Cairo, sans-serif',
                 cursor: 'pointer',
-                transition: 'all 0.2s'
+                transition: 'all 0.2s',
+                flexShrink: 0
               }}
               onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-2px)')}
               onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
@@ -264,16 +278,17 @@ export default function DashboardPage() {
               onClick={() => router.push('/dashboard/live')}
               style={{
                 width: '100%',
-                padding: '15px',
+                padding: 'clamp(10px, 1.5vh, 15px)',
                 background: 'linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%)',
                 color: 'white',
                 border: 'none',
-                borderRadius: '10px',
-                fontSize: '16px',
+                borderRadius: 'clamp(5px, 1vh, 10px)',
+                fontSize: 'clamp(12px, 1.4vw, 16px)',
                 fontWeight: '700',
                 fontFamily: 'Cairo, sans-serif',
                 cursor: 'pointer',
-                transition: 'all 0.2s'
+                transition: 'all 0.2s',
+                flexShrink: 0
               }}
               onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-2px)')}
               onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
@@ -281,22 +296,23 @@ export default function DashboardPage() {
               لوحة المعلومات المباشرة
             </button>
 
-            {/* Back to Login - All Users */}
+            {/* Logout Button */}
             <button
               onClick={handleLogout}
               style={{
                 width: '100%',
-                padding: '15px',
+                padding: 'clamp(10px, 1.5vh, 15px)',
                 background: '#ffffff',
                 color: '#e74c3c',
                 border: '2px solid #e74c3c',
-                borderRadius: '10px',
-                fontSize: '16px',
+                borderRadius: 'clamp(5px, 1vh, 10px)',
+                fontSize: 'clamp(12px, 1.4vw, 16px)',
                 fontWeight: '700',
                 fontFamily: 'Cairo, sans-serif',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
-                marginTop: '10px'
+                marginTop: 'clamp(5px, 1vh, 10px)',
+                flexShrink: 0
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = '#e74c3c'
