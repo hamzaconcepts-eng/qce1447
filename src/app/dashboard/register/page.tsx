@@ -237,10 +237,7 @@ export default function RegisterPage() {
           continue
         }
 
-        // Normalize level - ALWAYS returns a valid level (defaults to Level 5)
-        const level = normalizeLevel(levelInput)
-
-        // Validate phone number (8-15 digits)
+        // Validate mobile number (8-15 digits)
         if (!/^\d{8,15}$/.test(mobile)) {
           errorCount++
           errors.push({
@@ -251,29 +248,31 @@ export default function RegisterPage() {
           continue
         }
 
-        // Create unique key for this competitor (EXCLUDING mobile)
+        // Normalize level (with default fallback to Level 5)
+        const level = normalizeLevel(levelInput)
+
+        // Create unique key (name + gender + level + city) EXCLUDING mobile
         const uniqueKey = `${fullName}|${gender}|${level}|${city}`
 
-        // Check if already seen in this file
+        // Check for duplicates in THIS file
         if (seenInFile.has(uniqueKey)) {
           skippedCount++
           continue
         }
 
-        seenInFile.add(uniqueKey)
-
-        // Check database for exact duplicate (EXCLUDING mobile)
-        const { data: existing } = await supabase
+        // Check for duplicates in database
+        const { data: existingInDB } = await supabase
           .from('competitors')
-          .select('id')
+          .select('*')
           .eq('full_name', fullName)
           .eq('gender', gender)
           .eq('level', level)
           .eq('city', city)
           .single()
 
-        if (existing) {
+        if (existingInDB) {
           skippedCount++
+          seenInFile.add(uniqueKey)
           continue
         }
 
@@ -296,9 +295,11 @@ export default function RegisterPage() {
             name: fullName,
             reason: error.message
           })
-        } else {
-          successCount++
+          continue
         }
+
+        successCount++
+        seenInFile.add(uniqueKey)
       }
 
       setImportStats({ success: successCount, skipped: skippedCount, errors: errorCount })
@@ -306,13 +307,8 @@ export default function RegisterPage() {
       setImportSuccess(true)
       setImporting(false)
 
-      // Clear file input
-      setCsvFile(null)
-      const fileInput = document.getElementById('csv-upload') as HTMLInputElement
-      if (fileInput) fileInput.value = ''
-
     } catch (error) {
-      console.error('CSV import error:', error)
+      console.error('Error importing CSV:', error)
       alert('حدث خطأ أثناء استيراد الملف')
       setImporting(false)
     }
@@ -325,175 +321,186 @@ export default function RegisterPage() {
   return (
     <>
       <style jsx global>{`
-        body {
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
-          min-height: 100vh;
-        }
-        
-        .app-container {
-          background: #ffffff;
-          padding: 40px;
-          border-radius: 20px;
-          box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-          width: 100%;
-          max-width: 800px;
-          max-height: 90vh;
-          overflow-y: auto;
-        }
-        
-        @media (max-width: 480px) {
-          .app-container {
-            padding: 25px 20px;
-            border-radius: 15px;
-          }
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
         }
 
-        @keyframes spin {
-          to { transform: rotate(360deg); }
+        html, body {
+          height: 100vh;
+          width: 100vw;
+          overflow: hidden;
+          font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
         }
 
         .spinner {
-          display: inline-block;
-          width: 16px;
-          height: 16px;
-          border: 2px solid rgba(255, 255, 255, 0.3);
+          border: 3px solid rgba(255, 255, 255, 0.3);
+          border-top: 3px solid white;
           border-radius: 50%;
-          border-top-color: white;
-          animation: spin 0.6s linear infinite;
+          width: 18px;
+          height: 18px;
+          animation: spin 1s linear infinite;
         }
 
-        .error-list {
-          max-height: 300px;
-          overflow-y: auto;
-          background: #fff3cd;
-          padding: 15px;
-          border-radius: 10px;
-          margin-top: 15px;
-          border: 1px solid #ffc107;
-        }
-
-        .error-item {
-          padding: 8px 0;
-          border-bottom: 1px solid #ffe8a1;
-          font-size: 13px;
-          color: #856404;
-        }
-
-        .error-item:last-child {
-          border-bottom: none;
-        }
-
-        .tab-button {
-          flex: 1;
-          padding: 12px 20px;
-          border: none;
-          background: #f5f5f5;
-          color: #666666;
-          font-size: 15px;
-          font-weight: 600;
-          font-family: 'Cairo', sans-serif;
-          cursor: pointer;
-          transition: all 0.3s;
-          border-bottom: 3px solid transparent;
-        }
-
-        .tab-button.active {
-          background: white;
-          color: #5fb3b3;
-          border-bottom-color: #5fb3b3;
-        }
-
-        .tab-button:hover {
-          background: #f0f9f9;
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
         }
 
         .tab-content {
-          padding: 30px 0;
+          animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .error-list {
+          background: #fff3cd;
+          padding: clamp(10px, 1.5vh, 15px);
+          border-radius: clamp(5px, 0.8vh, 8px);
+          margin-top: clamp(10px, 1.5vh, 15px);
+        }
+
+        .error-item {
+          background: white;
+          padding: clamp(8px, 1.2vh, 12px);
+          margin-bottom: clamp(8px, 1.2vh, 12px);
+          border-radius: clamp(4px, 0.6vh, 6px);
+          font-size: clamp(11px, 1.2vw, 13px);
+          color: #856404;
+          text-align: right;
         }
       `}</style>
-
+      
       <div style={{
-        minHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '20px',
+        padding: 'clamp(10px, 1.5vh, 20px)',
         background: 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)'
       }}>
         
-        <div className="app-container">
+        <div style={{
+          background: '#ffffff',
+          padding: 'clamp(15px, 2.5vh, 30px) clamp(20px, 3vw, 40px)',
+          borderRadius: 'clamp(10px, 1.5vh, 20px)',
+          boxShadow: '0 1vh 3vh rgba(0,0,0,0.3)',
+          width: '100%',
+          maxWidth: 'clamp(350px, 90vw, 800px)',
+          maxHeight: '95vh',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
           
-          {/* Header */}
-          <div style={{ marginBottom: '30px', textAlign: 'center' }}>
-            <div style={{
-              width: '60px',
-              height: '60px',
-              margin: '0 auto 15px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <Image
-                src="/images/logo.svg"
-                alt="شعار مركز رياض العلم"
-                width={60}
-                height={60}
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                priority
-              />
-            </div>
-
-            <h1 style={{
-              color: '#333333',
-              fontSize: '22px',
-              fontWeight: '700',
-              marginBottom: '5px'
-            }}>
-              تسجيل المتسابقين
-            </h1>
+          {/* Logo */}
+          <div style={{
+            width: 'clamp(50px, 8vw, 80px)',
+            height: 'clamp(50px, 8vw, 80px)',
+            margin: '0 auto clamp(8px, 1.2vh, 15px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0
+          }}>
+            <Image
+              src="/images/logo.svg"
+              alt="شعار مركز رياض العلم"
+              width={80}
+              height={80}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              priority
+            />
           </div>
+
+          {/* Title */}
+          <h1 style={{
+            color: '#333333',
+            marginBottom: 'clamp(5px, 1vh, 10px)',
+            fontSize: 'clamp(14px, 2vw, 22px)',
+            fontWeight: '700',
+            lineHeight: '1.3',
+            textAlign: 'center',
+            flexShrink: 0
+          }}>
+            تسجيل متسابق جديد
+          </h1>
 
           {/* Tabs */}
           <div style={{
             display: 'flex',
-            gap: '0',
-            marginBottom: '0',
-            borderRadius: '10px 10px 0 0',
-            overflow: 'hidden',
-            border: '2px solid #e0e0e0',
-            borderBottom: 'none'
+            gap: 'clamp(8px, 1vw, 12px)',
+            marginBottom: 'clamp(10px, 1.5vh, 20px)',
+            flexShrink: 0
           }}>
             <button
-              className={`tab-button ${activeTab === 'manual' ? 'active' : ''}`}
               onClick={() => setActiveTab('manual')}
+              style={{
+                flex: 1,
+                padding: 'clamp(8px, 1.2vh, 12px)',
+                background: activeTab === 'manual' 
+                  ? 'linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%)'
+                  : '#f0f0f0',
+                color: activeTab === 'manual' ? 'white' : '#666666',
+                border: 'none',
+                borderRadius: 'clamp(5px, 0.8vh, 10px)',
+                fontSize: 'clamp(11px, 1.3vw, 14px)',
+                fontWeight: '700',
+                fontFamily: 'Cairo, sans-serif',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
             >
               تسجيل يدوي
             </button>
             <button
-              className={`tab-button ${activeTab === 'import' ? 'active' : ''}`}
               onClick={() => setActiveTab('import')}
+              style={{
+                flex: 1,
+                padding: 'clamp(8px, 1.2vh, 12px)',
+                background: activeTab === 'import' 
+                  ? 'linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%)'
+                  : '#f0f0f0',
+                color: activeTab === 'import' ? 'white' : '#666666',
+                border: 'none',
+                borderRadius: 'clamp(5px, 0.8vh, 10px)',
+                fontSize: 'clamp(11px, 1.3vw, 14px)',
+                fontWeight: '700',
+                fontFamily: 'Cairo, sans-serif',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
             >
               استيراد CSV
             </button>
           </div>
 
-          {/* Tab Content */}
+          {/* Scrollable Content Area */}
           <div style={{
-            border: '2px solid #e0e0e0',
-            borderRadius: '0 0 10px 10px',
-            padding: '30px',
-            minHeight: '400px'
+            flex: 1,
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            paddingRight: 'clamp(3px, 0.5vw, 8px)',
+            marginBottom: 'clamp(10px, 1.5vh, 15px)'
           }}>
-            
             {/* Manual Registration Tab */}
             {activeTab === 'manual' && (
               <div className="tab-content">
                 <form onSubmit={handleSubmit}>
-                  <div style={{ marginBottom: '20px' }}>
+                  <div style={{ marginBottom: 'clamp(12px, 1.8vh, 20px)' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: '8px',
-                      fontSize: '14px',
+                      marginBottom: 'clamp(4px, 0.6vh, 8px)',
+                      fontSize: 'clamp(11px, 1.2vw, 14px)',
                       fontWeight: '600',
                       color: '#555555',
                       textAlign: 'right'
@@ -506,52 +513,71 @@ export default function RegisterPage() {
                       onChange={(e) => setFullName(e.target.value)}
                       style={{
                         width: '100%',
-                        padding: '12px',
+                        padding: 'clamp(8px, 1.2vh, 12px)',
                         border: '2px solid #e0e0e0',
-                        borderRadius: '10px',
-                        fontSize: '15px',
+                        borderRadius: 'clamp(5px, 0.8vh, 10px)',
+                        fontSize: 'clamp(12px, 1.4vw, 15px)',
                         textAlign: 'right',
                         fontFamily: 'Cairo, sans-serif'
                       }}
-                      placeholder="الاسم الثلاثي الكامل"
+                      placeholder="اسم المتسابق الكامل"
                     />
                   </div>
 
-                  <div style={{ marginBottom: '20px' }}>
+                  <div style={{ marginBottom: 'clamp(12px, 1.8vh, 20px)' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: '8px',
-                      fontSize: '14px',
+                      marginBottom: 'clamp(4px, 0.6vh, 8px)',
+                      fontSize: 'clamp(11px, 1.2vw, 14px)',
                       fontWeight: '600',
                       color: '#555555',
                       textAlign: 'right'
                     }}>
                       الجنس
                     </label>
-                    <select
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value)}
-                      style={{
-                        width: '100%',
-                        padding: '12px',
-                        border: '2px solid #e0e0e0',
-                        borderRadius: '10px',
-                        fontSize: '15px',
-                        fontFamily: 'Cairo, sans-serif',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      <option value="">اختر الجنس</option>
-                      <option value="male">ذكر</option>
-                      <option value="female">أنثى</option>
-                    </select>
+                    <div style={{ 
+                      display: 'flex', 
+                      gap: 'clamp(8px, 1.2vw, 15px)',
+                      justifyContent: 'flex-end'
+                    }}>
+                      <label style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        fontSize: 'clamp(12px, 1.4vw, 14px)'
+                      }}>
+                        <span style={{ marginLeft: 'clamp(4px, 0.6vw, 8px)' }}>ذكر</span>
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="male"
+                          checked={gender === 'male'}
+                          onChange={(e) => setGender(e.target.value)}
+                        />
+                      </label>
+                      <label style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        fontSize: 'clamp(12px, 1.4vw, 14px)'
+                      }}>
+                        <span style={{ marginLeft: 'clamp(4px, 0.6vw, 8px)' }}>أنثى</span>
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="female"
+                          checked={gender === 'female'}
+                          onChange={(e) => setGender(e.target.value)}
+                        />
+                      </label>
+                    </div>
                   </div>
 
-                  <div style={{ marginBottom: '20px' }}>
+                  <div style={{ marginBottom: 'clamp(12px, 1.8vh, 20px)' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: '8px',
-                      fontSize: '14px',
+                      marginBottom: 'clamp(4px, 0.6vh, 8px)',
+                      fontSize: 'clamp(11px, 1.2vw, 14px)',
                       fontWeight: '600',
                       color: '#555555',
                       textAlign: 'right'
@@ -563,26 +589,26 @@ export default function RegisterPage() {
                       onChange={(e) => setLevel(e.target.value)}
                       style={{
                         width: '100%',
-                        padding: '12px',
+                        padding: 'clamp(8px, 1.2vh, 12px)',
                         border: '2px solid #e0e0e0',
-                        borderRadius: '10px',
-                        fontSize: '15px',
-                        fontFamily: 'Cairo, sans-serif',
-                        cursor: 'pointer'
+                        borderRadius: 'clamp(5px, 0.8vh, 10px)',
+                        fontSize: 'clamp(12px, 1.4vw, 15px)',
+                        textAlign: 'right',
+                        fontFamily: 'Cairo, sans-serif'
                       }}
                     >
                       <option value="">اختر المستوى</option>
-                      {levels.map(level => (
-                        <option key={level} value={level}>{level}</option>
+                      {levels.map((lvl) => (
+                        <option key={lvl} value={lvl}>{lvl}</option>
                       ))}
                     </select>
                   </div>
 
-                  <div style={{ marginBottom: '20px' }}>
+                  <div style={{ marginBottom: 'clamp(12px, 1.8vh, 20px)' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: '8px',
-                      fontSize: '14px',
+                      marginBottom: 'clamp(4px, 0.6vh, 8px)',
+                      fontSize: 'clamp(11px, 1.2vw, 14px)',
                       fontWeight: '600',
                       color: '#555555',
                       textAlign: 'right'
@@ -595,10 +621,10 @@ export default function RegisterPage() {
                       onChange={(e) => setCity(e.target.value)}
                       style={{
                         width: '100%',
-                        padding: '12px',
+                        padding: 'clamp(8px, 1.2vh, 12px)',
                         border: '2px solid #e0e0e0',
-                        borderRadius: '10px',
-                        fontSize: '15px',
+                        borderRadius: 'clamp(5px, 0.8vh, 10px)',
+                        fontSize: 'clamp(12px, 1.4vw, 15px)',
                         textAlign: 'right',
                         fontFamily: 'Cairo, sans-serif'
                       }}
@@ -606,11 +632,11 @@ export default function RegisterPage() {
                     />
                   </div>
 
-                  <div style={{ marginBottom: '30px' }}>
+                  <div style={{ marginBottom: 'clamp(15px, 2.5vh, 30px)' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: '8px',
-                      fontSize: '14px',
+                      marginBottom: 'clamp(4px, 0.6vh, 8px)',
+                      fontSize: 'clamp(11px, 1.2vw, 14px)',
                       fontWeight: '600',
                       color: '#555555',
                       textAlign: 'right'
@@ -623,10 +649,10 @@ export default function RegisterPage() {
                       onChange={(e) => setMobile(e.target.value)}
                       style={{
                         width: '100%',
-                        padding: '12px',
+                        padding: 'clamp(8px, 1.2vh, 12px)',
                         border: '2px solid #e0e0e0',
-                        borderRadius: '10px',
-                        fontSize: '15px',
+                        borderRadius: 'clamp(5px, 0.8vh, 10px)',
+                        fontSize: 'clamp(12px, 1.4vw, 15px)',
                         textAlign: 'right',
                         fontFamily: 'Cairo, sans-serif',
                         direction: 'ltr'
@@ -640,20 +666,20 @@ export default function RegisterPage() {
                     disabled={loading}
                     style={{
                       width: '100%',
-                      padding: '15px',
+                      padding: 'clamp(10px, 1.5vh, 15px)',
                       background: loading ? '#95a5a6' : 'linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%)',
                       color: 'white',
                       border: 'none',
-                      borderRadius: '10px',
-                      fontSize: '16px',
+                      borderRadius: 'clamp(5px, 0.8vh, 10px)',
+                      fontSize: 'clamp(13px, 1.5vw, 16px)',
                       fontWeight: '700',
                       fontFamily: 'Cairo, sans-serif',
                       cursor: loading ? 'not-allowed' : 'pointer',
-                      boxShadow: '0 4px 15px rgba(26, 58, 58, 0.3)',
+                      boxShadow: '0 0.4vh 1.5vh rgba(26, 58, 58, 0.3)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: '10px'
+                      gap: 'clamp(5px, 0.8vw, 10px)'
                     }}
                   >
                     {loading && <span className="spinner"></span>}
@@ -668,9 +694,9 @@ export default function RegisterPage() {
               <div className="tab-content">
                 <div style={{
                   background: '#f0f9f9',
-                  padding: '20px',
-                  borderRadius: '12px',
-                  marginBottom: '20px',
+                  padding: 'clamp(12px, 2vh, 20px)',
+                  borderRadius: 'clamp(6px, 1vh, 12px)',
+                  marginBottom: 'clamp(12px, 2vh, 20px)',
                   border: '2px dashed #5fb3b3'
                 }}>
                   <input
@@ -680,15 +706,15 @@ export default function RegisterPage() {
                     onChange={(e) => setCsvFile(e.target.files?.[0] || null)}
                     style={{
                       width: '100%',
-                      padding: '10px',
-                      fontSize: '14px',
+                      padding: 'clamp(8px, 1.2vh, 10px)',
+                      fontSize: 'clamp(11px, 1.2vw, 14px)',
                       fontFamily: 'Cairo, sans-serif'
                     }}
                   />
                   <p style={{
-                    fontSize: '12px',
+                    fontSize: 'clamp(9px, 1vw, 12px)',
                     color: '#666666',
-                    marginTop: '10px',
+                    marginTop: 'clamp(8px, 1.2vh, 10px)',
                     textAlign: 'right',
                     lineHeight: '1.6'
                   }}>
@@ -707,20 +733,20 @@ export default function RegisterPage() {
                   disabled={!csvFile || importing}
                   style={{
                     width: '100%',
-                    padding: '15px',
+                    padding: 'clamp(10px, 1.5vh, 15px)',
                     background: (!csvFile || importing) ? '#95a5a6' : '#3498db',
                     color: 'white',
                     border: 'none',
-                    borderRadius: '10px',
-                    fontSize: '16px',
+                    borderRadius: 'clamp(5px, 0.8vh, 10px)',
+                    fontSize: 'clamp(13px, 1.5vw, 16px)',
                     fontWeight: '700',
                     fontFamily: 'Cairo, sans-serif',
                     cursor: (!csvFile || importing) ? 'not-allowed' : 'pointer',
-                    boxShadow: '0 4px 15px rgba(52, 152, 219, 0.3)',
+                    boxShadow: '0 0.4vh 1.5vh rgba(52, 152, 219, 0.3)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '10px'
+                    gap: 'clamp(5px, 0.8vw, 10px)'
                   }}
                 >
                   {importing && <span className="spinner"></span>}
@@ -730,23 +756,23 @@ export default function RegisterPage() {
                 {/* Import Results */}
                 {importSuccess && (
                   <div style={{
-                    marginTop: '20px',
-                    padding: '15px',
+                    marginTop: 'clamp(12px, 2vh, 20px)',
+                    padding: 'clamp(10px, 1.5vh, 15px)',
                     background: '#d4edda',
-                    borderRadius: '10px',
+                    borderRadius: 'clamp(5px, 0.8vh, 10px)',
                     border: '1px solid #28a745'
                   }}>
                     <h3 style={{
-                      fontSize: '16px',
+                      fontSize: 'clamp(13px, 1.5vw, 16px)',
                       fontWeight: '700',
                       color: '#27ae60',
-                      marginBottom: '10px',
+                      marginBottom: 'clamp(8px, 1.2vh, 10px)',
                       textAlign: 'center'
                     }}>
                       تفاصيل الاستيراد
                     </h3>
                     <div style={{
-                      fontSize: '14px',
+                      fontSize: 'clamp(11px, 1.2vw, 14px)',
                       color: '#155724',
                       textAlign: 'right',
                       lineHeight: '2'
@@ -761,8 +787,9 @@ export default function RegisterPage() {
                       <div className="error-list">
                         <div style={{
                           fontWeight: '700',
-                          marginBottom: '10px',
-                          color: '#856404'
+                          marginBottom: 'clamp(8px, 1.2vh, 10px)',
+                          color: '#856404',
+                          fontSize: 'clamp(11px, 1.2vw, 13px)'
                         }}>
                           تفصيل الأخطاء:
                         </div>
@@ -770,7 +797,7 @@ export default function RegisterPage() {
                           <div key={index} className="error-item">
                             <strong>السطر {error.row}:</strong> {error.name}
                             <br />
-                            <span style={{ fontSize: '12px' }}>السبب: {error.reason}</span>
+                            <span style={{ fontSize: 'clamp(9px, 1vw, 12px)' }}>السبب: {error.reason}</span>
                           </div>
                         ))}
                       </div>
@@ -786,17 +813,17 @@ export default function RegisterPage() {
             onClick={() => router.push('/dashboard')}
             style={{
               width: '100%',
-              marginTop: '30px',
-              padding: '15px',
+              padding: 'clamp(10px, 1.5vh, 15px)',
               background: '#ffffff',
               color: '#5fb3b3',
               border: '2px solid #5fb3b3',
-              borderRadius: '10px',
-              fontSize: '16px',
+              borderRadius: 'clamp(5px, 0.8vh, 10px)',
+              fontSize: 'clamp(13px, 1.5vw, 16px)',
               fontWeight: '700',
               fontFamily: 'Cairo, sans-serif',
               cursor: 'pointer',
-              transition: 'all 0.2s'
+              transition: 'all 0.2s',
+              flexShrink: 0
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = '#5fb3b3'
