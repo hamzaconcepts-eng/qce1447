@@ -85,6 +85,23 @@ export default function EvaluatePage() {
     'المستوى الخامس: الصفوف 1-3 | جزء عمَّ'
   ]
 
+  // Fix viewport height for mobile browsers
+  useEffect(() => {
+    const setVH = () => {
+      const vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+    }
+    
+    setVH()
+    window.addEventListener('resize', setVH)
+    window.addEventListener('orientationchange', setVH)
+    
+    return () => {
+      window.removeEventListener('resize', setVH)
+      window.removeEventListener('orientationchange', setVH)
+    }
+  }, [])
+
   useEffect(() => {
     const userStr = localStorage.getItem('user')
     if (!userStr) {
@@ -289,22 +306,30 @@ export default function EvaluatePage() {
         final_score: finalScore
       }
 
+      let savedEvaluation
+
       if (existingEvaluation) {
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from('evaluations')
           .update({
             ...evaluationData,
             updated_at: new Date().toISOString()
           })
           .eq('id', existingEvaluation.id)
+          .select()
+          .single()
 
         if (error) throw error
+        savedEvaluation = data
       } else {
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from('evaluations')
           .insert([evaluationData])
+          .select()
+          .single()
 
         if (error) throw error
+        savedEvaluation = data
       }
 
       await supabase
@@ -312,6 +337,8 @@ export default function EvaluatePage() {
         .update({ status: 'evaluated' })
         .eq('id', selectedCompetitor.id)
 
+      // Update existing evaluation with the saved data
+      setExistingEvaluation(savedEvaluation)
       setHasChanges(false)
       setShowSaveSuccess(true)
       setSaving(false)
@@ -373,7 +400,7 @@ export default function EvaluatePage() {
             font-family: 'Cairo', sans-serif; 
             direction: rtl;
             background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
-            min-height: 100vh;
+            min-height: calc(var(--vh, 1vh) * 100);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -745,7 +772,7 @@ export default function EvaluatePage() {
       <style jsx global>{`
         body {
           background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
-          min-height: 100vh;
+          min-height: calc(var(--vh, 1vh) * 100);
         }
         
         .app-container {
@@ -951,7 +978,7 @@ export default function EvaluatePage() {
       `}</style>
 
       <div style={{
-        minHeight: '100vh',
+        minHeight: 'calc(var(--vh, 1vh) * 100)',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
