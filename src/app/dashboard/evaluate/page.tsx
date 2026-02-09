@@ -1,4 +1,3 @@
-//hello
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -1533,7 +1532,7 @@ export default function EvaluatePage() {
                         style={{
                           flex: 1,
                           height: '100%',
-                          background: 'linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%)',
+                          background: 'linear-gradient(135deg, #d0d4d7 0%, #b8bec2 100%)',
                           color: 'white',
                           border: 'none',
                           borderRadius: '10px',
@@ -1543,7 +1542,7 @@ export default function EvaluatePage() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                          boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
@@ -1661,7 +1660,7 @@ export default function EvaluatePage() {
                         style={{
                           flex: 1,
                           height: '100%',
-                          background: 'linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%)',
+                          background: 'linear-gradient(135deg, #d0d4d7 0%, #b8bec2 100%)',
                           color: 'white',
                           border: 'none',
                           borderRadius: '10px',
@@ -1671,7 +1670,7 @@ export default function EvaluatePage() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                          boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
@@ -1789,7 +1788,7 @@ export default function EvaluatePage() {
                         style={{
                           flex: 1,
                           height: '100%',
-                          background: 'linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%)',
+                          background: 'linear-gradient(135deg, #d0d4d7 0%, #b8bec2 100%)',
                           color: 'white',
                           border: 'none',
                           borderRadius: '10px',
@@ -1799,7 +1798,7 @@ export default function EvaluatePage() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                          boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
@@ -1917,7 +1916,7 @@ export default function EvaluatePage() {
                         style={{
                           flex: 1,
                           height: '100%',
-                          background: 'linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%)',
+                          background: 'linear-gradient(135deg, #d0d4d7 0%, #b8bec2 100%)',
                           color: 'white',
                           border: 'none',
                           borderRadius: '10px',
@@ -1927,7 +1926,7 @@ export default function EvaluatePage() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                          boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
