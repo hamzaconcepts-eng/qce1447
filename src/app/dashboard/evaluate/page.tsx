@@ -1262,7 +1262,7 @@ export default function EvaluatePage() {
                 padding: 'clamp(6px, 1vh, 12px)',
                 overflow: 'hidden',
                 boxSizing: 'border-box',
-                background: 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)'
+                background: '#ffffff'
               }}>
                 
                 {/* FIXED ALERTS */}
