@@ -1248,132 +1248,148 @@ export default function EvaluatePage() {
             </>
           ) : (
             <>
-              {/* Evaluation Screen - LANDSCAPE OPTIMIZED - ORIGINAL STYLING V2 */}
+              {/* Evaluation Screen - INSPIRED LAYOUT */}
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'clamp(280px, 28vw, 380px) 1fr',
+                gridTemplateColumns: 'clamp(320px, 32vw, 450px) 1fr',
                 gridTemplateRows: '1fr auto',
-                height: 'calc(var(--vh, 1vh) * 88)',
-                gap: 'clamp(15px, 2vw, 25px)',
-                padding: 'clamp(10px, 1.5vh, 15px)',
-                overflow: 'hidden'
+                height: 'calc(var(--vh, 1vh) * 92)',
+                gap: 'clamp(20px, 2.5vw, 35px)',
+                padding: 'clamp(15px, 2vh, 25px)',
+                overflow: 'hidden',
+                background: '#f5f5f5'
               }}>
                 
-                {/* LEFT SIDEBAR - Competitor Info */}
+                {/* LEFT SIDEBAR */}
                 <div style={{
-                  gridRow: '1 / 2',
+                  gridRow: '1 / 3',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: 'clamp(10px, 1.3vh, 16px)',
+                  gap: 'clamp(15px, 2vh, 25px)',
                   overflow: 'hidden'
                 }}>
                   
+                  {/* Logo */}
+                  <div style={{
+                    width: 'clamp(60px, 8vw, 90px)',
+                    height: 'clamp(60px, 8vw, 90px)',
+                    margin: '0',
+                    flexShrink: 0
+                  }}>
+                    <Image
+                      src="/images/logo.svg"
+                      alt="Logo"
+                      width={90}
+                      height={90}
+                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                      priority
+                    />
+                  </div>
+
+                  {/* Title */}
+                  <h1 style={{
+                    fontSize: 'clamp(22px, 2.8vw, 32px)',
+                    fontWeight: '700',
+                    color: '#333333',
+                    margin: 0,
+                    flexShrink: 0
+                  }}>
+                    تقييم المتسابقين
+                  </h1>
+
                   {/* Alerts */}
                   {showAlreadyEvaluated && (
                     <div style={{
                       background: '#fff3cd',
-                      padding: 'clamp(8px, 1vh, 12px)',
-                      borderRadius: 'clamp(6px, 0.8vh, 10px)',
-                      fontSize: 'clamp(11px, 1.2vw, 13px)',
+                      padding: 'clamp(10px, 1.3vh, 15px)',
+                      borderRadius: 'clamp(8px, 1vh, 12px)',
+                      fontSize: 'clamp(12px, 1.3vw, 14px)',
                       textAlign: 'center',
                       color: '#856404',
-                      border: '1px solid #ffc107',
-                      lineHeight: '1.4'
+                      border: '2px solid #ffc107',
+                      flexShrink: 0
                     }}>
-                      ⚠️ تم تقييم هذا المتسابق مسبقاً. أي تغييرات ستحدث الدرجة السابقة.
+                      ⚠️ تم تقييم هذا المتسابق مسبقاً
                     </div>
                   )}
 
                   {showSaveSuccess && (
                     <div style={{
                       background: '#d4edda',
-                      padding: 'clamp(8px, 1vh, 12px)',
-                      borderRadius: 'clamp(6px, 0.8vh, 10px)',
-                      fontSize: 'clamp(11px, 1.2vw, 13px)',
+                      padding: 'clamp(10px, 1.3vh, 15px)',
+                      borderRadius: 'clamp(8px, 1vh, 12px)',
+                      fontSize: 'clamp(12px, 1.3vw, 14px)',
                       textAlign: 'center',
                       color: '#27ae60',
-                      fontWeight: '600'
+                      fontWeight: '700',
+                      flexShrink: 0
                     }}>
                       ✓ تم حفظ التقييم بنجاح
                     </div>
                   )}
 
-                  {/* Competitor Name & Details - ONE LINE */}
-                  <div style={{ textAlign: 'center' }}>
-                    <h2 style={{
-                      fontSize: 'clamp(18px, 2.2vw, 26px)',
-                      fontWeight: '700',
-                      color: '#333333',
-                      margin: '0 0 clamp(6px, 0.8vh, 10px) 0'
-                    }}>
-                      {selectedCompetitor.full_name}
-                    </h2>
-                    <p style={{
-                      fontSize: 'clamp(11px, 1.3vw, 14px)',
-                      color: '#666666',
-                      lineHeight: '1.6',
-                      margin: 0
-                    }}>
-                      {selectedCompetitor.gender === 'male' ? 'ذكر' : 'أنثى'} • {selectedCompetitor.level} • {selectedCompetitor.city}
-                    </p>
-                  </div>
+                  {/* Competitor Name */}
+                  <h2 style={{
+                    fontSize: 'clamp(20px, 2.5vw, 30px)',
+                    fontWeight: '700',
+                    color: '#1a3a3a',
+                    margin: 0,
+                    lineHeight: '1.3',
+                    flexShrink: 0
+                  }}>
+                    {selectedCompetitor.full_name}
+                  </h2>
 
-                  {/* Score Display - ORIGINAL COLORS */}
-                  <div style={{ textAlign: 'center' }}>
+                  {/* Details - One Line */}
+                  <p style={{
+                    fontSize: 'clamp(13px, 1.5vw, 16px)',
+                    color: '#666666',
+                    margin: 0,
+                    lineHeight: '1.5',
+                    flexShrink: 0
+                  }}>
+                    {selectedCompetitor.gender === 'male' ? 'أنثى' : 'ذكر'} • {selectedCompetitor.level} • {selectedCompetitor.city}
+                  </p>
+
+                  {/* Score Display */}
+                  <div style={{
+                    background: finalScore >= 95 ? '#d4edda' : 
+                               finalScore >= 90 ? '#fff3cd' : '#ffebee',
+                    padding: 'clamp(30px, 4vh, 50px)',
+                    borderRadius: 'clamp(15px, 2vh, 25px)',
+                    textAlign: 'center',
+                    flexShrink: 0
+                  }}>
                     <div style={{
-                      fontSize: 'clamp(50px, 6vw, 80px)',
+                      fontSize: 'clamp(70px, 9vw, 120px)',
                       fontWeight: '700',
-                      padding: 'clamp(20px, 2.5vh, 30px)',
-                      borderRadius: 'clamp(12px, 1.5vh, 20px)',
-                      width: '100%',
-                      background: finalScore >= 95 ? '#d4edda' : 
-                                 finalScore >= 90 ? '#fff3cd' : '#ffebee',
                       color: finalScore >= 95 ? '#27ae60' : 
-                             finalScore >= 90 ? '#f39c12' : '#e74c3c'
+                             finalScore >= 90 ? '#f39c12' : '#e74c3c',
+                      lineHeight: '1'
                     }}>
                       {finalScore}
                     </div>
                   </div>
 
-                  {/* Save Button - Below Score */}
-                  <button
-                    onClick={handleSave}
-                    disabled={saving}
-                    style={{
-                      padding: 'clamp(14px, 2vh, 20px)',
-                      background: saving ? '#95a5a6' : '#5fb3b3',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: 'clamp(8px, 1vh, 12px)',
-                      fontSize: 'clamp(15px, 1.8vw, 20px)',
-                      fontWeight: '700',
-                      fontFamily: 'Cairo, sans-serif',
-                      cursor: saving ? 'not-allowed' : 'pointer',
-                      transition: 'all 0.2s',
-                      boxShadow: '0 4px 12px rgba(95, 179, 179, 0.3)'
-                    }}
-                  >
-                    {saving ? 'جاري الحفظ...' : 'حفظ التقييم'}
-                  </button>
-
-                  {/* Print Button - Below Save (Smaller) */}
+                  {/* PDF Print Button */}
                   <button
                     onClick={handlePrintScoreCard}
                     style={{
-                      padding: 'clamp(8px, 1.2vh, 12px)',
+                      padding: 'clamp(14px, 2vh, 20px)',
                       background: '#ffffff',
                       color: '#5fb3b3',
-                      border: '2px solid #5fb3b3',
-                      borderRadius: 'clamp(6px, 0.8vh, 10px)',
-                      fontSize: 'clamp(12px, 1.4vw, 15px)',
-                      fontWeight: '600',
+                      border: '3px solid #5fb3b3',
+                      borderRadius: 'clamp(10px, 1.3vh, 15px)',
+                      fontSize: 'clamp(15px, 1.8vw, 20px)',
+                      fontWeight: '700',
                       fontFamily: 'Cairo, sans-serif',
                       cursor: 'pointer',
                       transition: 'all 0.2s',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: 'clamp(5px, 0.7vw, 8px)'
+                      gap: 'clamp(8px, 1vw, 12px)',
+                      flexShrink: 0
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.background = '#5fb3b3'
@@ -1384,341 +1400,25 @@ export default function EvaluatePage() {
                       e.currentTarget.style.color = '#5fb3b3'
                     }}
                   >
-                    <span>📄</span>
+                    <span style={{ fontSize: 'clamp(18px, 2.2vw, 24px)' }}>📄</span>
                     <span>طباعة PDF</span>
                   </button>
-                </div>
 
-                {/* RIGHT AREA - Error Buttons 2x2 Grid */}
-                <div style={{
-                  gridRow: '1 / 2',
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
-                  gridTemplateRows: 'repeat(2, 1fr)',
-                  gap: 'clamp(12px, 1.8vw, 20px)',
-                  overflow: 'hidden'
-                }}>
-                  
-                  {/* تنبيه Button - FIXED: -1 not -5 */}
-                  <div style={{
-                    background: '#ffffff',
-                    padding: 'clamp(15px, 2vh, 20px)',
-                    borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                    border: '2px solid #e0e0e0'
-                  }}>
-                    <div style={{
-                      fontSize: 'clamp(20px, 2.5vw, 28px)',
-                      fontWeight: '800',
-                      color: '#333333',
-                      marginBottom: 'clamp(10px, 1.3vh, 15px)',
-                      textAlign: 'center'
-                    }}>
-                      تنبيه
-                      <div style={{ 
-                        fontSize: 'clamp(11px, 1.2vw, 13px)', 
-                        color: '#888', 
-                        marginTop: 'clamp(3px, 0.5vh, 5px)',
-                        fontWeight: '400'
-                      }}>
-                        ({tanbihCount} أخطاء = -{tanbihCount * 1} درجة)
-                      </div>
-                    </div>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      gap: 'clamp(10px, 1.5vw, 15px)'
-                    }}>
-                      <button
-                        onClick={() => incrementCount('tanbih')}
-                        style={{
-                          flex: 1,
-                          padding: 'clamp(18px, 2.5vh, 25px)',
-                          background: '#5fb3b3',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                          fontSize: 'clamp(28px, 3.5vw, 40px)',
-                          fontWeight: '700',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        +
-                      </button>
-                      <div style={{
-                        fontSize: 'clamp(32px, 4vw, 48px)',
-                        fontWeight: '700',
-                        color: '#666666',
-                        minWidth: 'clamp(45px, 5.5vw, 70px)',
-                        textAlign: 'center'
-                      }}>
-                        {tanbihCount}
-                      </div>
-                      <button
-                        onClick={() => decrementCount('tanbih')}
-                        style={{
-                          flex: 1,
-                          padding: 'clamp(18px, 2.5vh, 25px)',
-                          background: '#95a5a6',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                          fontSize: 'clamp(28px, 3.5vw, 40px)',
-                          fontWeight: '700',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        -
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* فتح Button */}
-                  <div style={{
-                    background: '#ffffff',
-                    padding: 'clamp(15px, 2vh, 20px)',
-                    borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                    border: '2px solid #e0e0e0'
-                  }}>
-                    <div style={{
-                      fontSize: 'clamp(20px, 2.5vw, 28px)',
-                      fontWeight: '800',
-                      color: '#333333',
-                      marginBottom: 'clamp(10px, 1.3vh, 15px)',
-                      textAlign: 'center'
-                    }}>
-                      فتح
-                      <div style={{ 
-                        fontSize: 'clamp(11px, 1.2vw, 13px)', 
-                        color: '#888', 
-                        marginTop: 'clamp(3px, 0.5vh, 5px)',
-                        fontWeight: '400'
-                      }}>
-                        ({fatehCount} أخطاء = -{fatehCount * 2} درجة)
-                      </div>
-                    </div>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      gap: 'clamp(10px, 1.5vw, 15px)'
-                    }}>
-                      <button
-                        onClick={() => incrementCount('fateh')}
-                        style={{
-                          flex: 1,
-                          padding: 'clamp(18px, 2.5vh, 25px)',
-                          background: '#5fb3b3',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                          fontSize: 'clamp(28px, 3.5vw, 40px)',
-                          fontWeight: '700',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        +
-                      </button>
-                      <div style={{
-                        fontSize: 'clamp(32px, 4vw, 48px)',
-                        fontWeight: '700',
-                        color: '#666666',
-                        minWidth: 'clamp(45px, 5.5vw, 70px)',
-                        textAlign: 'center'
-                      }}>
-                        {fatehCount}
-                      </div>
-                      <button
-                        onClick={() => decrementCount('fateh')}
-                        style={{
-                          flex: 1,
-                          padding: 'clamp(18px, 2.5vh, 25px)',
-                          background: '#95a5a6',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                          fontSize: 'clamp(28px, 3.5vw, 40px)',
-                          fontWeight: '700',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        -
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* تشكيل Button */}
-                  <div style={{
-                    background: '#ffffff',
-                    padding: 'clamp(15px, 2vh, 20px)',
-                    borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                    border: '2px solid #e0e0e0'
-                  }}>
-                    <div style={{
-                      fontSize: 'clamp(20px, 2.5vw, 28px)',
-                      fontWeight: '800',
-                      color: '#333333',
-                      marginBottom: 'clamp(10px, 1.3vh, 15px)',
-                      textAlign: 'center'
-                    }}>
-                      تشكيل
-                      <div style={{ 
-                        fontSize: 'clamp(11px, 1.2vw, 13px)', 
-                        color: '#888', 
-                        marginTop: 'clamp(3px, 0.5vh, 5px)',
-                        fontWeight: '400'
-                      }}>
-                        ({tashkeelCount} أخطاء = -{tashkeelCount * 1} درجة)
-                      </div>
-                    </div>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      gap: 'clamp(10px, 1.5vw, 15px)'
-                    }}>
-                      <button
-                        onClick={() => incrementCount('tashkeel')}
-                        style={{
-                          flex: 1,
-                          padding: 'clamp(18px, 2.5vh, 25px)',
-                          background: '#5fb3b3',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                          fontSize: 'clamp(28px, 3.5vw, 40px)',
-                          fontWeight: '700',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        +
-                      </button>
-                      <div style={{
-                        fontSize: 'clamp(32px, 4vw, 48px)',
-                        fontWeight: '700',
-                        color: '#666666',
-                        minWidth: 'clamp(45px, 5.5vw, 70px)',
-                        textAlign: 'center'
-                      }}>
-                        {tashkeelCount}
-                      </div>
-                      <button
-                        onClick={() => decrementCount('tashkeel')}
-                        style={{
-                          flex: 1,
-                          padding: 'clamp(18px, 2.5vh, 25px)',
-                          background: '#95a5a6',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                          fontSize: 'clamp(28px, 3.5vw, 40px)',
-                          fontWeight: '700',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        -
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* تجويد Button */}
-                  <div style={{
-                    background: '#ffffff',
-                    padding: 'clamp(15px, 2vh, 20px)',
-                    borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                    border: '2px solid #e0e0e0'
-                  }}>
-                    <div style={{
-                      fontSize: 'clamp(20px, 2.5vw, 28px)',
-                      fontWeight: '800',
-                      color: '#333333',
-                      marginBottom: 'clamp(10px, 1.3vh, 15px)',
-                      textAlign: 'center'
-                    }}>
-                      تجويد
-                      <div style={{ 
-                        fontSize: 'clamp(11px, 1.2vw, 13px)', 
-                        color: '#888', 
-                        marginTop: 'clamp(3px, 0.5vh, 5px)',
-                        fontWeight: '400'
-                      }}>
-                        ({tajweedCount} أخطاء = -{tajweedCount * 1} درجة)
-                      </div>
-                    </div>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      gap: 'clamp(10px, 1.5vw, 15px)'
-                    }}>
-                      <button
-                        onClick={() => incrementCount('tajweed')}
-                        style={{
-                          flex: 1,
-                          padding: 'clamp(18px, 2.5vh, 25px)',
-                          background: '#5fb3b3',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                          fontSize: 'clamp(28px, 3.5vw, 40px)',
-                          fontWeight: '700',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        +
-                      </button>
-                      <div style={{
-                        fontSize: 'clamp(32px, 4vw, 48px)',
-                        fontWeight: '700',
-                        color: '#666666',
-                        minWidth: 'clamp(45px, 5.5vw, 70px)',
-                        textAlign: 'center'
-                      }}>
-                        {tajweedCount}
-                      </div>
-                      <button
-                        onClick={() => decrementCount('tajweed')}
-                        style={{
-                          flex: 1,
-                          padding: 'clamp(18px, 2.5vh, 25px)',
-                          background: '#95a5a6',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: 'clamp(10px, 1.2vh, 15px)',
-                          fontSize: 'clamp(28px, 3.5vw, 40px)',
-                          fontWeight: '700',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        -
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* BOTTOM ACTION BAR - 2 buttons only */}
-                <div style={{
-                  gridColumn: '1 / -1',
-                  gridRow: '2 / 3',
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: 'clamp(10px, 1.5vw, 15px)'
-                }}>
-
-                  {/* Back to List Button */}
+                  {/* المتسابقين Button */}
                   <button
                     onClick={handleBackToList}
                     style={{
-                      padding: 'clamp(12px, 1.8vh, 18px)',
+                      padding: 'clamp(14px, 2vh, 20px)',
                       background: '#ffffff',
                       color: '#5fb3b3',
-                      border: '2px solid #5fb3b3',
-                      borderRadius: 'clamp(8px, 1vh, 12px)',
-                      fontSize: 'clamp(13px, 1.5vw, 16px)',
-                      fontWeight: '600',
+                      border: '3px solid #5fb3b3',
+                      borderRadius: 'clamp(10px, 1.3vh, 15px)',
+                      fontSize: 'clamp(15px, 1.8vw, 20px)',
+                      fontWeight: '700',
                       fontFamily: 'Cairo, sans-serif',
                       cursor: 'pointer',
-                      transition: 'all 0.2s'
+                      transition: 'all 0.2s',
+                      flexShrink: 0
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.background = '#5fb3b3'
@@ -1729,15 +1429,15 @@ export default function EvaluatePage() {
                       e.currentTarget.style.color = '#5fb3b3'
                     }}
                   >
-                    قائمة المتسابقين
+                    المتسابقين
                   </button>
 
-                  {/* Main Menu Button */}
+                  {/* Main Menu Button (hidden, use back) */}
                   <button
                     onClick={handleBack}
                     style={{
-                      padding: 'clamp(12px, 1.8vh, 18px)',
-                      background: '#ffffff',
+                      padding: 'clamp(10px, 1.5vh, 14px)',
+                      background: 'transparent',
                       color: '#e74c3c',
                       border: '2px solid #e74c3c',
                       borderRadius: 'clamp(8px, 1vh, 12px)',
@@ -1745,18 +1445,435 @@ export default function EvaluatePage() {
                       fontWeight: '600',
                       fontFamily: 'Cairo, sans-serif',
                       cursor: 'pointer',
-                      transition: 'all 0.2s'
+                      transition: 'all 0.2s',
+                      flexShrink: 0
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.background = '#e74c3c'
                       e.currentTarget.style.color = 'white'
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = '#ffffff'
+                      e.currentTarget.style.background = 'transparent'
                       e.currentTarget.style.color = '#e74c3c'
                     }}
                   >
                     القائمة الرئيسية
+                  </button>
+                </div>
+
+                {/* RIGHT AREA - 2x2 Grid */}
+                <div style={{
+                  gridRow: '1 / 2',
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gridTemplateRows: 'repeat(2, 1fr)',
+                  gap: 'clamp(15px, 2vw, 25px)',
+                  overflow: 'hidden'
+                }}>
+                  
+                  {/* تنبيه Button */}
+                  <div style={{
+                    background: '#ffffff',
+                    borderRadius: 'clamp(15px, 2vh, 25px)',
+                    padding: 'clamp(20px, 2.5vh, 30px)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                    border: '3px solid #e8e8e8'
+                  }}>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{
+                        fontSize: 'clamp(18px, 2.3vw, 26px)',
+                        fontWeight: '700',
+                        color: '#333',
+                        marginBottom: 'clamp(5px, 0.8vh, 10px)'
+                      }}>
+                        تنبيه
+                      </div>
+                      <div style={{
+                        fontSize: 'clamp(11px, 1.2vw, 13px)',
+                        color: '#999',
+                        fontWeight: '400'
+                      }}>
+                        (10 أخطاء = -5 درجة)
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: 'clamp(12px, 1.8vw, 20px)',
+                      marginTop: 'clamp(15px, 2vh, 25px)'
+                    }}>
+                      <button
+                        onClick={() => decrementCount('tanbih')}
+                        style={{
+                          flex: 1,
+                          aspectRatio: '1',
+                          background: '#95a5a6',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 'clamp(15px, 2vh, 25px)',
+                          fontSize: 'clamp(32px, 4vw, 50px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      >
+                        −
+                      </button>
+
+                      <div style={{
+                        fontSize: 'clamp(40px, 5vw, 60px)',
+                        fontWeight: '700',
+                        color: '#333',
+                        minWidth: 'clamp(50px, 6vw, 80px)',
+                        textAlign: 'center'
+                      }}>
+                        {tanbihCount}
+                      </div>
+
+                      <button
+                        onClick={() => incrementCount('tanbih')}
+                        style={{
+                          flex: 1,
+                          aspectRatio: '1',
+                          background: '#5fb3b3',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 'clamp(15px, 2vh, 25px)',
+                          fontSize: 'clamp(32px, 4vw, 50px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* فتح Button */}
+                  <div style={{
+                    background: '#ffffff',
+                    borderRadius: 'clamp(15px, 2vh, 25px)',
+                    padding: 'clamp(20px, 2.5vh, 30px)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                    border: '3px solid #e8e8e8'
+                  }}>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{
+                        fontSize: 'clamp(18px, 2.3vw, 26px)',
+                        fontWeight: '700',
+                        color: '#333',
+                        marginBottom: 'clamp(5px, 0.8vh, 10px)'
+                      }}>
+                        فتح
+                      </div>
+                      <div style={{
+                        fontSize: 'clamp(11px, 1.2vw, 13px)',
+                        color: '#999',
+                        fontWeight: '400'
+                      }}>
+                        (10 أخطاء = -2 درجة)
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: 'clamp(12px, 1.8vw, 20px)',
+                      marginTop: 'clamp(15px, 2vh, 25px)'
+                    }}>
+                      <button
+                        onClick={() => decrementCount('fateh')}
+                        style={{
+                          flex: 1,
+                          aspectRatio: '1',
+                          background: '#95a5a6',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 'clamp(15px, 2vh, 25px)',
+                          fontSize: 'clamp(32px, 4vw, 50px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      >
+                        −
+                      </button>
+
+                      <div style={{
+                        fontSize: 'clamp(40px, 5vw, 60px)',
+                        fontWeight: '700',
+                        color: '#333',
+                        minWidth: 'clamp(50px, 6vw, 80px)',
+                        textAlign: 'center'
+                      }}>
+                        {fatehCount}
+                      </div>
+
+                      <button
+                        onClick={() => incrementCount('fateh')}
+                        style={{
+                          flex: 1,
+                          aspectRatio: '1',
+                          background: '#5fb3b3',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 'clamp(15px, 2vh, 25px)',
+                          fontSize: 'clamp(32px, 4vw, 50px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* تشكيل Button */}
+                  <div style={{
+                    background: '#ffffff',
+                    borderRadius: 'clamp(15px, 2vh, 25px)',
+                    padding: 'clamp(20px, 2.5vh, 30px)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                    border: '3px solid #e8e8e8'
+                  }}>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{
+                        fontSize: 'clamp(18px, 2.3vw, 26px)',
+                        fontWeight: '700',
+                        color: '#333',
+                        marginBottom: 'clamp(5px, 0.8vh, 10px)'
+                      }}>
+                        تشكيل
+                      </div>
+                      <div style={{
+                        fontSize: 'clamp(11px, 1.2vw, 13px)',
+                        color: '#999',
+                        fontWeight: '400'
+                      }}>
+                        (10 أخطاء = -1 درجة)
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: 'clamp(12px, 1.8vw, 20px)',
+                      marginTop: 'clamp(15px, 2vh, 25px)'
+                    }}>
+                      <button
+                        onClick={() => decrementCount('tashkeel')}
+                        style={{
+                          flex: 1,
+                          aspectRatio: '1',
+                          background: '#95a5a6',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 'clamp(15px, 2vh, 25px)',
+                          fontSize: 'clamp(32px, 4vw, 50px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      >
+                        −
+                      </button>
+
+                      <div style={{
+                        fontSize: 'clamp(40px, 5vw, 60px)',
+                        fontWeight: '700',
+                        color: '#333',
+                        minWidth: 'clamp(50px, 6vw, 80px)',
+                        textAlign: 'center'
+                      }}>
+                        {tashkeelCount}
+                      </div>
+
+                      <button
+                        onClick={() => incrementCount('tashkeel')}
+                        style={{
+                          flex: 1,
+                          aspectRatio: '1',
+                          background: '#5fb3b3',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 'clamp(15px, 2vh, 25px)',
+                          fontSize: 'clamp(32px, 4vw, 50px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* تجويد Button */}
+                  <div style={{
+                    background: '#ffffff',
+                    borderRadius: 'clamp(15px, 2vh, 25px)',
+                    padding: 'clamp(20px, 2.5vh, 30px)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                    border: '3px solid #e8e8e8'
+                  }}>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{
+                        fontSize: 'clamp(18px, 2.3vw, 26px)',
+                        fontWeight: '700',
+                        color: '#333',
+                        marginBottom: 'clamp(5px, 0.8vh, 10px)'
+                      }}>
+                        تجويد
+                      </div>
+                      <div style={{
+                        fontSize: 'clamp(11px, 1.2vw, 13px)',
+                        color: '#999',
+                        fontWeight: '400'
+                      }}>
+                        (10 أخطاء = -1 درجة)
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: 'clamp(12px, 1.8vw, 20px)',
+                      marginTop: 'clamp(15px, 2vh, 25px)'
+                    }}>
+                      <button
+                        onClick={() => decrementCount('tajweed')}
+                        style={{
+                          flex: 1,
+                          aspectRatio: '1',
+                          background: '#95a5a6',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 'clamp(15px, 2vh, 25px)',
+                          fontSize: 'clamp(32px, 4vw, 50px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      >
+                        −
+                      </button>
+
+                      <div style={{
+                        fontSize: 'clamp(40px, 5vw, 60px)',
+                        fontWeight: '700',
+                        color: '#333',
+                        minWidth: 'clamp(50px, 6vw, 80px)',
+                        textAlign: 'center'
+                      }}>
+                        {tajweedCount}
+                      </div>
+
+                      <button
+                        onClick={() => incrementCount('tajweed')}
+                        style={{
+                          flex: 1,
+                          aspectRatio: '1',
+                          background: '#5fb3b3',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 'clamp(15px, 2vh, 25px)',
+                          fontSize: 'clamp(32px, 4vw, 50px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* SAVE BUTTON - Full Width Bottom */}
+                <div style={{
+                  gridColumn: '2 / 3',
+                  gridRow: '2 / 3'
+                }}>
+                  <button
+                    onClick={handleSave}
+                    disabled={saving}
+                    style={{
+                      width: '100%',
+                      padding: 'clamp(18px, 2.5vh, 28px)',
+                      background: saving ? '#95a5a6' : '#5fb3b3',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: 'clamp(12px, 1.5vh, 18px)',
+                      fontSize: 'clamp(20px, 2.5vw, 30px)',
+                      fontWeight: '700',
+                      fontFamily: 'Cairo, sans-serif',
+                      cursor: saving ? 'not-allowed' : 'pointer',
+                      boxShadow: '0 6px 25px rgba(95, 179, 179, 0.4)',
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={(e) => !saving && (e.currentTarget.style.transform = 'translateY(-3px)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+                  >
+                    {saving ? 'جاري الحفظ...' : 'حفظ التقييم'}
                   </button>
                 </div>
               </div>
