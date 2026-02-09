@@ -989,7 +989,20 @@ export default function ResultsPage() {
 
                 {/* Print Buttons */}
                 <div style={{ marginBottom: '15px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                  <button onClick={handlePrintAllResults} style={{ padding: '8px 15px', background: '#3498db', color: 'white', border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: '600', fontFamily: 'Cairo, sans-serif', cursor: 'pointer' }}>
+                  <button 
+                    onClick={handlePrintAllResults} 
+                    style={{ 
+                      padding: '8px 15px', 
+                      background: '#3498db', 
+                      color: 'white', 
+                      border: 'none', 
+                      borderRadius: '6px', 
+                      fontSize: '13px', 
+                      fontWeight: '600', 
+                      fontFamily: 'Cairo, sans-serif', 
+                      cursor: 'pointer' 
+                    }}
+                  >
                     طباعة النتائج
                   </button>
                   
