@@ -300,13 +300,14 @@ export default function DashboardPage() {
             background: 'rgba(200, 162, 78, 0.08)',
             backdropFilter: 'blur(12px)',
             border: '1px solid rgba(200, 162, 78, 0.25)',
-            padding: 'clamp(10px, 1.5vh, 12px)',
-            borderRadius: '999px',
+            padding: 'clamp(10px, 1.5vh, 12px) clamp(20px, 3.5vw, 28px)',
+            borderRadius: 'clamp(12px, 1.8vh, 18px)',
             marginBottom: 'clamp(14px, 2vh, 18px)',
             flexShrink: 0,
             position: 'relative',
             zIndex: 1,
-            transition: 'all 0.25s'
+            transition: 'all 0.25s',
+            width: '100%'
           }}>
             <p style={{
               color: 'rgba(240, 253, 244, 0.6)',
