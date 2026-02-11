@@ -349,15 +349,15 @@ export default function DashboardPage() {
                 width: '100%',
                 padding: 'clamp(10px, 1.4vh, 12px) clamp(20px, 3.5vw, 28px)',
                 background: 'transparent',
-                color: canRegister ? '#86EFAC' : 'rgba(240, 253, 244, 0.3)',
-                border: canRegister ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(200, 162, 78, 0.12)',
-                borderRadius: '999px',
+                color: canRegister ? '#D4AF5E' : 'rgba(240, 253, 244, 0.3)',
+                border: canRegister ? '1px solid rgba(200, 162, 78, 0.3)' : '1px solid rgba(200, 162, 78, 0.12)',
+                borderRadius: 'clamp(8px, 1.2vh, 12px)',
                 fontSize: 'clamp(12px, 1.4vw, 14px)',
                 fontWeight: '700',
                 fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                 cursor: canRegister ? 'pointer' : 'not-allowed',
                 transition: 'all 0.3s ease',
-                opacity: canRegister ? 0.8 : 0.5,
+                opacity: canRegister ? 0.7 : 0.5,
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
@@ -373,9 +373,9 @@ export default function DashboardPage() {
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)'
                 e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.color = '#86EFAC'
-                e.currentTarget.style.border = '1px solid rgba(34, 197, 94, 0.3)'
-                e.currentTarget.style.opacity = '0.8'
+                e.currentTarget.style.color = '#D4AF5E'
+                e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.3)'
+                e.currentTarget.style.opacity = '0.7'
                 e.currentTarget.style.boxShadow = 'none'
               }}
             >
@@ -390,15 +390,15 @@ export default function DashboardPage() {
                 width: '100%',
                 padding: 'clamp(10px, 1.4vh, 12px) clamp(20px, 3.5vw, 28px)',
                 background: 'transparent',
-                color: canView ? '#86EFAC' : 'rgba(240, 253, 244, 0.3)',
-                border: canView ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(200, 162, 78, 0.12)',
-                borderRadius: '999px',
+                color: canView ? '#D4AF5E' : 'rgba(240, 253, 244, 0.3)',
+                border: canView ? '1px solid rgba(200, 162, 78, 0.3)' : '1px solid rgba(200, 162, 78, 0.12)',
+                borderRadius: 'clamp(8px, 1.2vh, 12px)',
                 fontSize: 'clamp(12px, 1.4vw, 14px)',
                 fontWeight: '700',
                 fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                 cursor: canView ? 'pointer' : 'not-allowed',
                 transition: 'all 0.3s ease',
-                opacity: canView ? 0.8 : 0.5,
+                opacity: canView ? 0.7 : 0.5,
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
@@ -414,16 +414,16 @@ export default function DashboardPage() {
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)'
                 e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.color = '#86EFAC'
-                e.currentTarget.style.border = '1px solid rgba(34, 197, 94, 0.3)'
-                e.currentTarget.style.opacity = '0.8'
+                e.currentTarget.style.color = '#D4AF5E'
+                e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.3)'
+                e.currentTarget.style.opacity = '0.7'
                 e.currentTarget.style.boxShadow = 'none'
               }}
             >
               عرض المتسابقين المسجلين
             </button>
 
-            {/* Evaluate - Admin & Evaluator - Ghost style turning gold */}
+            {/* Evaluate - Admin & Evaluator */}
             <button
               onClick={() => canEvaluate && router.push('/dashboard/evaluate')}
               disabled={!canEvaluate}
@@ -431,15 +431,15 @@ export default function DashboardPage() {
                 width: '100%',
                 padding: 'clamp(10px, 1.4vh, 12px) clamp(20px, 3.5vw, 28px)',
                 background: 'transparent',
-                color: canEvaluate ? '#86EFAC' : 'rgba(240, 253, 244, 0.3)',
-                border: canEvaluate ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(200, 162, 78, 0.12)',
-                borderRadius: '999px',
+                color: canEvaluate ? '#D4AF5E' : 'rgba(240, 253, 244, 0.3)',
+                border: canEvaluate ? '1px solid rgba(200, 162, 78, 0.3)' : '1px solid rgba(200, 162, 78, 0.12)',
+                borderRadius: 'clamp(8px, 1.2vh, 12px)',
                 fontSize: 'clamp(12px, 1.4vw, 14px)',
                 fontWeight: '700',
                 fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                 cursor: canEvaluate ? 'pointer' : 'not-allowed',
                 transition: 'all 0.3s ease',
-                opacity: canEvaluate ? 0.8 : 0.5,
+                opacity: canEvaluate ? 0.7 : 0.5,
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
@@ -455,9 +455,9 @@ export default function DashboardPage() {
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)'
                 e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.color = '#86EFAC'
-                e.currentTarget.style.border = '1px solid rgba(34, 197, 94, 0.3)'
-                e.currentTarget.style.opacity = '0.8'
+                e.currentTarget.style.color = '#D4AF5E'
+                e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.3)'
+                e.currentTarget.style.opacity = '0.7'
                 e.currentTarget.style.boxShadow = 'none'
               }}
             >
@@ -471,15 +471,15 @@ export default function DashboardPage() {
                 width: '100%',
                 padding: 'clamp(10px, 1.4vh, 12px) clamp(20px, 3.5vw, 28px)',
                 background: 'transparent',
-                color: '#86EFAC',
-                border: '1px solid rgba(34, 197, 94, 0.3)',
-                borderRadius: '999px',
+                color: '#D4AF5E',
+                border: '1px solid rgba(200, 162, 78, 0.3)',
+                borderRadius: 'clamp(8px, 1.2vh, 12px)',
                 fontSize: 'clamp(12px, 1.4vw, 14px)',
                 fontWeight: '700',
                 fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
-                opacity: 0.8,
+                opacity: 0.7,
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
@@ -493,9 +493,9 @@ export default function DashboardPage() {
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)'
                 e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.color = '#86EFAC'
-                e.currentTarget.style.border = '1px solid rgba(34, 197, 94, 0.3)'
-                e.currentTarget.style.opacity = '0.8'
+                e.currentTarget.style.color = '#D4AF5E'
+                e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.3)'
+                e.currentTarget.style.opacity = '0.7'
                 e.currentTarget.style.boxShadow = 'none'
               }}
             >
@@ -509,15 +509,15 @@ export default function DashboardPage() {
                 width: '100%',
                 padding: 'clamp(10px, 1.4vh, 12px) clamp(20px, 3.5vw, 28px)',
                 background: 'transparent',
-                color: '#86EFAC',
-                border: '1px solid rgba(34, 197, 94, 0.3)',
-                borderRadius: '999px',
+                color: '#D4AF5E',
+                border: '1px solid rgba(200, 162, 78, 0.3)',
+                borderRadius: 'clamp(8px, 1.2vh, 12px)',
                 fontSize: 'clamp(12px, 1.4vw, 14px)',
                 fontWeight: '700',
                 fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
-                opacity: 0.8,
+                opacity: 0.7,
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
@@ -531,16 +531,16 @@ export default function DashboardPage() {
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)'
                 e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.color = '#86EFAC'
-                e.currentTarget.style.border = '1px solid rgba(34, 197, 94, 0.3)'
-                e.currentTarget.style.opacity = '0.8'
+                e.currentTarget.style.color = '#D4AF5E'
+                e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.3)'
+                e.currentTarget.style.opacity = '0.7'
                 e.currentTarget.style.boxShadow = 'none'
               }}
             >
               لوحة المعلومات المباشرة
             </button>
 
-            {/* Logout Button - Ghost Style */}
+            {/* Logout Button - Same style */}
             <button
               onClick={handleLogout}
               style={{
@@ -549,7 +549,7 @@ export default function DashboardPage() {
                 background: 'transparent',
                 color: '#D4AF5E',
                 border: '1px solid rgba(200, 162, 78, 0.3)',
-                borderRadius: '999px',
+                borderRadius: 'clamp(8px, 1.2vh, 12px)',
                 fontSize: 'clamp(12px, 1.4vw, 14px)',
                 fontWeight: '700',
                 fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
