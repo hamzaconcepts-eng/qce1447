@@ -301,7 +301,7 @@ export default function DashboardPage() {
             backdropFilter: 'blur(12px)',
             border: '1px solid rgba(200, 162, 78, 0.25)',
             padding: 'clamp(10px, 1.5vh, 12px)',
-            borderRadius: 'clamp(12px, 1.8vh, 18px)',
+            borderRadius: '999px',
             marginBottom: 'clamp(14px, 2vh, 18px)',
             flexShrink: 0,
             position: 'relative',
