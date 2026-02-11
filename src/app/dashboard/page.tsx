@@ -345,7 +345,7 @@ export default function DashboardPage() {
             overflowX: 'hidden',
             display: 'flex',
             flexDirection: 'column',
-            gap: 'clamp(10px, 1.4vh, 12px)',
+            gap: 'clamp(16px, 2vh, 20px)',
             paddingRight: '5px',
             position: 'relative',
             zIndex: 1
@@ -359,10 +359,11 @@ export default function DashboardPage() {
                 width: '100%',
                 padding: 'clamp(12px, 1.8vh, 14px) clamp(24px, 4vw, 32px)',
                 background: canRegister 
-                  ? 'linear-gradient(135deg, #B8922E, #D4AF5E)'
-                  : 'rgba(200, 162, 78, 0.1)',
-                color: canRegister ? '#0A0F0A' : 'rgba(240, 253, 244, 0.3)',
-                border: canRegister ? 'none' : '1px solid rgba(200, 162, 78, 0.2)',
+                  ? 'rgba(34, 197, 94, 0.15)'
+                  : 'rgba(200, 162, 78, 0.08)',
+                backdropFilter: 'blur(10px)',
+                color: canRegister ? '#86EFAC' : 'rgba(240, 253, 244, 0.3)',
+                border: canRegister ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(200, 162, 78, 0.15)',
                 borderRadius: '999px',
                 fontSize: 'clamp(13px, 1.5vw, 15px)',
                 fontWeight: '700',
@@ -370,18 +371,19 @@ export default function DashboardPage() {
                 cursor: canRegister ? 'pointer' : 'not-allowed',
                 transition: 'all 0.25s',
                 opacity: canRegister ? 1 : 0.5,
-                boxShadow: canRegister ? '0 4px 16px rgba(200,162,78,0.3)' : 'none',
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
                 if (canRegister) {
                   e.currentTarget.style.transform = 'translateY(-2px)'
-                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(200,162,78,0.5)'
+                  e.currentTarget.style.background = 'rgba(34, 197, 94, 0.2)'
+                  e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.4)'
                 }
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = canRegister ? '0 4px 16px rgba(200,162,78,0.3)' : 'none'
+                e.currentTarget.style.background = canRegister ? 'rgba(34, 197, 94, 0.15)' : 'rgba(200, 162, 78, 0.08)'
+                e.currentTarget.style.borderColor = canRegister ? 'rgba(34, 197, 94, 0.3)' : 'rgba(200, 162, 78, 0.15)'
               }}
             >
               تسجيل متسابق جديد
@@ -395,10 +397,11 @@ export default function DashboardPage() {
                 width: '100%',
                 padding: 'clamp(12px, 1.8vh, 14px) clamp(24px, 4vw, 32px)',
                 background: canView 
-                  ? 'linear-gradient(135deg, #166534, #22C55E)'
-                  : 'rgba(200, 162, 78, 0.1)',
-                color: canView ? '#FFFFFF' : 'rgba(240, 253, 244, 0.3)',
-                border: canView ? 'none' : '1px solid rgba(200, 162, 78, 0.2)',
+                  ? 'rgba(34, 197, 94, 0.15)'
+                  : 'rgba(200, 162, 78, 0.08)',
+                backdropFilter: 'blur(10px)',
+                color: canView ? '#86EFAC' : 'rgba(240, 253, 244, 0.3)',
+                border: canView ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(200, 162, 78, 0.15)',
                 borderRadius: '999px',
                 fontSize: 'clamp(13px, 1.5vw, 15px)',
                 fontWeight: '700',
@@ -406,24 +409,25 @@ export default function DashboardPage() {
                 cursor: canView ? 'pointer' : 'not-allowed',
                 transition: 'all 0.25s',
                 opacity: canView ? 1 : 0.5,
-                boxShadow: canView ? '0 4px 16px rgba(34, 197, 94, 0.35)' : 'none',
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
                 if (canView) {
                   e.currentTarget.style.transform = 'translateY(-2px)'
-                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(34, 197, 94, 0.5)'
+                  e.currentTarget.style.background = 'rgba(34, 197, 94, 0.2)'
+                  e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.4)'
                 }
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = canView ? '0 4px 16px rgba(34, 197, 94, 0.35)' : 'none'
+                e.currentTarget.style.background = canView ? 'rgba(34, 197, 94, 0.15)' : 'rgba(200, 162, 78, 0.08)'
+                e.currentTarget.style.borderColor = canView ? 'rgba(34, 197, 94, 0.3)' : 'rgba(200, 162, 78, 0.15)'
               }}
             >
               عرض المتسابقين المسجلين
             </button>
 
-            {/* Evaluate - Admin & Evaluator */}
+            {/* Evaluate - Admin & Evaluator - GOLD BUTTON */}
             <button
               onClick={() => canEvaluate && router.push('/dashboard/evaluate')}
               disabled={!canEvaluate}
@@ -431,10 +435,10 @@ export default function DashboardPage() {
                 width: '100%',
                 padding: 'clamp(12px, 1.8vh, 14px) clamp(24px, 4vw, 32px)',
                 background: canEvaluate 
-                  ? 'linear-gradient(135deg, #166534, #22C55E)'
-                  : 'rgba(200, 162, 78, 0.1)',
-                color: canEvaluate ? '#FFFFFF' : 'rgba(240, 253, 244, 0.3)',
-                border: canEvaluate ? 'none' : '1px solid rgba(200, 162, 78, 0.2)',
+                  ? 'linear-gradient(135deg, #B8922E, #D4AF5E)'
+                  : 'rgba(200, 162, 78, 0.08)',
+                color: canEvaluate ? '#0A0F0A' : 'rgba(240, 253, 244, 0.3)',
+                border: canEvaluate ? 'none' : '1px solid rgba(200, 162, 78, 0.15)',
                 borderRadius: '999px',
                 fontSize: 'clamp(13px, 1.5vw, 15px)',
                 fontWeight: '700',
@@ -442,18 +446,18 @@ export default function DashboardPage() {
                 cursor: canEvaluate ? 'pointer' : 'not-allowed',
                 transition: 'all 0.25s',
                 opacity: canEvaluate ? 1 : 0.5,
-                boxShadow: canEvaluate ? '0 4px 16px rgba(34, 197, 94, 0.35)' : 'none',
+                boxShadow: canEvaluate ? '0 4px 20px rgba(200,162,78,0.4)' : 'none',
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
                 if (canEvaluate) {
                   e.currentTarget.style.transform = 'translateY(-2px)'
-                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(34, 197, 94, 0.5)'
+                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(200,162,78,0.6)'
                 }
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = canEvaluate ? '0 4px 16px rgba(34, 197, 94, 0.35)' : 'none'
+                e.currentTarget.style.boxShadow = canEvaluate ? '0 4px 20px rgba(200,162,78,0.4)' : 'none'
               }}
             >
               التقييم
@@ -465,25 +469,27 @@ export default function DashboardPage() {
               style={{
                 width: '100%',
                 padding: 'clamp(12px, 1.8vh, 14px) clamp(24px, 4vw, 32px)',
-                background: 'linear-gradient(135deg, #166534, #22C55E)',
-                color: '#FFFFFF',
-                border: 'none',
+                background: 'rgba(34, 197, 94, 0.15)',
+                backdropFilter: 'blur(10px)',
+                color: '#86EFAC',
+                border: '1px solid rgba(34, 197, 94, 0.3)',
                 borderRadius: '999px',
                 fontSize: 'clamp(13px, 1.5vw, 15px)',
                 fontWeight: '700',
                 fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                 cursor: 'pointer',
                 transition: 'all 0.25s',
-                boxShadow: '0 4px 16px rgba(34, 197, 94, 0.35)',
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(34, 197, 94, 0.5)'
+                e.currentTarget.style.background = 'rgba(34, 197, 94, 0.2)'
+                e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.4)'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(34, 197, 94, 0.35)'
+                e.currentTarget.style.background = 'rgba(34, 197, 94, 0.15)'
+                e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.3)'
               }}
             >
               النتائج
@@ -495,25 +501,27 @@ export default function DashboardPage() {
               style={{
                 width: '100%',
                 padding: 'clamp(12px, 1.8vh, 14px) clamp(24px, 4vw, 32px)',
-                background: 'linear-gradient(135deg, #166534, #22C55E)',
-                color: '#FFFFFF',
-                border: 'none',
+                background: 'rgba(34, 197, 94, 0.15)',
+                backdropFilter: 'blur(10px)',
+                color: '#86EFAC',
+                border: '1px solid rgba(34, 197, 94, 0.3)',
                 borderRadius: '999px',
                 fontSize: 'clamp(13px, 1.5vw, 15px)',
                 fontWeight: '700',
                 fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                 cursor: 'pointer',
                 transition: 'all 0.25s',
-                boxShadow: '0 4px 16px rgba(34, 197, 94, 0.35)',
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(34, 197, 94, 0.5)'
+                e.currentTarget.style.background = 'rgba(34, 197, 94, 0.2)'
+                e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.4)'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(34, 197, 94, 0.35)'
+                e.currentTarget.style.background = 'rgba(34, 197, 94, 0.15)'
+                e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.3)'
               }}
             >
               لوحة المعلومات المباشرة
