@@ -77,6 +77,9 @@ export default function LoginPage() {
 
   return (
     <>
+      {/* Google Fonts */}
+      <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+      
       <style jsx global>{`
         * {
           margin: 0;
