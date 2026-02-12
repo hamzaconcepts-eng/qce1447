@@ -937,6 +937,7 @@ export default function ResultsPage() {
                               title="تحديد الكل"
                             />
                           </th>
+                          <th style={{ width: '40px' }}>#</th>
                           <th onClick={() => handleSort('full_name')}>
                             الاسم
                             {sortField === 'full_name' && (
@@ -984,6 +985,7 @@ export default function ResultsPage() {
                               onChange={() => toggleSelect(result.id)}
                             />
                           </td>
+                            <td style={{ fontWeight: '600', color: '#C8A24E' }}>{startIndex + index + 1}</td>
                             <td className="name-cell">{result.full_name}</td>
                             <td>{result.gender === 'male' ? 'ذكر' : 'أنثى'}</td>
                             <td className="level-cell">{result.level.split(':')[0]}</td>
