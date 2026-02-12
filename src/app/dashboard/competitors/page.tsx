@@ -474,7 +474,7 @@ export default function CompetitorsPage() {
         }
 
         .compact-table th {
-          background: linear-gradient(135deg, #0B1F0E, #166534);
+          background: #0B1F0E;
           font-weight: 700;
           color: #FFFFFF;
           position: sticky;
@@ -487,7 +487,7 @@ export default function CompetitorsPage() {
         }
 
         .compact-table th:hover {
-          background: linear-gradient(135deg, #166534, #0B1F0E);
+          background: #143322;
         }
 
         .compact-table .name-cell {
