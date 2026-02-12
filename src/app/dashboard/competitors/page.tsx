@@ -103,6 +103,16 @@ export default function CompetitorsPage() {
     setCurrentPage(1)
   }, [searchTerm, filterGender, filterLevel, filterStatus])
 
+  // Fix: ensure currentPage is valid after data changes (e.g. after delete)
+  useEffect(() => {
+    const maxPage = Math.ceil(filteredCompetitors.length / itemsPerPage)
+    if (currentPage > maxPage && maxPage > 0) {
+      setCurrentPage(maxPage)
+    } else if (maxPage === 0 && currentPage !== 1) {
+      setCurrentPage(1)
+    }
+  }, [filteredCompetitors, currentPage])
+
   const fetchCompetitors = async () => {
     try {
       const supabase = createClient()
@@ -252,8 +262,6 @@ export default function CompetitorsPage() {
           if (error) throw error
         }
         
-        setSelectedIds(new Set())
-        
       } else if (deleteMode === 'all') {
         // Delete all competitors - get all IDs first
         const allIds = competitors.map(c => c.id)
@@ -270,9 +278,10 @@ export default function CompetitorsPage() {
             // Continue with other deletions even if one fails
           }
         }
-        
-        setSelectedIds(new Set())
       }
+
+      // Always clear selection after any delete
+      setSelectedIds(new Set())
 
       // Refresh competitors list
       await fetchCompetitors()
