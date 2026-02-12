@@ -1273,6 +1273,38 @@ export default function EvaluatePage() {
 
           {!selectedCompetitor ? (
             <>
+              {/* Back to Dashboard - Top */}
+              <button
+                onClick={() => router.push('/dashboard')}
+                style={{
+                  width: '100%',
+                  marginBottom: 'clamp(12px, 2vh, 18px)',
+                  padding: 'clamp(10px, 1.4vh, 12px)',
+                  background: 'transparent',
+                  color: '#D4AF5E',
+                  border: '1px solid rgba(200, 162, 78, 0.3)',
+                  borderRadius: 'clamp(8px, 1.2vh, 12px)',
+                  fontSize: 'clamp(12px, 1.4vw, 14px)',
+                  fontWeight: '700',
+                  fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  opacity: 0.7
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(200, 162, 78, 0.08)'
+                  e.currentTarget.style.opacity = '1'
+                  e.currentTarget.style.borderColor = 'rgba(200, 162, 78, 0.5)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'transparent'
+                  e.currentTarget.style.opacity = '0.7'
+                  e.currentTarget.style.borderColor = 'rgba(200, 162, 78, 0.3)'
+                }}
+              >
+                العودة للقائمة الرئيسية
+              </button>
+
               {/* Search */}
               <div style={{ marginBottom: '20px' }}>
                 <input
