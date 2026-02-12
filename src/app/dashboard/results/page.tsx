@@ -378,7 +378,7 @@ export default function ResultsPage() {
             margin: 12mm;
           }
           body { 
-            font-family: 'Noto Kufi Arabic', 'Sora', sans-serif; 
+            font-family: 'Noto Kufi Arabic', 'Sora', -apple-system, BlinkMacSystemFont, sans-serif; 
             direction: rtl;
             font-size: 10px;
             line-height: 1.4;
@@ -387,12 +387,12 @@ export default function ResultsPage() {
             text-align: center; 
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #5fb3b3;
+            border-bottom: 3px solid #C8A24E;
           }
           h1 { 
             font-size: 18px; 
             margin-bottom: 5px;
-            color: #1a3a3a;
+            color: #0B1F0E;
             font-weight: 800;
           }
           .subtitle {
@@ -405,7 +405,7 @@ export default function ResultsPage() {
             page-break-inside: avoid;
           }
           .level-title {
-            background: linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%);
+            background: linear-gradient(135deg, #0B1F0E 0%, #C8A24E 100%);
             color: white;
             padding: 8px 12px;
             border-radius: 8px;
@@ -425,7 +425,7 @@ export default function ResultsPage() {
             font-weight: 700;
             color: #333;
             margin-bottom: 8px;
-            border-right: 4px solid #5fb3b3;
+            border-right: 4px solid #C8A24E;
           }
           .winner-card {
             background: white;
@@ -438,25 +438,25 @@ export default function ResultsPage() {
             align-items: center;
           }
           .winner-card.first {
-            border-color: #FFD700;
-            background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF0 100%);
+            border-color: #C8A24E;
+            background: linear-gradient(135deg, #FFFDF5 0%, #FFF9E6 100%);
           }
           .winner-card.second {
-            border-color: #C0C0C0;
-            background: linear-gradient(135deg, #F5F5F5 0%, #FAFAFA 100%);
+            border-color: #A0A0A0;
+            background: linear-gradient(135deg, #F8F8F8 0%, #FAFAFA 100%);
           }
           .winner-card.third {
-            border-color: #CD7F32;
-            background: linear-gradient(135deg, #FFF5E6 0%, #FFFAF0 100%);
+            border-color: #8B6914;
+            background: linear-gradient(135deg, #FFF8EE 0%, #FFFAF2 100%);
           }
           .rank {
             font-size: 20px;
             font-weight: 800;
             min-width: 30px;
           }
-          .rank.first { color: #FFD700; }
-          .rank.second { color: #C0C0C0; }
-          .rank.third { color: #CD7F32; }
+          .rank.first { color: #C8A24E; }
+          .rank.second { color: #A0A0A0; }
+          .rank.third { color: #8B6914; }
           .winner-info {
             flex: 1;
             margin: 0 10px;
@@ -464,7 +464,7 @@ export default function ResultsPage() {
           .winner-name {
             font-size: clamp(9px, 1.8vw, 11px);
             font-weight: 700;
-            color: #1a3a3a;
+            color: #0B1F0E;
             margin-bottom: 2px;
           }
           .winner-details {
@@ -477,9 +477,9 @@ export default function ResultsPage() {
             min-width: 50px;
             text-align: center;
           }
-          .winner-score.first { color: #27ae60; }
-          .winner-score.second { color: #f39c12; }
-          .winner-score.third { color: #3498db; }
+          .score-green { color: #166534; }
+          .score-gold { color: #92702A; }
+          .score-red { color: #dc3545; }
           .no-winners {
             text-align: center;
             padding: 15px;
@@ -491,7 +491,7 @@ export default function ResultsPage() {
             text-align: center;
             margin-top: 20px;
             padding-top: 10px;
-            border-top: 2px solid #e0e0e0;
+            border-top: 2px solid #C8A24E;
             color: #666;
             font-size: 9px;
           }
@@ -527,7 +527,7 @@ export default function ResultsPage() {
                       <div class="winner-name">${winner.full_name}</div>
                       <div class="winner-details">${winner.city} • ${winner.mobile}</div>
                     </div>
-                    <div class="winner-score ${index === 0 ? 'first' : index === 1 ? 'second' : 'third'}">
+                    <div class="winner-score ${winner.final_score >= 95 ? 'score-green' : winner.final_score >= 90 ? 'score-gold' : 'score-red'}">
                       ${winner.final_score}
                     </div>
                   </div>
@@ -548,7 +548,7 @@ export default function ResultsPage() {
                       <div class="winner-name">${winner.full_name}</div>
                       <div class="winner-details">${winner.city} • ${winner.mobile}</div>
                     </div>
-                    <div class="winner-score ${index === 0 ? 'first' : index === 1 ? 'second' : 'third'}">
+                    <div class="winner-score ${winner.final_score >= 95 ? 'score-green' : winner.final_score >= 90 ? 'score-gold' : 'score-red'}">
                       ${winner.final_score}
                     </div>
                   </div>
