@@ -1552,9 +1552,9 @@ export default function EvaluatePage() {
                         style={{
                           flex: 1,
                           height: '100%',
-                          background: 'linear-gradient(135deg, #C8A24E 0%, #4a9d9d 100%)',
-                          color: 'white',
-                          border: 'none',
+                          background: 'transparent',
+                          color: '#C8A24E',
+                          border: '2px solid #C8A24E',
                           borderRadius: '10px',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
                           fontWeight: '700',
@@ -1562,18 +1562,24 @@ export default function EvaluatePage() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: '0 4px 12px rgba(95,179,179,0.3)',
+                          boxShadow: 'none',
                           transition: 'all 0.2s ease',
                           position: 'relative',
                           overflow: 'hidden'
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
-                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(95,179,179,0.5)';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)';
+                          e.currentTarget.style.color = '#0A0F0A';
+                          e.currentTarget.style.border = 'none';
+                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,162,78,0.5)';
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 4px 12px rgba(95,179,179,0.3)';
+                          e.currentTarget.style.background = 'transparent';
+                          e.currentTarget.style.color = '#C8A24E';
+                          e.currentTarget.style.border = '2px solid #C8A24E';
+                          e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
                           e.currentTarget.style.transform = 'scale(0.95)';
@@ -1602,9 +1608,9 @@ export default function EvaluatePage() {
                         style={{
                           flex: 1,
                           height: '100%',
-                          background: 'linear-gradient(135deg, #d0d4d7 0%, #b8bec2 100%)',
-                          color: 'white',
-                          border: 'none',
+                          background: 'transparent',
+                          color: '#22C55E',
+                          border: '2px solid #22C55E',
                           borderRadius: '10px',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
                           fontWeight: '700',
@@ -1612,16 +1618,22 @@ export default function EvaluatePage() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                          boxShadow: 'none',
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
-                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)';
+                          e.currentTarget.style.color = '#0A0F0A';
+                          e.currentTarget.style.border = 'none';
+                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,162,78,0.5)';
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                          e.currentTarget.style.background = 'transparent';
+                          e.currentTarget.style.color = '#22C55E';
+                          e.currentTarget.style.border = '2px solid #22C55E';
+                          e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
                           e.currentTarget.style.transform = 'scale(0.95)';
@@ -1730,9 +1742,9 @@ export default function EvaluatePage() {
                         style={{
                           flex: 1,
                           height: '100%',
-                          background: 'linear-gradient(135deg, #d0d4d7 0%, #b8bec2 100%)',
-                          color: 'white',
-                          border: 'none',
+                          background: 'transparent',
+                          color: '#22C55E',
+                          border: '2px solid #22C55E',
                           borderRadius: '10px',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
                           fontWeight: '700',
@@ -1740,16 +1752,22 @@ export default function EvaluatePage() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                          boxShadow: 'none',
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
-                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)';
+                          e.currentTarget.style.color = '#0A0F0A';
+                          e.currentTarget.style.border = 'none';
+                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,162,78,0.5)';
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                          e.currentTarget.style.background = 'transparent';
+                          e.currentTarget.style.color = '#22C55E';
+                          e.currentTarget.style.border = '2px solid #22C55E';
+                          e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
                           e.currentTarget.style.transform = 'scale(0.95)';
@@ -1858,9 +1876,9 @@ export default function EvaluatePage() {
                         style={{
                           flex: 1,
                           height: '100%',
-                          background: 'linear-gradient(135deg, #d0d4d7 0%, #b8bec2 100%)',
-                          color: 'white',
-                          border: 'none',
+                          background: 'transparent',
+                          color: '#22C55E',
+                          border: '2px solid #22C55E',
                           borderRadius: '10px',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
                           fontWeight: '700',
@@ -1868,16 +1886,22 @@ export default function EvaluatePage() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                          boxShadow: 'none',
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
-                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)';
+                          e.currentTarget.style.color = '#0A0F0A';
+                          e.currentTarget.style.border = 'none';
+                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,162,78,0.5)';
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                          e.currentTarget.style.background = 'transparent';
+                          e.currentTarget.style.color = '#22C55E';
+                          e.currentTarget.style.border = '2px solid #22C55E';
+                          e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
                           e.currentTarget.style.transform = 'scale(0.95)';
@@ -1986,9 +2010,9 @@ export default function EvaluatePage() {
                         style={{
                           flex: 1,
                           height: '100%',
-                          background: 'linear-gradient(135deg, #d0d4d7 0%, #b8bec2 100%)',
-                          color: 'white',
-                          border: 'none',
+                          background: 'transparent',
+                          color: '#22C55E',
+                          border: '2px solid #22C55E',
                           borderRadius: '10px',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
                           fontWeight: '700',
@@ -1996,16 +2020,22 @@ export default function EvaluatePage() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                          boxShadow: 'none',
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
-                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)';
+                          e.currentTarget.style.color = '#0A0F0A';
+                          e.currentTarget.style.border = 'none';
+                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,162,78,0.5)';
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                          e.currentTarget.style.background = 'transparent';
+                          e.currentTarget.style.color = '#22C55E';
+                          e.currentTarget.style.border = '2px solid #22C55E';
+                          e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
                           e.currentTarget.style.transform = 'scale(0.95)';
@@ -2059,16 +2089,27 @@ export default function EvaluatePage() {
                     disabled={saving}
                     style={{
                       padding: 'clamp(11px, 1.7vh, 17px)',
-                      background: saving ? '#95a5a6' : 'linear-gradient(135deg, #C8A24E 0%, #0B1F0E 100%)',
-                      color: 'white',
+                      background: saving ? 'rgba(200, 162, 78, 0.5)' : 'linear-gradient(135deg, #B8922E, #D4AF5E)',
+                      color: saving ? 'rgba(10, 15, 10, 0.6)' : '#0A0F0A',
                       border: 'none',
                       borderRadius: '10px',
                       fontSize: 'clamp(13px, 1.7vw, 17px)',
                       fontWeight: '700',
                       fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                       cursor: saving ? 'not-allowed' : 'pointer',
-                      boxShadow: '0 3px 12px rgba(95, 179, 179, 0.25)',
-                      flexShrink: 0
+                      boxShadow: saving ? 'none' : '0 4px 16px rgba(200, 162, 78, 0.4)',
+                      flexShrink: 0,
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!saving) {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 24px rgba(200, 162, 78, 0.6)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = saving ? 'none' : '0 4px 16px rgba(200, 162, 78, 0.4)';
                     }}
                   >
                     {saving ? 'جاري الحفظ...' : 'حفظ التقييم'}
