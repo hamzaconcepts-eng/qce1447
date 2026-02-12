@@ -258,7 +258,7 @@ export default function LiveStatsPage() {
             box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.08);
           }
           50% {
-            box-shadow: 0 0.6vh 1.5vh rgba(95, 179, 179, 0.2);
+            box-shadow: 0 0.6vh 1.5vh rgba(200, 162, 78, 0.2);
           }
         }
 
@@ -338,11 +338,11 @@ export default function LiveStatsPage() {
         }
 
         body {
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
+          background: linear-gradient(135deg, #0B1F0E 0%, #1A3A1A 50%, #0B1F0E 100%);
           margin: 0;
           padding: 0;
           overflow: hidden;
-          font-family: "Cairo", sans-serif;
+          font-family: "Noto Kufi Arabic", "Sora", sans-serif;
         }
 
         .screen-container {
@@ -351,15 +351,15 @@ export default function LiveStatsPage() {
           display: flex;
           justify-content: center;
           align-items: center;
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
+          background: linear-gradient(135deg, #0B1F0E 0%, #1A3A1A 50%, #0B1F0E 100%);
           padding: 1vh 1vw;
         }
 
         .dashboard-box {
           width: 100%;
           height: 100%;
-          background: #ffffff;
-          box-shadow: 0 1.2vh 3.5vh rgba(0, 0, 0, 0.4);
+          background: linear-gradient(135deg, #FEFDFB 0%, #FBF9F4 100%);
+          box-shadow: 0 1.2vh 3.5vh rgba(0, 0, 0, 0.4), 0 0 60px rgba(200,162,78,0.08);
           overflow: hidden;
           display: flex;
           flex-direction: column;
@@ -376,10 +376,11 @@ export default function LiveStatsPage() {
         }
 
         .stat-card {
-          background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+          background: linear-gradient(135deg, #F9F6F0 0%, #FEFDFB 100%);
           border-radius: clamp(8px, 0.8vh, 15px);
           padding: clamp(8px, 0.9vh, 18px);
-          box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.08);
+          box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.06);
+          border: 1px solid rgba(200, 162, 78, 0.15);
           transition: all 0.3s;
           animation:
             slideUp 0.6s ease-out,
@@ -395,7 +396,7 @@ export default function LiveStatsPage() {
         .stat-number {
           font-size: clamp(24px, 2.5vw, 48px);
           font-weight: 800;
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
+          background: linear-gradient(135deg, #C8A24E 0%, #0B1F0E 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -415,15 +416,15 @@ export default function LiveStatsPage() {
           height: clamp(120px, 11vw, 220px);
           border-radius: 50%;
           background: conic-gradient(
-            #5fb3b3 0deg,
-            #5fb3b3 calc(var(--progress) * 3.6deg),
-            #e0e0e0 calc(var(--progress) * 3.6deg),
-            #e0e0e0 360deg
+            #C8A24E 0deg,
+            #C8A24E calc(var(--progress) * 3.6deg),
+            #EEEBE4 calc(var(--progress) * 3.6deg),
+            #EEEBE4 360deg
           );
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 0.5vh 1.5vh rgba(95, 179, 179, 0.3);
+          box-shadow: 0 0.5vh 1.5vh rgba(200, 162, 78, 0.3);
           animation: rotate 20s linear infinite;
         }
 
@@ -431,7 +432,7 @@ export default function LiveStatsPage() {
           width: calc(100% - clamp(30px, 2.5vw, 45px));
           height: calc(100% - clamp(30px, 2.5vw, 45px));
           border-radius: 50%;
-          background: white;
+          background: #FEFDFB;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -442,7 +443,7 @@ export default function LiveStatsPage() {
         .progress-percentage {
           font-size: clamp(26px, 2.7vw, 52px);
           font-weight: 800;
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
+          background: linear-gradient(135deg, #C8A24E 0%, #0B1F0E 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -495,7 +496,7 @@ export default function LiveStatsPage() {
         .bar-wrapper {
           flex: 1;
           height: clamp(16px, 1.7vh, 32px);
-          background: #f0f0f0;
+          background: #EEEBE4;
           border-radius: clamp(8px, 0.8vh, 15px);
           overflow: hidden;
         }
@@ -504,11 +505,11 @@ export default function LiveStatsPage() {
           height: 100%;
           background: linear-gradient(
             90deg,
-            #5fb3b3 0%,
-            #4aa3a3 25%,
-            #5fb3b3 50%,
-            #4aa3a3 75%,
-            #5fb3b3 100%
+            #22C55E 0%,
+            #166534 25%,
+            #22C55E 50%,
+            #166534 75%,
+            #22C55E 100%
           );
           background-size: 200% 100%;
           border-radius: clamp(8px, 0.8vh, 15px);
@@ -522,14 +523,14 @@ export default function LiveStatsPage() {
         }
 
         .milestone-badge {
-          background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+          background: linear-gradient(135deg, #C8A24E 0%, #D4AF5E 100%);
           color: #333;
           padding: clamp(5px, 0.5vh, 10px) clamp(14px, 1.5vw, 28px);
           border-radius: clamp(25px, 2.5vh, 50px);
           font-size: clamp(12px, 1vw, 20px);
           font-weight: 800;
           text-align: center;
-          box-shadow: 0 0.5vh 1.5vh rgba(255, 215, 0, 0.4);
+          box-shadow: 0 0.5vh 1.5vh rgba(200, 162, 78, 0.4);
           animation:
             float 3s ease-in-out infinite,
             pulse 2s ease-in-out infinite;
@@ -538,8 +539,8 @@ export default function LiveStatsPage() {
         .clock-display {
           font-size: clamp(40px, 4.4vw, 84px);
           font-weight: 700;
-          color: #1a3a3a;
-          font-family: "Cairo", monospace;
+          color: #0B1F0E;
+          font-family: "Noto Kufi Arabic", "Sora", monospace;
           animation: pulse 2s ease-in-out infinite;
           text-align: right;
         }
@@ -551,12 +552,12 @@ export default function LiveStatsPage() {
           width: clamp(35px, 2.9vw, 55px);
           height: clamp(35px, 2.9vw, 55px);
           border-radius: 50%;
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
+          background: linear-gradient(135deg, #0B1F0E 0%, #C8A24E 100%);
           color: white;
           border: none;
           cursor: pointer;
           font-size: clamp(14px, 1.1vw, 22px);
-          box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.3);
+          box-shadow: 0 0.4vh 1vh rgba(200, 162, 78, 0.3);
           transition: all 0.3s;
           z-index: 1000;
           animation: float 3s ease-in-out infinite;
@@ -572,15 +573,15 @@ export default function LiveStatsPage() {
           bottom: clamp(10px, 1.3vh, 25px);
           left: clamp(10px, 1.3vw, 25px);
           padding: clamp(6px, 0.6vh, 12px) clamp(12px, 1.3vw, 25px);
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
+          background: linear-gradient(135deg, #0B1F0E 0%, #C8A24E 100%);
           color: white;
           border: none;
           border-radius: clamp(5px, 0.5vh, 10px);
           cursor: pointer;
           font-size: clamp(11px, 0.8vw, 16px);
           font-weight: 700;
-          font-family: "Cairo", sans-serif;
-          box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.3);
+          font-family: "Noto Kufi Arabic", "Sora", sans-serif;
+          box-shadow: 0 0.4vh 1vh rgba(200, 162, 78, 0.3);
           transition: all 0.3s;
           z-index: 1000;
           animation: float 3s ease-in-out infinite 0.5s;
@@ -593,26 +594,26 @@ export default function LiveStatsPage() {
 
         .filter-button {
           padding: clamp(5px, 0.5vh, 9px) clamp(11px, 1.1vw, 22px);
-          border: 2px solid #e0e0e0;
-          background: white;
+          border: 2px solid rgba(200, 162, 78, 0.25);
+          background: #FEFDFB;
           color: #666;
           border-radius: clamp(5px, 0.5vh, 10px);
           font-size: clamp(10px, 0.8vw, 15px);
           font-weight: 600;
-          font-family: "Cairo", sans-serif;
+          font-family: "Noto Kufi Arabic", "Sora", sans-serif;
           cursor: pointer;
           transition: all 0.2s;
         }
 
         .filter-button.active {
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
+          background: linear-gradient(135deg, #166534 0%, #0B1F0E 100%);
           color: white;
-          border-color: #5fb3b3;
+          border-color: #C8A24E;
           animation: pulse 1.5s ease-in-out infinite;
         }
 
         .filter-button:hover {
-          border-color: #5fb3b3;
+          border-color: #C8A24E;
           transform: translateY(-0.1vh);
         }
 
@@ -661,6 +662,8 @@ export default function LiveStatsPage() {
         }
       `}</style>
 
+      <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
       <div className="screen-container">
         <div className="dashboard-box">
           <div className="content-wrapper">
@@ -700,12 +703,12 @@ export default function LiveStatsPage() {
                 <div style={{ flex: 1, textAlign: "center", minWidth: 0 }}>
                   <h1
                     style={{
-                      color: "#1a3a3a",
+                      color: "#0B1F0E",
                       fontSize: "clamp(14px, 1.7vw, 32px)",
                       fontWeight: "800",
                       marginBottom: "clamp(3px, 0.4vh, 7px)",
                       background:
-                        "linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)",
+                        "linear-gradient(135deg, #C8A24E 0%, #0B1F0E 100%)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text",
@@ -824,7 +827,7 @@ export default function LiveStatsPage() {
                       className="stat-number"
                       style={{
                         background:
-                          "linear-gradient(135deg, #27ae60 0%, #229954 100%)",
+                          "linear-gradient(135deg, #22C55E 0%, #166534 100%)",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                         backgroundClip: "text",
@@ -840,7 +843,7 @@ export default function LiveStatsPage() {
                       className="stat-number"
                       style={{
                         background:
-                          "linear-gradient(135deg, #f39c12 0%, #e67e22 100%)",
+                          "linear-gradient(135deg, #C8A24E 0%, #A07C2E 100%)",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                         backgroundClip: "text",
@@ -856,7 +859,7 @@ export default function LiveStatsPage() {
                       className="stat-number"
                       style={{
                         background:
-                          "linear-gradient(135deg, #3498db 0%, #2980b9 100%)",
+                          "linear-gradient(135deg, #0B1F0E 0%, #166534 100%)",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                         backgroundClip: "text",
@@ -892,7 +895,7 @@ export default function LiveStatsPage() {
                       className="section-box"
                       style={{
                         background:
-                          "linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)",
+                          "linear-gradient(135deg, #F9F6F0 0%, #FEFDFB 100%)",
                         borderRadius: "clamp(8px, 0.8vh, 15px)",
                         padding: "clamp(9px, 0.9vh, 18px)",
                         textAlign: "center",
@@ -907,7 +910,7 @@ export default function LiveStatsPage() {
                         style={{
                           fontSize: "clamp(12px, 0.9vw, 18px)",
                           fontWeight: "700",
-                          color: "#1a3a3a",
+                          color: "#0B1F0E",
                           marginBottom: "clamp(8px, 0.8vh, 15px)",
                         }}
                       >
@@ -956,7 +959,7 @@ export default function LiveStatsPage() {
                       className="section-box"
                       style={{
                         background:
-                          "linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)",
+                          "linear-gradient(135deg, #F9F6F0 0%, #FEFDFB 100%)",
                         borderRadius: "clamp(8px, 0.8vh, 15px)",
                         padding: "clamp(8px, 0.8vh, 15px)",
                         boxShadow: "0 0.4vh 1vh rgba(0,0,0,0.08)",
@@ -969,7 +972,7 @@ export default function LiveStatsPage() {
                         style={{
                           fontSize: "clamp(11px, 0.8vw, 16px)",
                           fontWeight: "700",
-                          color: "#1a3a3a",
+                          color: "#0B1F0E",
                           marginBottom: "clamp(6px, 0.6vh, 12px)",
                           textAlign: "center",
                         }}
@@ -999,12 +1002,12 @@ export default function LiveStatsPage() {
                                 padding:
                                   "clamp(4px, 0.4vh, 7px) clamp(5px, 0.5vw, 10px)",
                                 background: isActive
-                                  ? "linear-gradient(135deg, #e8f5f5 0%, #f0f8f8 100%)"
-                                  : "linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)",
+                                  ? "linear-gradient(135deg, #F0F9F0 0%, #F5FBF5 100%)"
+                                  : "linear-gradient(135deg, #F9F6F0 0%, #FEFDFB 100%)",
                                 borderRadius: "clamp(4px, 0.4vh, 8px)",
                                 borderRight: isActive
-                                  ? "3px solid #27ae60"
-                                  : "3px solid #5fb3b3",
+                                  ? "3px solid #22C55E"
+                                  : "3px solid rgba(200, 162, 78, 0.35)",
                                 boxShadow: "0 0.1vh 0.4vh rgba(0,0,0,0.04)",
                                 transition: "all 0.3s",
                                 gap: "clamp(5px, 0.5vw, 10px)",
@@ -1019,7 +1022,7 @@ export default function LiveStatsPage() {
                                   padding:
                                     "clamp(3px, 0.3vh, 5px) clamp(4px, 0.4vw, 8px)",
                                   background:
-                                    "linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)",
+                                    "linear-gradient(135deg, #166534 0%, #0B1F0E 100%)",
                                   color: "white",
                                   borderRadius: "clamp(3px, 0.3vh, 6px)",
                                   fontSize: "clamp(8px, 0.6vw, 11px)",
@@ -1045,7 +1048,7 @@ export default function LiveStatsPage() {
                                   flex: 1,
                                   fontSize: "clamp(9px, 0.7vw, 14px)",
                                   fontWeight: "600",
-                                  color: isActive ? "#1a3a3a" : "#999",
+                                  color: isActive ? "#0B1F0E" : "#999",
                                   fontStyle: isActive ? "normal" : "italic",
                                   whiteSpace: "nowrap",
                                   overflow: "hidden",
@@ -1066,7 +1069,7 @@ export default function LiveStatsPage() {
                                     gap: "clamp(2px, 0.2vw, 4px)",
                                     fontSize: "clamp(7px, 0.5vw, 10px)",
                                     fontWeight: "600",
-                                    color: "#27ae60",
+                                    color: "#166534",
                                     flexShrink: 0,
                                   }}
                                 >
@@ -1074,7 +1077,7 @@ export default function LiveStatsPage() {
                                     style={{
                                       width: "clamp(4px, 0.4vw, 8px)",
                                       height: "clamp(4px, 0.4vw, 8px)",
-                                      background: "#27ae60",
+                                      background: "#22C55E",
                                       borderRadius: "50%",
                                       animation:
                                         "blink 1.5s ease-in-out infinite",
@@ -1103,7 +1106,7 @@ export default function LiveStatsPage() {
                       className="section-box"
                       style={{
                         background:
-                          "linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)",
+                          "linear-gradient(135deg, #F9F6F0 0%, #FEFDFB 100%)",
                         borderRadius: "clamp(8px, 0.8vh, 15px)",
                         padding: "clamp(9px, 0.9vh, 18px)",
                         boxShadow: "0 0.4vh 1vh rgba(0,0,0,0.08)",
@@ -1114,7 +1117,7 @@ export default function LiveStatsPage() {
                         style={{
                           fontSize: "clamp(12px, 0.9vw, 18px)",
                           fontWeight: "700",
-                          color: "#1a3a3a",
+                          color: "#0B1F0E",
                           marginBottom: "clamp(7px, 0.7vh, 13px)",
                           textAlign: "center",
                         }}
@@ -1157,7 +1160,7 @@ export default function LiveStatsPage() {
                       className="section-box"
                       style={{
                         background:
-                          "linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)",
+                          "linear-gradient(135deg, #F9F6F0 0%, #FEFDFB 100%)",
                         borderRadius: "clamp(8px, 0.8vh, 15px)",
                         padding: "clamp(9px, 0.9vh, 18px)",
                         boxShadow: "0 0.4vh 1vh rgba(0,0,0,0.08)",
@@ -1168,7 +1171,7 @@ export default function LiveStatsPage() {
                         style={{
                           fontSize: "clamp(12px, 0.9vw, 18px)",
                           fontWeight: "700",
-                          color: "#1a3a3a",
+                          color: "#0B1F0E",
                           marginBottom: "clamp(7px, 0.7vh, 13px)",
                           textAlign: "center",
                         }}
@@ -1201,7 +1204,7 @@ export default function LiveStatsPage() {
                                     style={{
                                       width: `${percentage}%`,
                                       background:
-                                        "linear-gradient(90deg, #3498db 0%, #2980b9 100%)",
+                                        "linear-gradient(90deg, #C8A24E 0%, #A07C2E 100%)",
                                     }}
                                   >
                                     {count}
