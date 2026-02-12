@@ -239,94 +239,35 @@ export default function CompetitorsPage() {
 
     try {
       const supabase = createClient()
+      
+      // Collect IDs to delete
+      let idsToDelete: string[] = []
 
       if (deleteMode === 'single' && deletingId) {
-        // Delete single competitor
+        idsToDelete = [deletingId]
+      } else if (deleteMode === 'selected') {
+        idsToDelete = Array.from(selectedIds)
+      } else if (deleteMode === 'all') {
+        idsToDelete = competitors.map(c => c.id)
+      }
+
+      // Delete from database
+      for (const id of idsToDelete) {
         const { error } = await supabase
           .from('competitors')
           .delete()
-          .eq('id', deletingId)
-
-        if (error) throw error
+          .eq('id', id)
         
-      } else if (deleteMode === 'selected') {
-        // Delete selected competitors
-        const idsArray = Array.from(selectedIds)
-        
-        // Delete in batches to avoid issues
-        for (const id of idsArray) {
-          const { error } = await supabase
-            .from('competitors')
-            .delete()
-            .eq('id', id)
-          
-          if (error) throw error
-        }
-        
-      } else if (deleteMode === 'all') {
-        // Delete all competitors - get all IDs first
-        const allIds = competitors.map(c => c.id)
-        
-        // Delete in batches
-        for (const id of allIds) {
-          const { error } = await supabase
-            .from('competitors')
-            .delete()
-            .eq('id', id)
-          
-          if (error) {
-            console.error('Error deleting competitor:', id, error)
-            // Continue with other deletions even if one fails
-          }
+        if (error) {
+          console.error('Error deleting competitor:', id, error)
         }
       }
 
-      // Always clear selection after any delete
+      // Remove deleted items from local state immediately 
+      // This triggers the applyFilters useEffect automatically
+      const deletedSet = new Set(idsToDelete)
+      setCompetitors(prev => prev.filter(c => !deletedSet.has(c.id)))
       setSelectedIds(new Set())
-
-      // Refresh competitors list
-      const supabaseRefresh = createClient()
-      const { data: freshData, error: fetchError } = await supabaseRefresh
-        .from('competitors')
-        .select('*')
-        .order('created_at', { ascending: false })
-
-      if (fetchError) throw fetchError
-
-      const newCompetitors = freshData || []
-      setCompetitors(newCompetitors)
-      
-      // Immediately recompute filtered list so table updates right away
-      let filtered = [...newCompetitors]
-      if (searchTerm) {
-        filtered = filtered.filter(c => {
-          const searchLower = searchTerm.toLowerCase().trim()
-          const nameLower = c.full_name.toLowerCase()
-          if (nameLower.includes(searchLower)) return true
-          if (c.mobile.includes(searchTerm)) return true
-          const searchWords = searchLower.split(/\s+/)
-          const nameWords = nameLower.split(/\s+/)
-          return searchWords.every((sw: string) => nameWords.some((nw: string) => nw.includes(sw)))
-        })
-      }
-      if (filterGender) filtered = filtered.filter(c => c.gender === filterGender)
-      if (filterLevel) filtered = filtered.filter(c => c.level === filterLevel)
-      if (filterStatus) filtered = filtered.filter(c => c.status === filterStatus)
-      filtered.sort((a, b) => {
-        let aValue = a[sortField]; let bValue = b[sortField]
-        if (sortField === 'gender') { aValue = a.gender === 'male' ? 'ذكر' : 'أنثى'; bValue = b.gender === 'male' ? 'ذكر' : 'أنثى' }
-        if (sortField === 'status') { aValue = a.status === 'evaluated' ? 'تم التقييم' : 'لم يتم التقييم'; bValue = b.status === 'evaluated' ? 'تم التقييم' : 'لم يتم التقييم' }
-        if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1
-        if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1
-        return 0
-      })
-      setFilteredCompetitors(filtered)
-
-      // Fix pagination if current page is now out of bounds
-      const maxPage = Math.ceil(filtered.length / itemsPerPage)
-      if (currentPage > maxPage) {
-        setCurrentPage(maxPage > 0 ? maxPage : 1)
-      }
       
       // Close modal and reset
       setShowDeleteModal(false)
