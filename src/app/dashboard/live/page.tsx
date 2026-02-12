@@ -1002,11 +1002,11 @@ export default function LiveStatsPage() {
                                 padding:
                                   "clamp(4px, 0.4vh, 7px) clamp(5px, 0.5vw, 10px)",
                                 background: isActive
-                                  ? "linear-gradient(135deg, #F0F9F0 0%, #F5FBF5 100%)"
+                                  ? "linear-gradient(135deg, #FBF6EC 0%, #FDF9F0 100%)"
                                   : "linear-gradient(135deg, #F9F6F0 0%, #FEFDFB 100%)",
                                 borderRadius: "clamp(4px, 0.4vh, 8px)",
                                 borderRight: isActive
-                                  ? "3px solid #22C55E"
+                                  ? "3px solid #C8A24E"
                                   : "3px solid rgba(200, 162, 78, 0.35)",
                                 boxShadow: "0 0.1vh 0.4vh rgba(0,0,0,0.04)",
                                 transition: "all 0.3s",
@@ -1022,7 +1022,7 @@ export default function LiveStatsPage() {
                                   padding:
                                     "clamp(3px, 0.3vh, 5px) clamp(4px, 0.4vw, 8px)",
                                   background:
-                                    "linear-gradient(135deg, #166534 0%, #0B1F0E 100%)",
+                                    "linear-gradient(135deg, #C8A24E 0%, #A07C2E 100%)",
                                   color: "white",
                                   borderRadius: "clamp(3px, 0.3vh, 6px)",
                                   fontSize: "clamp(8px, 0.6vw, 11px)",
