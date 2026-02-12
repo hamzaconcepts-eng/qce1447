@@ -836,7 +836,22 @@ export default function EvaluatePage() {
         <div className="bg-orb gold-2"></div>
       </div>
 
+      {/* Google Fonts */}
+      <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
       <style jsx global>{`
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        html, body {
+          height: calc(var(--vh, 1vh) * 100);
+          width: 100vw;
+          overflow: hidden;
+        }
+
         body {
           background: #0A0F0A;
           font-family: 'Noto Kufi Arabic', 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -844,15 +859,125 @@ export default function EvaluatePage() {
           -webkit-font-smoothing: antialiased;
           min-height: calc(var(--vh, 1vh) * 100);
         }
+
+        /* Animated Background Orbs */
+        .bg-canvas {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 0;
+          overflow: hidden;
+          pointer-events: none;
+        }
+
+        .bg-orb {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(120px);
+          opacity: 0.3;
+        }
+
+        .bg-orb.green-1 {
+          width: 500px;
+          height: 500px;
+          background: radial-gradient(circle, #22C55E, transparent 70%);
+          bottom: -15%;
+          left: 20%;
+          animation: orbPulse1 15s ease-in-out infinite alternate;
+        }
+
+        .bg-orb.green-2 {
+          width: 350px;
+          height: 350px;
+          background: radial-gradient(circle, #166534, transparent 70%);
+          top: 10%;
+          right: -5%;
+          animation: orbPulse2 20s ease-in-out infinite alternate;
+        }
+
+        .bg-orb.gold-1 {
+          width: 400px;
+          height: 400px;
+          background: radial-gradient(circle, #C8A24E, transparent 70%);
+          top: 35%;
+          left: -8%;
+          opacity: 0.18;
+          animation: orbPulse3 18s ease-in-out infinite alternate;
+        }
+
+        .bg-orb.gold-2 {
+          width: 300px;
+          height: 300px;
+          background: radial-gradient(circle, #D4AF5E, transparent 70%);
+          bottom: 20%;
+          right: -5%;
+          opacity: 0.12;
+          animation: orbPulse2 22s ease-in-out infinite alternate;
+        }
+
+        @keyframes orbPulse1 {
+          0% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+          50% { transform: translate(30px, -20px) scale(1.15); opacity: 0.35; }
+          100% { transform: translate(-20px, 10px) scale(0.95); opacity: 0.2; }
+        }
+
+        @keyframes orbPulse2 {
+          0% { transform: translate(0, 0) scale(1); }
+          100% { transform: translate(-40px, 30px) scale(1.1); }
+        }
+
+        @keyframes orbPulse3 {
+          0% { transform: translate(0, 0) scale(1); }
+          100% { transform: translate(30px, -20px) scale(1.08); }
+        }
+
+        .bg-canvas::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(34, 197, 94, 0.012) 2px,
+            rgba(34, 197, 94, 0.012) 4px
+          );
+          pointer-events: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: rgba(34, 197, 94, 0.05);
+          border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: rgba(200, 162, 78, 0.3);
+          border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(200, 162, 78, 0.5);
+        }
         
         .app-container {
-          background: #ffffff;
+          background: rgba(34, 197, 94, 0.06);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(34, 197, 94, 0.15);
           padding: 30px;
-          border-radius: 20px;
-          box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+          border-radius: clamp(20px, 3vh, 32px);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 80px rgba(34, 197, 94, 0.05);
           width: 100%;
           max-height: 90vh;
           overflow-y: auto;
+          position: relative;
         }
 
         .modal-overlay {
@@ -861,7 +986,9 @@ export default function EvaluatePage() {
           left: 0;
           right: 0;
           bottom: 0;
-          background: rgba(0, 0, 0, 0.5);
+          background: rgba(0, 0, 0, 0.7);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -869,16 +996,22 @@ export default function EvaluatePage() {
         }
 
         .modal-content {
-          background: white;
+          background: rgba(34, 197, 94, 0.08);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border: 1px solid rgba(34, 197, 94, 0.2);
           padding: 30px;
-          border-radius: 15px;
+          border-radius: clamp(16px, 2.5vh, 24px);
           max-width: 500px;
           width: 90%;
-          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 16px 64px rgba(0, 0, 0, 0.5), 0 0 80px rgba(34, 197, 94, 0.05);
         }
 
         .category-group {
-          background: #f5f5f5;
+          background: rgba(34, 197, 94, 0.06);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(34, 197, 94, 0.15);
           padding: 20px;
           border-radius: 15px;
           margin-bottom: 20px;
@@ -891,7 +1024,7 @@ export default function EvaluatePage() {
           margin-bottom: 15px;
           text-align: center;
           padding-bottom: 10px;
-          border-bottom: 2px solid #e0e0e0;
+          border-bottom: 2px solid rgba(200, 162, 78, 0.2);
         }
 
         .print-button-compact {
@@ -899,9 +1032,9 @@ export default function EvaluatePage() {
           align-items: center;
           gap: 6px;
           padding: 6px 12px;
-          background: #e8e8e8;
-          color: #666666;
-          border: 1px solid #d0d0d0;
+          background: rgba(200, 162, 78, 0.06);
+          color: #D4AF5E;
+          border: 1px solid rgba(200, 162, 78, 0.3);
           border-radius: 6px;
           font-size: 12px;
           font-weight: 600;
@@ -911,16 +1044,17 @@ export default function EvaluatePage() {
         }
 
         .print-button-compact:hover {
-          background: #d8d8d8;
-          color: #555555;
-          border-color: #b8b8b8;
+          background: rgba(200, 162, 78, 0.15);
+          color: #D4AF5E;
+          border-color: rgba(200, 162, 78, 0.5);
           transform: translateY(-1px);
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 6px rgba(200, 162, 78, 0.2);
         }
 
         .compact-table {
           width: 100%;
-          border-collapse: collapse;
+          border-collapse: separate;
+          border-spacing: 0;
           font-size: 12px;
         }
 
@@ -928,38 +1062,42 @@ export default function EvaluatePage() {
         .compact-table td {
           padding: 6px 8px;
           text-align: center;
-          border-bottom: 1px solid #e0e0e0;
+          border-bottom: 1px solid rgba(34, 197, 94, 0.1);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
         }
 
         .compact-table th {
-          background: #f5f5f5;
-          font-weight: 600;
-          color: #555555;
+          background: rgba(200, 162, 78, 0.1);
+          font-weight: 700;
+          color: #C8A24E;
           position: sticky;
           top: 0;
           z-index: 10;
           font-size: 11px;
           cursor: pointer;
           user-select: none;
+          letter-spacing: 0.3px;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
         }
 
         .compact-table th:hover {
-          background: #e8e8e8;
+          background: rgba(200, 162, 78, 0.18);
         }
 
         .compact-table .name-cell {
           text-align: right;
           font-weight: 600;
-          color: #333333;
+          color: #F0FDF4;
           max-width: 200px;
         }
 
         .compact-table .level-cell {
           font-size: 10px;
           max-width: 150px;
+          color: rgba(240, 253, 244, 0.7);
         }
 
         .compact-table tr {
@@ -967,14 +1105,19 @@ export default function EvaluatePage() {
           transition: all 0.2s;
         }
 
-        .compact-table tr:hover {
-          background: #f0f9f9;
+        .compact-table tbody tr:hover {
+          background: rgba(200, 162, 78, 0.08);
+        }
+
+        .compact-table tbody tr td {
+          color: rgba(240, 253, 244, 0.8);
         }
 
         .sort-indicator {
           display: inline-block;
           margin-left: 4px;
           font-size: 10px;
+          color: #D4AF5E;
         }
 
         .pagination {
@@ -987,28 +1130,33 @@ export default function EvaluatePage() {
 
         .page-button {
           padding: 6px 12px;
-          border: 1px solid #e0e0e0;
-          background: white;
+          border: 1px solid rgba(200, 162, 78, 0.3);
+          background: rgba(200, 162, 78, 0.06);
+          color: #D4AF5E;
           cursor: pointer;
-          border-radius: 5px;
+          border-radius: clamp(6px, 0.8vh, 8px);
           font-family: 'Noto Kufi Arabic', 'Sora', sans-serif;
           font-size: 13px;
+          font-weight: 600;
           transition: all 0.2s;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
         }
 
         .page-button:hover {
-          background: #f0f9f9;
-          border-color: #C8A24E;
+          background: rgba(200, 162, 78, 0.15);
+          border-color: rgba(200, 162, 78, 0.5);
         }
 
         .page-button.active {
-          background: #C8A24E;
-          color: white;
-          border-color: #C8A24E;
+          background: linear-gradient(135deg, #B8922E, #D4AF5E);
+          color: #0A0F0A;
+          border-color: transparent;
+          box-shadow: 0 4px 16px rgba(200,162,78,0.4);
         }
 
         .page-button:disabled {
-          opacity: 0.5;
+          opacity: 0.35;
           cursor: not-allowed;
         }
 
@@ -1016,20 +1164,22 @@ export default function EvaluatePage() {
           width: 100%;
           margin-top: 20px;
           padding: 12px;
-          background: #ffffff;
-          color: #C8A24E;
-          border: 2px solid #C8A24E;
-          border-radius: 8px;
+          background: transparent;
+          color: #D4AF5E;
+          border: 1px solid rgba(200, 162, 78, 0.3);
+          border-radius: clamp(8px, 1.2vh, 12px);
           font-size: 15px;
           font-weight: 700;
           font-family: 'Noto Kufi Arabic', 'Sora', sans-serif;
           cursor: pointer;
           transition: all 0.2s;
+          opacity: 0.7;
         }
 
         .back-button:hover {
-          background: #C8A24E;
-          color: white;
+          background: rgba(200, 162, 78, 0.08);
+          opacity: 1;
+          border-color: rgba(200, 162, 78, 0.5);
         }
 
         @keyframes spin {
@@ -1045,6 +1195,11 @@ export default function EvaluatePage() {
           border-top-color: white;
           animation: spin 0.6s linear infinite;
         }
+
+        @keyframes slideIn {
+          from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
+          to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
       `}</style>
 
       <div style={{
@@ -1052,8 +1207,10 @@ export default function EvaluatePage() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '20px',
-        background: 'linear-gradient(135deg, #C8A24E 0%, #0B1F0E 100%)'
+        padding: 'clamp(10px, 2vh, 20px)',
+        background: '#0A0F0A',
+        position: 'relative',
+        zIndex: 1
       }}>
         
         <div className="app-container">
@@ -1061,19 +1218,28 @@ export default function EvaluatePage() {
           {/* Header */}
           <div style={{ marginBottom: '30px', textAlign: 'center' }}>
             <div style={{
-              width: '60px',
-              height: '60px',
+              width: 'clamp(45px, 7vw, 60px)',
+              height: 'clamp(45px, 7vw, 60px)',
               margin: '0 auto 15px',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #0B1F0E, #0A0F0A)',
+              border: '2px solid #C8A24E',
+              boxShadow: '0 0 28px rgba(200,162,78,0.3), 0 0 8px rgba(200,162,78,0.2)'
             }}>
               <Image
                 src="/images/logo.svg"
                 alt="شعار مركز رياض العلم"
                 width={60}
                 height={60}
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                style={{ 
+                  width: '70%', 
+                  height: '70%', 
+                  objectFit: 'contain',
+                  filter: 'brightness(0) saturate(100%) invert(79%) sepia(18%) saturate(1234%) hue-rotate(359deg) brightness(95%) contrast(88%)'
+                }}
                 priority
               />
             </div>
@@ -1082,7 +1248,11 @@ export default function EvaluatePage() {
               color: '#F0FDF4',
               fontSize: '22px',
               fontWeight: '700',
-              marginBottom: '5px'
+              marginBottom: '5px',
+              background: 'linear-gradient(135deg, #C8A24E, #E0C478, #D4AF5E)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
             }}>
               تقييم المتسابقين
             </h1>
@@ -1109,13 +1279,24 @@ export default function EvaluatePage() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid rgba(200, 162, 78, 0.3)',
+                    border: '1px solid rgba(200, 162, 78, 0.25)',
                     borderRadius: '10px',
-                  backdropFilter: 'blur(10px)',
+                    backdropFilter: 'blur(10px)',
                     fontSize: '15px',
                     textAlign: 'right',
                     fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                    marginBottom: '10px'
+                    marginBottom: '10px',
+                    background: 'rgba(200, 162, 78, 0.06)',
+                    color: '#F0FDF4',
+                    outline: 'none'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#C8A24E'
+                    e.target.style.boxShadow = '0 0 0 3px rgba(200,162,78,0.12)'
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = 'rgba(200, 162, 78, 0.25)'
+                    e.target.style.boxShadow = 'none'
                   }}
                 />
 
@@ -1130,16 +1311,19 @@ export default function EvaluatePage() {
                     onChange={(e) => setFilterGender(e.target.value)}
                     style={{
                       padding: '10px',
-                      border: '1px solid rgba(200, 162, 78, 0.3)',
+                      border: '1px solid rgba(200, 162, 78, 0.25)',
                       borderRadius: '8px',
                       fontSize: '14px',
                       fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      background: 'rgba(200, 162, 78, 0.06)',
+                      color: '#F0FDF4',
+                      outline: 'none'
                     }}
                   >
-                    <option value="">كل الأجناس</option>
-                    <option value="male">ذكر</option>
-                    <option value="female">أنثى</option>
+                    <option value="" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>كل الأجناس</option>
+                    <option value="male" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>ذكر</option>
+                    <option value="female" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>أنثى</option>
                   </select>
 
                   <select
@@ -1147,16 +1331,19 @@ export default function EvaluatePage() {
                     onChange={(e) => setFilterStatus(e.target.value)}
                     style={{
                       padding: '10px',
-                      border: '1px solid rgba(200, 162, 78, 0.3)',
+                      border: '1px solid rgba(200, 162, 78, 0.25)',
                       borderRadius: '8px',
                       fontSize: '14px',
                       fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      background: 'rgba(200, 162, 78, 0.06)',
+                      color: '#F0FDF4',
+                      outline: 'none'
                     }}
                   >
-                    <option value="">كل الحالات</option>
-                    <option value="evaluated">تم التقييم</option>
-                    <option value="not_evaluated">لم يتم التقييم</option>
+                    <option value="" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>كل الحالات</option>
+                    <option value="evaluated" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>تم التقييم</option>
+                    <option value="not_evaluated" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>لم يتم التقييم</option>
                   </select>
 
                   <select
@@ -1164,17 +1351,20 @@ export default function EvaluatePage() {
                     onChange={(e) => setFilterLevel(e.target.value)}
                     style={{
                       padding: '10px',
-                      border: '1px solid rgba(200, 162, 78, 0.3)',
+                      border: '1px solid rgba(200, 162, 78, 0.25)',
                       borderRadius: '8px',
                       fontSize: '14px',
                       fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                       cursor: 'pointer',
-                      gridColumn: 'span 2'
+                      gridColumn: 'span 2',
+                      background: 'rgba(200, 162, 78, 0.06)',
+                      color: '#F0FDF4',
+                      outline: 'none'
                     }}
                   >
-                    <option value="">كل المستويات</option>
+                    <option value="" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>كل المستويات</option>
                     {levels.map(level => (
-                      <option key={level} value={level}>{level}</option>
+                      <option key={level} value={level} style={{ background: '#0A0F0A', color: '#F0FDF4' }}>{level}</option>
                     ))}
                   </select>
 
@@ -1184,13 +1374,22 @@ export default function EvaluatePage() {
                       gridColumn: 'span 2',
                       padding: '10px',
                       background: 'rgba(200, 162, 78, 0.08)',
-                      color: 'rgba(240, 253, 244, 0.7)',
-                      border: 'none',
+                      color: 'rgba(240, 253, 244, 0.5)',
+                      border: '1px solid rgba(200, 162, 78, 0.15)',
                       borderRadius: '8px',
                       fontSize: '14px',
                       fontWeight: '600',
                       fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(200, 162, 78, 0.15)'
+                      e.currentTarget.style.color = '#D4AF5E'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'rgba(200, 162, 78, 0.08)'
+                      e.currentTarget.style.color = 'rgba(240, 253, 244, 0.5)'
                     }}
                   >
                     إعادة تعيين
@@ -1269,11 +1468,12 @@ export default function EvaluatePage() {
                               display: 'inline-block',
                               padding: '3px 8px',
                               borderRadius: '10px',
-                  backdropFilter: 'blur(10px)',
+                              backdropFilter: 'blur(10px)',
                               fontSize: '10px',
                               fontWeight: '600',
-                              background: competitor.status === 'evaluated' ? '#d4edda' : '#fff3cd',
-                              color: competitor.status === 'evaluated' ? '#27ae60' : '#f39c12'
+                              background: competitor.status === 'evaluated' ? 'rgba(34, 197, 94, 0.15)' : 'rgba(200, 162, 78, 0.15)',
+                              color: competitor.status === 'evaluated' ? '#4ADE80' : '#D4AF5E',
+                              border: competitor.status === 'evaluated' ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(200, 162, 78, 0.3)'
                             }}>
                               {competitor.status === 'evaluated' ? 'تم التقييم' : 'لم يتم التقييم'}
                             </span>
@@ -1344,15 +1544,17 @@ export default function EvaluatePage() {
                     top: '15px',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    background: 'rgba(200, 162, 78, 0.15)',
+                    background: 'rgba(200, 162, 78, 0.12)',
+                    backdropFilter: 'blur(16px)',
+                    WebkitBackdropFilter: 'blur(16px)',
                     padding: '8px 20px',
                     borderRadius: '8px',
                     fontSize: '12px',
                     textAlign: 'center',
                     color: '#D4AF5E',
-                    border: '1px solid #ffc107',
+                    border: '1px solid rgba(200, 162, 78, 0.3)',
                     zIndex: 1000,
-                    boxShadow: '0 3px 15px rgba(0,0,0,0.12)',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
                     maxWidth: '85vw'
                   }}>
                     ⚠️ تم تقييم هذا المتسابق مسبقاً
@@ -1365,15 +1567,18 @@ export default function EvaluatePage() {
                     top: '15px',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    background: 'rgba(34, 197, 94, 0.15)',
+                    background: 'rgba(34, 197, 94, 0.12)',
+                    backdropFilter: 'blur(16px)',
+                    WebkitBackdropFilter: 'blur(16px)',
                     padding: '8px 20px',
                     borderRadius: '8px',
                     fontSize: '12px',
                     textAlign: 'center',
                     color: '#4ADE80',
+                    border: '1px solid rgba(34, 197, 94, 0.3)',
                     fontWeight: '700',
                     zIndex: 1000,
-                    boxShadow: '0 3px 15px rgba(0,0,0,0.12)',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
                     maxWidth: '85vw'
                   }}>
                     ✓ تم حفظ التقييم بنجاح
@@ -1398,30 +1603,34 @@ export default function EvaluatePage() {
                     color: '#F0FDF4',
                     margin: '0 0 clamp(6px, 0.8vh, 10px) 0',
                     textAlign: 'center',
-                    lineHeight: '1.2'
+                    lineHeight: '1.2',
+                    background: 'linear-gradient(135deg, #C8A24E, #E0C478, #D4AF5E)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
                   }}>
                     ضوابط التقييم
                   </h3>
                   <div style={{
                     fontSize: 'clamp(9px, 1.05vw, 11px)',
-                    color: '#C8A24E',
+                    color: 'rgba(240, 253, 244, 0.7)',
                     lineHeight: '1.6',
                     textAlign: 'right'
                   }}>
                     <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                      • يُعطى كل متسابق <strong>3 أسئلة</strong> من القرآن الكريم
+                      • يُعطى كل متسابق <strong style={{ color: '#C8A24E' }}>3 أسئلة</strong> من القرآن الكريم
                     </p>
                     <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                      • <strong>تنبيه:</strong> خصم درجة واحدة (-1) لكل خطأ
+                      • <strong style={{ color: '#C8A24E' }}>تنبيه:</strong> خصم درجة واحدة (-1) لكل خطأ
                     </p>
                     <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                      • <strong>فتح:</strong> خصم درجتين (-2) لكل خطأ
+                      • <strong style={{ color: '#C8A24E' }}>فتح:</strong> خصم درجتين (-2) لكل خطأ
                     </p>
                     <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                      • <strong>تشكيل:</strong> خصم درجة واحدة (-1) لكل خطأ
+                      • <strong style={{ color: '#C8A24E' }}>تشكيل:</strong> خصم درجة واحدة (-1) لكل خطأ
                     </p>
                     <p style={{ margin: 0 }}>
-                      • <strong>تجويد:</strong> خصم نصف درجة (-0.5) لكل خطأ
+                      • <strong style={{ color: '#C8A24E' }}>تجويد:</strong> خصم نصف درجة (-0.5) لكل خطأ
                     </p>
                   </div>
                 </div>
@@ -1440,14 +1649,26 @@ export default function EvaluatePage() {
                     width: 'clamp(40px, 6vw, 65px)',
                     height: 'clamp(40px, 6vw, 65px)',
                     margin: '0 auto',
-                    flexShrink: 0
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #0B1F0E, #0A0F0A)',
+                    border: '2px solid #C8A24E',
+                    boxShadow: '0 0 28px rgba(200,162,78,0.3), 0 0 8px rgba(200,162,78,0.2)'
                   }}>
                     <Image
                       src="/images/logo.svg"
                       alt="Logo"
                       width={65}
                       height={65}
-                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                      style={{ 
+                        width: '70%', 
+                        height: '70%', 
+                        objectFit: 'contain',
+                        filter: 'brightness(0) saturate(100%) invert(79%) sepia(18%) saturate(1234%) hue-rotate(359deg) brightness(95%) contrast(88%)'
+                      }}
                       priority
                     />
                   </div>
@@ -1467,7 +1688,7 @@ export default function EvaluatePage() {
                   <div style={{
                     width: '55%',
                     height: '1px',
-                    background: 'linear-gradient(to right, transparent, #d0d0d0, transparent)',
+                    background: 'linear-gradient(to right, transparent, rgba(200, 162, 78, 0.4), transparent)',
                     margin: '0 auto',
                     flexShrink: 0
                   }} />
@@ -1480,7 +1701,11 @@ export default function EvaluatePage() {
                     lineHeight: '1.1',
                     textAlign: 'center',
                     flexShrink: 0,
-                    letterSpacing: '-0.3px'
+                    letterSpacing: '-0.3px',
+                    background: 'linear-gradient(135deg, #C8A24E, #E0C478, #D4AF5E)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
                   }}>
                     {selectedCompetitor?.full_name}
                   </h2>
@@ -2099,12 +2324,13 @@ export default function EvaluatePage() {
                   
                   {/* Score Display - EXPANDABLE */}
                   <div style={{
-                    background: finalScore >= 95 ? '#d4edda' : finalScore >= 90 ? '#fff3cd' : '#ffebee',
+                    background: finalScore >= 95 ? 'rgba(34, 197, 94, 0.12)' : finalScore >= 90 ? 'rgba(200, 162, 78, 0.12)' : 'rgba(220, 38, 38, 0.12)',
                     padding: 'clamp(18px, 2.8vh, 32px)',
                     borderRadius: '10px',
-                  backdropFilter: 'blur(10px)',
+                    backdropFilter: 'blur(10px)',
                     textAlign: 'center',
-                    boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+                    border: finalScore >= 95 ? '1px solid rgba(34, 197, 94, 0.3)' : finalScore >= 90 ? '1px solid rgba(200, 162, 78, 0.3)' : '1px solid rgba(220, 38, 38, 0.3)',
                     flex: 1,
                     display: 'flex',
                     alignItems: 'center',
@@ -2114,8 +2340,9 @@ export default function EvaluatePage() {
                     <div style={{
                       fontSize: 'clamp(50px, 7.5vw, 90px)',
                       fontWeight: '800',
-                      color: finalScore >= 95 ? '#27ae60' : finalScore >= 90 ? '#f39c12' : '#e74c3c',
-                      lineHeight: '1'
+                      color: finalScore >= 95 ? '#4ADE80' : finalScore >= 90 ? '#D4AF5E' : '#FCA5A5',
+                      lineHeight: '1',
+                      textShadow: finalScore >= 95 ? '0 0 40px rgba(74, 222, 128, 0.3)' : finalScore >= 90 ? '0 0 40px rgba(212, 175, 94, 0.3)' : '0 0 40px rgba(252, 165, 165, 0.3)'
                     }}>
                       {finalScore}
                     </div>
@@ -2159,9 +2386,9 @@ export default function EvaluatePage() {
                     onClick={handlePrintScoreCard}
                     style={{
                       padding: 'clamp(7px, 1.2vh, 11px)',
-                      background: '#ffffff',
-                      color: '#C8A24E',
-                      border: '1.5px solid #C8A24E',
+                      background: 'rgba(200, 162, 78, 0.06)',
+                      color: '#D4AF5E',
+                      border: '1px solid rgba(200, 162, 78, 0.3)',
                       borderRadius: '8px',
                       fontSize: 'clamp(10px, 1.25vw, 13px)',
                       fontWeight: '700',
@@ -2171,15 +2398,16 @@ export default function EvaluatePage() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: 'clamp(4px, 0.5vw, 6px)',
-                      flexShrink: 0
+                      flexShrink: 0,
+                      transition: 'all 0.2s'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = '#C8A24E';
-                      e.currentTarget.style.color = 'white';
+                      e.currentTarget.style.background = 'rgba(200, 162, 78, 0.15)';
+                      e.currentTarget.style.borderColor = 'rgba(200, 162, 78, 0.5)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = '#ffffff';
-                      e.currentTarget.style.color = '#C8A24E';
+                      e.currentTarget.style.background = 'rgba(200, 162, 78, 0.06)';
+                      e.currentTarget.style.borderColor = 'rgba(200, 162, 78, 0.3)';
                     }}
                   >
                     <span>📄</span>
@@ -2191,23 +2419,27 @@ export default function EvaluatePage() {
                     onClick={handleBackToList}
                     style={{
                       padding: 'clamp(10px, 1.6vh, 14px)',
-                      background: '#ffffff',
-                      color: '#C8A24E',
-                      border: '1.5px solid #C8A24E',
+                      background: 'transparent',
+                      color: '#D4AF5E',
+                      border: '1px solid rgba(200, 162, 78, 0.3)',
                       borderRadius: '8px',
                       fontSize: 'clamp(11px, 1.4vw, 15px)',
                       fontWeight: '700',
                       fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                       cursor: 'pointer',
-                      flexShrink: 0
+                      flexShrink: 0,
+                      transition: 'all 0.2s',
+                      opacity: 0.7
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = '#C8A24E';
-                      e.currentTarget.style.color = 'white';
+                      e.currentTarget.style.background = 'rgba(200, 162, 78, 0.08)';
+                      e.currentTarget.style.opacity = '1';
+                      e.currentTarget.style.borderColor = 'rgba(200, 162, 78, 0.5)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = '#ffffff';
-                      e.currentTarget.style.color = '#C8A24E';
+                      e.currentTarget.style.background = 'transparent';
+                      e.currentTarget.style.opacity = '0.7';
+                      e.currentTarget.style.borderColor = 'rgba(200, 162, 78, 0.3)';
                     }}
                   >
                     العودة إلى قائمة المتسابقين
@@ -2234,23 +2466,23 @@ export default function EvaluatePage() {
         <div className="modal-overlay" onClick={() => setShowBackWarning(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2 style={{
-              color: '#F0FDF4',
+              color: '#FCA5A5',
               fontSize: '20px',
               fontWeight: '700',
               marginBottom: '15px',
               textAlign: 'center'
             }}>
-              تحذير
+              ⚠️ تحذير
             </h2>
 
             <p style={{
-              color: '#FCA5A5',
+              color: 'rgba(240, 253, 244, 0.8)',
               fontSize: '15px',
               marginBottom: '20px',
               textAlign: 'center',
               lineHeight: '1.6'
             }}>
-              ⚠️ لديك تغييرات غير محفوظة. هل تريد المتابعة بدون حفظ؟
+              لديك تغييرات غير محفوظة. هل تريد المتابعة بدون حفظ؟
             </p>
 
             <div style={{ display: 'flex', gap: '10px' }}>
@@ -2259,14 +2491,24 @@ export default function EvaluatePage() {
                 style={{
                   flex: 1,
                   padding: '12px',
-                  background: '#e74c3c',
+                  background: 'linear-gradient(135deg, #dc2626, #ef4444)',
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
                   fontSize: '15px',
                   fontWeight: '600',
                   fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 16px rgba(220, 38, 38, 0.3)',
+                  transition: 'all 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)'
+                  e.currentTarget.style.boxShadow = '0 6px 24px rgba(220, 38, 38, 0.5)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(220, 38, 38, 0.3)'
                 }}
               >
                 نعم، العودة بدون حفظ
@@ -2276,14 +2518,21 @@ export default function EvaluatePage() {
                 style={{
                   flex: 1,
                   padding: '12px',
-                  background: '#95a5a6',
-                  color: 'white',
-                  border: 'none',
+                  background: 'rgba(200, 162, 78, 0.1)',
+                  color: '#D4AF5E',
+                  border: '1px solid rgba(200, 162, 78, 0.3)',
                   borderRadius: '8px',
                   fontSize: '15px',
                   fontWeight: '600',
                   fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(200, 162, 78, 0.2)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(200, 162, 78, 0.1)'
                 }}
               >
                 إلغاء
