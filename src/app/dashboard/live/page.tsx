@@ -1180,7 +1180,7 @@ export default function LiveStatsPage() {
                       </h3>
                       <div className="bar-chart-container">
                         {Object.entries(displayStats.cityDistribution)
-                          .slice(0, 5)
+                          .slice(0, 8)
                           .map(([city, count]) => {
                             const maxCount = Math.max(
                               ...Object.values(displayStats.cityDistribution),
