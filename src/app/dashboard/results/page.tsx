@@ -160,7 +160,8 @@ export default function ResultsPage() {
 
     if (searchTerm) {
       filtered = filtered.filter(r => 
-        r.full_name.toLowerCase().includes(searchTerm.toLowerCase())
+        r.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.mobile.includes(searchTerm)
       )
     }
 
@@ -829,7 +830,7 @@ export default function ResultsPage() {
                 <div style={{ marginBottom: '20px' }}>
                   <input
                     type="text"
-                    placeholder="بحث بالاسم..."
+                    placeholder="بحث بالاسم أو رقم الهاتف..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     style={{
