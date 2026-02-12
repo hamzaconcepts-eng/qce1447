@@ -1060,22 +1060,25 @@ export default function EvaluatePage() {
           border-collapse: separate;
           border-spacing: 0;
           font-size: 12px;
+          background: rgba(255, 255, 255, 0.95);
+          border-radius: 10px;
+          overflow: hidden;
         }
 
         .compact-table th,
         .compact-table td {
           padding: 6px 8px;
           text-align: center;
-          border-bottom: 1px solid rgba(34, 197, 94, 0.1);
+          border-bottom: 1px solid rgba(200, 162, 78, 0.12);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
         }
 
         .compact-table th {
-          background: rgba(200, 162, 78, 0.1);
+          background: #0B1F0E;
           font-weight: 700;
-          color: #C8A24E;
+          color: #FFFFFF;
           position: sticky;
           top: 0;
           z-index: 10;
@@ -1083,25 +1086,23 @@ export default function EvaluatePage() {
           cursor: pointer;
           user-select: none;
           letter-spacing: 0.3px;
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
         }
 
         .compact-table th:hover {
-          background: rgba(200, 162, 78, 0.18);
+          background: #143322;
         }
 
         .compact-table .name-cell {
           text-align: right;
           font-weight: 600;
-          color: #F0FDF4;
+          color: #1A1A1A;
           max-width: 200px;
         }
 
         .compact-table .level-cell {
           font-size: 10px;
           max-width: 150px;
-          color: rgba(240, 253, 244, 0.7);
+          color: #555;
         }
 
         .compact-table tr {
@@ -1114,7 +1115,7 @@ export default function EvaluatePage() {
         }
 
         .compact-table tbody tr td {
-          color: rgba(240, 253, 244, 0.8);
+          color: #333;
         }
 
         .sort-indicator {
@@ -1490,7 +1491,7 @@ export default function EvaluatePage() {
                           key={competitor.id}
                           onClick={() => handleSelectCompetitor(competitor)}
                         >
-                          <td style={{ fontWeight: '600', color: '#C8A24E' }}>
+                          <td style={{ fontWeight: '600', color: '#0B1F0E' }}>
                             {startIndex + index + 1}
                           </td>
                           <td className="name-cell">
@@ -1507,9 +1508,9 @@ export default function EvaluatePage() {
                               backdropFilter: 'blur(10px)',
                               fontSize: '10px',
                               fontWeight: '600',
-                              background: competitor.status === 'evaluated' ? 'rgba(34, 197, 94, 0.15)' : 'rgba(200, 162, 78, 0.15)',
-                              color: competitor.status === 'evaluated' ? '#4ADE80' : '#D4AF5E',
-                              border: competitor.status === 'evaluated' ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(200, 162, 78, 0.3)'
+                              background: competitor.status === 'evaluated' ? 'rgba(22, 101, 52, 0.1)' : 'rgba(200, 162, 78, 0.1)',
+                              color: competitor.status === 'evaluated' ? '#166534' : '#A07C2E',
+                              border: competitor.status === 'evaluated' ? '1px solid rgba(22, 101, 52, 0.25)' : '1px solid rgba(200, 162, 78, 0.25)'
                             }}>
                               {competitor.status === 'evaluated' ? 'تم التقييم' : 'لم يتم التقييم'}
                             </span>
