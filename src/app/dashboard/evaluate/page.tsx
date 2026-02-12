@@ -1129,7 +1129,7 @@ export default function EvaluatePage() {
           display: inline-block;
           margin-left: 4px;
           font-size: 10px;
-          color: #D4AF5E;
+          color: #0A0F0A;
         }
 
         .pagination {
