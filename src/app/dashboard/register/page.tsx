@@ -101,6 +101,22 @@ export default function RegisterPage() {
     setUser(userData)
   }, [router])
 
+  useEffect(() => {
+    const setVH = () => {
+      const vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+    }
+    
+    setVH()
+    window.addEventListener('resize', setVH)
+    window.addEventListener('orientationchange', setVH)
+    
+    return () => {
+      window.removeEventListener('resize', setVH)
+      window.removeEventListener('orientationchange', setVH)
+    }
+  }, [])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -223,45 +239,44 @@ export default function RegisterPage() {
         const mobile = cols[4].trim()
 
         // Normalize gender
-        if (gender === 'ذكر' || gender.toLowerCase() === 'male') {
+        if (gender === 'ذكر' || gender.toLowerCase() === 'male' || gender.toLowerCase() === 'm') {
           gender = 'male'
-        } else if (gender === 'أنثى' || gender.toLowerCase() === 'female') {
+        } else if (gender === 'أنثى' || gender === 'انثى' || gender.toLowerCase() === 'female' || gender.toLowerCase() === 'f') {
           gender = 'female'
         } else {
           errorCount++
           errors.push({
             row: i + 1,
             name: fullName,
-            reason: `الجنس غير صحيح: ${gender}`
+            reason: `جنس غير صحيح: "${gender}" - يجب أن يكون (ذكر/أنثى)`
           })
           continue
         }
 
-        // Validate mobile number (8-15 digits)
+        // Normalize and validate level
+        const level = normalizeLevel(levelInput)
+
+        // Validate phone number
         if (!/^\d{8,15}$/.test(mobile)) {
           errorCount++
           errors.push({
             row: i + 1,
             name: fullName,
-            reason: `رقم الهاتف غير صحيح: ${mobile}`
+            reason: `رقم هاتف غير صحيح: "${mobile}" - يجب أن يحتوي على 8-15 رقماً`
           })
           continue
         }
 
-        // Normalize level (with default fallback to Level 5)
-        const level = normalizeLevel(levelInput)
-
-        // Create unique key (name + gender + level + city) EXCLUDING mobile
-        const uniqueKey = `${fullName}|${gender}|${level}|${city}`
-
-        // Check for duplicates in THIS file
-        if (seenInFile.has(uniqueKey)) {
+        // Check for duplicates in the same file (EXCLUDING mobile)
+        const recordKey = `${fullName}|${gender}|${level}|${city}`
+        if (seenInFile.has(recordKey)) {
           skippedCount++
           continue
         }
+        seenInFile.add(recordKey)
 
-        // Check for duplicates in database
-        const { data: existingInDB } = await supabase
+        // Check for duplicates in database (EXCLUDING mobile)
+        const { data: existing } = await supabase
           .from('competitors')
           .select('*')
           .eq('full_name', fullName)
@@ -270,9 +285,8 @@ export default function RegisterPage() {
           .eq('city', city)
           .single()
 
-        if (existingInDB) {
+        if (existing) {
           skippedCount++
-          seenInFile.add(uniqueKey)
           continue
         }
 
@@ -293,23 +307,21 @@ export default function RegisterPage() {
           errors.push({
             row: i + 1,
             name: fullName,
-            reason: error.message
+            reason: `خطأ في قاعدة البيانات: ${error.message}`
           })
-          continue
+        } else {
+          successCount++
         }
-
-        successCount++
-        seenInFile.add(uniqueKey)
       }
 
       setImportStats({ success: successCount, skipped: skippedCount, errors: errorCount })
       setImportErrors(errors)
       setImportSuccess(true)
       setImporting(false)
-
+      
     } catch (error) {
-      console.error('Error importing CSV:', error)
-      alert('حدث خطأ أثناء استيراد الملف')
+      console.error('Import error:', error)
+      alert('حدث خطأ أثناء استيراد البيانات')
       setImporting(false)
     }
   }
@@ -320,6 +332,9 @@ export default function RegisterPage() {
 
   return (
     <>
+      {/* Google Fonts */}
+      <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+      
       <style jsx global>{`
         * {
           margin: 0;
@@ -328,109 +343,260 @@ export default function RegisterPage() {
         }
 
         html, body {
-          height: 100vh;
+          height: calc(var(--vh, 1vh) * 100);
           width: 100vw;
           overflow: hidden;
-          font-family: 'Cairo', sans-serif;
         }
 
         body {
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
+          background: #0A0F0A;
+          font-family: 'Noto Kufi Arabic', 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+          color: #F0FDF4;
+          -webkit-font-smoothing: antialiased;
         }
 
-        .spinner {
-          border: 3px solid rgba(255, 255, 255, 0.3);
-          border-top: 3px solid white;
+        /* Animated Background Orbs */
+        .bg-canvas {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 0;
+          overflow: hidden;
+          pointer-events: none;
+        }
+
+        .bg-orb {
+          position: absolute;
           border-radius: 50%;
-          width: 18px;
-          height: 18px;
-          animation: spin 1s linear infinite;
+          filter: blur(120px);
+          opacity: 0.3;
+        }
+
+        .bg-orb.green-1 {
+          width: 500px;
+          height: 500px;
+          background: radial-gradient(circle, #22C55E, transparent 70%);
+          bottom: -15%;
+          left: 20%;
+          animation: orbPulse1 15s ease-in-out infinite alternate;
+        }
+
+        .bg-orb.green-2 {
+          width: 350px;
+          height: 350px;
+          background: radial-gradient(circle, #166534, transparent 70%);
+          top: 10%;
+          right: -5%;
+          animation: orbPulse2 20s ease-in-out infinite alternate;
+        }
+
+        .bg-orb.gold-1 {
+          width: 400px;
+          height: 400px;
+          background: radial-gradient(circle, #C8A24E, transparent 70%);
+          top: 35%;
+          left: -8%;
+          opacity: 0.18;
+          animation: orbPulse3 18s ease-in-out infinite alternate;
+        }
+
+        .bg-orb.gold-2 {
+          width: 300px;
+          height: 300px;
+          background: radial-gradient(circle, #D4AF5E, transparent 70%);
+          bottom: 20%;
+          right: -5%;
+          opacity: 0.12;
+          animation: orbPulse2 22s ease-in-out infinite alternate;
+        }
+
+        @keyframes orbPulse1 {
+          0% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+          50% { transform: translate(30px, -20px) scale(1.15); opacity: 0.35; }
+          100% { transform: translate(-20px, 10px) scale(0.95); opacity: 0.2; }
+        }
+
+        @keyframes orbPulse2 {
+          0% { transform: translate(0, 0) scale(1); }
+          100% { transform: translate(-40px, 30px) scale(1.1); }
+        }
+
+        @keyframes orbPulse3 {
+          0% { transform: translate(0, 0) scale(1); }
+          100% { transform: translate(30px, -20px) scale(1.08); }
+        }
+
+        .bg-canvas::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(34, 197, 94, 0.012) 2px,
+            rgba(34, 197, 94, 0.012) 4px
+          );
+          pointer-events: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: rgba(34, 197, 94, 0.05);
+          border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: rgba(200, 162, 78, 0.3);
+          border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(200, 162, 78, 0.5);
+        }
+
+        /* Spinner */
+        .spinner {
+          width: clamp(14px, 2vw, 18px);
+          height: clamp(14px, 2vw, 18px);
+          border: 2px solid rgba(255,255,255,0.3);
+          border-top-color: #fff;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          to { transform: rotate(360deg); }
         }
 
-        .tab-content {
-          animation: fadeIn 0.3s ease-in;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-
+        /* Error list styling */
         .error-list {
-          background: #fff3cd;
-          padding: clamp(10px, 1.5vh, 15px);
-          border-radius: clamp(5px, 0.8vh, 8px);
           margin-top: clamp(10px, 1.5vh, 15px);
+          padding: clamp(10px, 1.5vh, 15px);
+          background: rgba(200, 162, 78, 0.08);
+          border-radius: clamp(6px, 1vh, 10px);
+          border: 1px solid rgba(200, 162, 78, 0.2);
         }
 
         .error-item {
-          background: white;
-          padding: clamp(8px, 1.2vh, 12px);
-          margin-bottom: clamp(8px, 1.2vh, 12px);
+          padding: clamp(6px, 1vh, 8px);
+          margin-bottom: clamp(6px, 1vh, 8px);
+          background: rgba(220, 38, 38, 0.1);
           border-radius: clamp(4px, 0.6vh, 6px);
-          font-size: clamp(11px, 1.2vw, 13px);
-          color: #856404;
+          font-size: clamp(10px, 1.1vw, 12px);
+          color: rgba(240, 253, 244, 0.8);
           text-align: right;
+          line-height: 1.5;
+        }
+
+        .error-item:last-child {
+          margin-bottom: 0;
         }
       `}</style>
       
+      {/* Animated Background */}
+      <div className="bg-canvas">
+        <div className="bg-orb green-1"></div>
+        <div className="bg-orb green-2"></div>
+        <div className="bg-orb gold-1"></div>
+        <div className="bg-orb gold-2"></div>
+      </div>
+
       <div style={{
-        height: '100vh',
+        height: 'calc(var(--vh, 1vh) * 100)',
         width: '100vw',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 'clamp(10px, 1.5vh, 20px)',
-        background: 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)'
+        padding: 'clamp(10px, 2vh, 20px)',
+        position: 'relative',
+        zIndex: 1
       }}>
         
+        {/* Glass Morphism Card */}
         <div style={{
-          background: '#ffffff',
-          padding: 'clamp(15px, 2.5vh, 30px) clamp(20px, 3vw, 40px)',
-          borderRadius: 'clamp(10px, 1.5vh, 20px)',
-          boxShadow: '0 1vh 3vh rgba(0,0,0,0.3)',
+          background: 'rgba(34, 197, 94, 0.06)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          border: '1px solid rgba(34, 197, 94, 0.15)',
+          padding: 'clamp(18px, 2.5vh, 28px) clamp(20px, 2.8vw, 28px)',
+          borderRadius: 'clamp(20px, 3vh, 32px)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 80px rgba(34, 197, 94, 0.05)',
           width: '100%',
-          maxWidth: 'clamp(350px, 90vw, 800px)',
-          maxHeight: '95vh',
-          overflow: 'hidden',
+          maxWidth: 'clamp(380px, 92vw, 600px)',
+          height: 'auto',
+          maxHeight: '94vh',
+          overflow: 'visible',
           display: 'flex',
-          flexDirection: 'column'
+          flexDirection: 'column',
+          position: 'relative'
         }}>
           
-          {/* Logo */}
+          {/* Gold Glow at Top */}
           <div style={{
-            width: 'clamp(50px, 8vw, 80px)',
-            height: 'clamp(50px, 8vw, 80px)',
-            margin: '0 auto clamp(8px, 1.2vh, 15px)',
+            position: 'absolute',
+            top: '-60px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '250px',
+            height: '140px',
+            background: 'radial-gradient(ellipse, rgba(200, 162, 78, 0.3), transparent 70%)',
+            pointerEvents: 'none',
+            opacity: 0.6,
+            zIndex: 0
+          }}></div>
+
+          {/* Logo with Gold Border */}
+          <div style={{
+            width: 'clamp(55px, 9vw, 70px)',
+            height: 'clamp(55px, 9vw, 70px)',
+            margin: '0 auto clamp(10px, 1.5vh, 14px)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            flexShrink: 0
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, #0B1F0E, #0A0F0A)',
+            border: '2px solid #C8A24E',
+            boxShadow: '0 0 28px rgba(200,162,78,0.3), 0 0 8px rgba(200,162,78,0.2)',
+            flexShrink: 0,
+            position: 'relative',
+            zIndex: 1
           }}>
             <Image
               src="/images/logo.svg"
               alt="شعار مركز رياض العلم"
-              width={80}
-              height={80}
-              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              width={70}
+              height={70}
+              style={{ 
+                width: '70%', 
+                height: '70%', 
+                objectFit: 'contain',
+                filter: 'brightness(0) saturate(100%) invert(79%) sepia(18%) saturate(1234%) hue-rotate(359deg) brightness(95%) contrast(88%)'
+              }}
               priority
             />
           </div>
 
-          {/* Title */}
+          {/* Title with Gold Gradient */}
           <h1 style={{
-            color: '#333333',
-            marginBottom: 'clamp(5px, 1vh, 10px)',
-            fontSize: 'clamp(14px, 2vw, 22px)',
+            marginBottom: 'clamp(12px, 1.8vh, 16px)',
+            fontSize: 'clamp(16px, 2.2vw, 20px)',
             fontWeight: '700',
             lineHeight: '1.3',
             textAlign: 'center',
-            flexShrink: 0
+            flexShrink: 0,
+            position: 'relative',
+            zIndex: 1,
+            background: 'linear-gradient(135deg, #C8A24E, #E0C478, #D4AF5E)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text'
           }}>
             تسجيل متسابق جديد
           </h1>
@@ -438,26 +604,31 @@ export default function RegisterPage() {
           {/* Tabs */}
           <div style={{
             display: 'flex',
-            gap: 'clamp(8px, 1vw, 12px)',
-            marginBottom: 'clamp(10px, 1.5vh, 20px)',
-            flexShrink: 0
+            gap: 'clamp(8px, 1.2vw, 12px)',
+            marginBottom: 'clamp(14px, 2vh, 18px)',
+            flexShrink: 0,
+            position: 'relative',
+            zIndex: 1,
+            padding: '0 4px'
           }}>
             <button
               onClick={() => setActiveTab('manual')}
               style={{
                 flex: 1,
-                padding: 'clamp(8px, 1.2vh, 12px)',
+                padding: 'clamp(8px, 1.2vh, 10px)',
                 background: activeTab === 'manual' 
-                  ? 'linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%)'
-                  : '#f0f0f0',
-                color: activeTab === 'manual' ? 'white' : '#666666',
-                border: 'none',
-                borderRadius: 'clamp(5px, 0.8vh, 10px)',
-                fontSize: 'clamp(11px, 1.3vw, 14px)',
+                  ? 'linear-gradient(135deg, #B8922E, #D4AF5E)'
+                  : 'transparent',
+                color: activeTab === 'manual' ? '#0A0F0A' : '#D4AF5E',
+                border: activeTab === 'manual' ? 'none' : '1px solid rgba(200, 162, 78, 0.3)',
+                borderRadius: 'clamp(8px, 1.2vh, 12px)',
+                fontSize: 'clamp(11px, 1.3vw, 13px)',
                 fontWeight: '700',
-                fontFamily: 'Cairo, sans-serif',
+                fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                 cursor: 'pointer',
-                transition: 'all 0.2s'
+                transition: 'all 0.3s',
+                opacity: activeTab === 'manual' ? 1 : 0.7,
+                boxShadow: activeTab === 'manual' ? '0 4px 16px rgba(200,162,78,0.4)' : 'none'
               }}
             >
               تسجيل يدوي
@@ -466,18 +637,20 @@ export default function RegisterPage() {
               onClick={() => setActiveTab('import')}
               style={{
                 flex: 1,
-                padding: 'clamp(8px, 1.2vh, 12px)',
+                padding: 'clamp(8px, 1.2vh, 10px)',
                 background: activeTab === 'import' 
-                  ? 'linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%)'
-                  : '#f0f0f0',
-                color: activeTab === 'import' ? 'white' : '#666666',
-                border: 'none',
-                borderRadius: 'clamp(5px, 0.8vh, 10px)',
-                fontSize: 'clamp(11px, 1.3vw, 14px)',
+                  ? 'linear-gradient(135deg, #B8922E, #D4AF5E)'
+                  : 'transparent',
+                color: activeTab === 'import' ? '#0A0F0A' : '#D4AF5E',
+                border: activeTab === 'import' ? 'none' : '1px solid rgba(200, 162, 78, 0.3)',
+                borderRadius: 'clamp(8px, 1.2vh, 12px)',
+                fontSize: 'clamp(11px, 1.3vw, 13px)',
                 fontWeight: '700',
-                fontFamily: 'Cairo, sans-serif',
+                fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                 cursor: 'pointer',
-                transition: 'all 0.2s'
+                transition: 'all 0.3s',
+                opacity: activeTab === 'import' ? 1 : 0.7,
+                boxShadow: activeTab === 'import' ? '0 4px 16px rgba(200,162,78,0.4)' : 'none'
               }}
             >
               استيراد CSV
@@ -489,21 +662,27 @@ export default function RegisterPage() {
             flex: 1,
             overflowY: 'auto',
             overflowX: 'hidden',
-            paddingRight: 'clamp(3px, 0.5vw, 8px)',
-            marginBottom: 'clamp(10px, 1.5vh, 15px)'
+            paddingRight: 'clamp(4px, 0.6vw, 8px)',
+            marginBottom: 'clamp(10px, 1.5vh, 14px)',
+            position: 'relative',
+            zIndex: 1
           }}>
             {/* Manual Registration Tab */}
             {activeTab === 'manual' && (
               <div className="tab-content">
                 <form onSubmit={handleSubmit}>
-                  <div style={{ marginBottom: 'clamp(12px, 1.8vh, 20px)' }}>
+                  {/* Full Name */}
+                  <div style={{ marginBottom: 'clamp(10px, 1.5vh, 14px)' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: 'clamp(4px, 0.6vh, 8px)',
-                      fontSize: 'clamp(11px, 1.2vw, 14px)',
+                      marginBottom: 'clamp(4px, 0.6vh, 6px)',
+                      fontSize: 'clamp(10px, 1.1vw, 12px)',
                       fontWeight: '600',
-                      color: '#555555',
-                      textAlign: 'right'
+                      color: '#C8A24E',
+                      opacity: 0.7,
+                      textAlign: 'right',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
                     }}>
                       الاسم الكامل
                     </label>
@@ -513,31 +692,47 @@ export default function RegisterPage() {
                       onChange={(e) => setFullName(e.target.value)}
                       style={{
                         width: '100%',
-                        padding: 'clamp(8px, 1.2vh, 12px)',
-                        border: '2px solid #e0e0e0',
-                        borderRadius: 'clamp(5px, 0.8vh, 10px)',
-                        fontSize: 'clamp(12px, 1.4vw, 15px)',
+                        padding: 'clamp(9px, 1.3vh, 11px) clamp(12px, 1.8vw, 14px)',
+                        background: 'rgba(200, 162, 78, 0.04)',
+                        backdropFilter: 'blur(8px)',
+                        border: '1px solid rgba(200, 162, 78, 0.15)',
+                        borderRadius: 'clamp(8px, 1.2vh, 12px)',
+                        fontSize: 'clamp(12px, 1.4vw, 14px)',
                         textAlign: 'right',
-                        fontFamily: 'Cairo, sans-serif'
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                        color: '#F0FDF4',
+                        outline: 'none',
+                        transition: 'all 0.2s'
                       }}
                       placeholder="اسم المتسابق الكامل"
+                      onFocus={(e) => {
+                        e.target.style.borderColor = '#C8A24E'
+                        e.target.style.boxShadow = '0 0 0 3px rgba(200,162,78,0.12)'
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.borderColor = 'rgba(200, 162, 78, 0.15)'
+                        e.target.style.boxShadow = 'none'
+                      }}
                     />
                   </div>
 
-                  <div style={{ marginBottom: 'clamp(12px, 1.8vh, 20px)', textAlign: 'right' }}>
+                  {/* Gender */}
+                  <div style={{ marginBottom: 'clamp(10px, 1.5vh, 14px)', textAlign: 'right' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: 'clamp(4px, 0.6vh, 8px)',
-                      fontSize: 'clamp(11px, 1.2vw, 14px)',
+                      marginBottom: 'clamp(6px, 0.8vh, 8px)',
+                      fontSize: 'clamp(10px, 1.1vw, 12px)',
                       fontWeight: '600',
-                      color: '#555555',
-                      textAlign: 'right'
+                      color: '#C8A24E',
+                      opacity: 0.7,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
                     }}>
                       الجنس
                     </label>
                     <div style={{ 
                       display: 'inline-flex', 
-                      gap: 'clamp(15px, 2vw, 25px)',
+                      gap: 'clamp(14px, 2vw, 20px)',
                       direction: 'rtl'
                     }}>
                       <label style={{
@@ -545,7 +740,8 @@ export default function RegisterPage() {
                         alignItems: 'center',
                         cursor: 'pointer',
                         fontSize: 'clamp(12px, 1.4vw, 14px)',
-                        gap: 'clamp(6px, 0.8vw, 10px)'
+                        gap: 'clamp(6px, 0.8vw, 8px)',
+                        color: '#86EFAC'
                       }}>
                         <input
                           type="radio"
@@ -553,16 +749,22 @@ export default function RegisterPage() {
                           value="male"
                           checked={gender === 'male'}
                           onChange={(e) => setGender(e.target.value)}
-                          style={{ cursor: 'pointer' }}
+                          style={{
+                            width: 'clamp(16px, 2vw, 18px)',
+                            height: 'clamp(16px, 2vw, 18px)',
+                            cursor: 'pointer',
+                            accentColor: '#C8A24E'
+                          }}
                         />
-                        <span>ذكر</span>
+                        ذكر
                       </label>
                       <label style={{
                         display: 'flex',
                         alignItems: 'center',
                         cursor: 'pointer',
                         fontSize: 'clamp(12px, 1.4vw, 14px)',
-                        gap: 'clamp(6px, 0.8vw, 10px)'
+                        gap: 'clamp(6px, 0.8vw, 8px)',
+                        color: '#86EFAC'
                       }}>
                         <input
                           type="radio"
@@ -570,21 +772,30 @@ export default function RegisterPage() {
                           value="female"
                           checked={gender === 'female'}
                           onChange={(e) => setGender(e.target.value)}
-                          style={{ cursor: 'pointer' }}
+                          style={{
+                            width: 'clamp(16px, 2vw, 18px)',
+                            height: 'clamp(16px, 2vw, 18px)',
+                            cursor: 'pointer',
+                            accentColor: '#C8A24E'
+                          }}
                         />
-                        <span>أنثى</span>
+                        أنثى
                       </label>
                     </div>
                   </div>
 
-                  <div style={{ marginBottom: 'clamp(12px, 1.8vh, 20px)' }}>
+                  {/* Level */}
+                  <div style={{ marginBottom: 'clamp(10px, 1.5vh, 14px)' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: 'clamp(4px, 0.6vh, 8px)',
-                      fontSize: 'clamp(11px, 1.2vw, 14px)',
+                      marginBottom: 'clamp(4px, 0.6vh, 6px)',
+                      fontSize: 'clamp(10px, 1.1vw, 12px)',
                       fontWeight: '600',
-                      color: '#555555',
-                      textAlign: 'right'
+                      color: '#C8A24E',
+                      opacity: 0.7,
+                      textAlign: 'right',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
                     }}>
                       المستوى
                     </label>
@@ -593,29 +804,49 @@ export default function RegisterPage() {
                       onChange={(e) => setLevel(e.target.value)}
                       style={{
                         width: '100%',
-                        padding: 'clamp(8px, 1.2vh, 12px)',
-                        border: '2px solid #e0e0e0',
-                        borderRadius: 'clamp(5px, 0.8vh, 10px)',
-                        fontSize: 'clamp(12px, 1.4vw, 15px)',
+                        padding: 'clamp(9px, 1.3vh, 11px) clamp(12px, 1.8vw, 14px)',
+                        background: 'rgba(200, 162, 78, 0.04)',
+                        backdropFilter: 'blur(8px)',
+                        border: '1px solid rgba(200, 162, 78, 0.15)',
+                        borderRadius: 'clamp(8px, 1.2vh, 12px)',
+                        fontSize: 'clamp(12px, 1.4vw, 14px)',
                         textAlign: 'right',
-                        fontFamily: 'Cairo, sans-serif'
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                        color: '#F0FDF4',
+                        outline: 'none',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s'
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.borderColor = '#C8A24E'
+                        e.target.style.boxShadow = '0 0 0 3px rgba(200,162,78,0.12)'
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.borderColor = 'rgba(200, 162, 78, 0.15)'
+                        e.target.style.boxShadow = 'none'
                       }}
                     >
-                      <option value="">اختر المستوى</option>
-                      {levels.map((lvl) => (
-                        <option key={lvl} value={lvl}>{lvl}</option>
+                      <option value="" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>اختر المستوى</option>
+                      {levels.map((lvl, index) => (
+                        <option key={index} value={lvl} style={{ background: '#0A0F0A', color: '#F0FDF4' }}>
+                          {lvl}
+                        </option>
                       ))}
                     </select>
                   </div>
 
-                  <div style={{ marginBottom: 'clamp(12px, 1.8vh, 20px)' }}>
+                  {/* City */}
+                  <div style={{ marginBottom: 'clamp(10px, 1.5vh, 14px)' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: 'clamp(4px, 0.6vh, 8px)',
-                      fontSize: 'clamp(11px, 1.2vw, 14px)',
+                      marginBottom: 'clamp(4px, 0.6vh, 6px)',
+                      fontSize: 'clamp(10px, 1.1vw, 12px)',
                       fontWeight: '600',
-                      color: '#555555',
-                      textAlign: 'right'
+                      color: '#C8A24E',
+                      opacity: 0.7,
+                      textAlign: 'right',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
                     }}>
                       المدينة
                     </label>
@@ -625,25 +856,42 @@ export default function RegisterPage() {
                       onChange={(e) => setCity(e.target.value)}
                       style={{
                         width: '100%',
-                        padding: 'clamp(8px, 1.2vh, 12px)',
-                        border: '2px solid #e0e0e0',
-                        borderRadius: 'clamp(5px, 0.8vh, 10px)',
-                        fontSize: 'clamp(12px, 1.4vw, 15px)',
+                        padding: 'clamp(9px, 1.3vh, 11px) clamp(12px, 1.8vw, 14px)',
+                        background: 'rgba(200, 162, 78, 0.04)',
+                        backdropFilter: 'blur(8px)',
+                        border: '1px solid rgba(200, 162, 78, 0.15)',
+                        borderRadius: 'clamp(8px, 1.2vh, 12px)',
+                        fontSize: 'clamp(12px, 1.4vw, 14px)',
                         textAlign: 'right',
-                        fontFamily: 'Cairo, sans-serif'
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                        color: '#F0FDF4',
+                        outline: 'none',
+                        transition: 'all 0.2s'
                       }}
                       placeholder="اسم المدينة"
+                      onFocus={(e) => {
+                        e.target.style.borderColor = '#C8A24E'
+                        e.target.style.boxShadow = '0 0 0 3px rgba(200,162,78,0.12)'
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.borderColor = 'rgba(200, 162, 78, 0.15)'
+                        e.target.style.boxShadow = 'none'
+                      }}
                     />
                   </div>
 
-                  <div style={{ marginBottom: 'clamp(15px, 2.5vh, 30px)' }}>
+                  {/* Mobile */}
+                  <div style={{ marginBottom: 'clamp(12px, 2vh, 16px)' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: 'clamp(4px, 0.6vh, 8px)',
-                      fontSize: 'clamp(11px, 1.2vw, 14px)',
+                      marginBottom: 'clamp(4px, 0.6vh, 6px)',
+                      fontSize: 'clamp(10px, 1.1vw, 12px)',
                       fontWeight: '600',
-                      color: '#555555',
-                      textAlign: 'right'
+                      color: '#C8A24E',
+                      opacity: 0.7,
+                      textAlign: 'right',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
                     }}>
                       رقم الهاتف (8-15 رقم)
                     </label>
@@ -653,37 +901,62 @@ export default function RegisterPage() {
                       onChange={(e) => setMobile(e.target.value)}
                       style={{
                         width: '100%',
-                        padding: 'clamp(8px, 1.2vh, 12px)',
-                        border: '2px solid #e0e0e0',
-                        borderRadius: 'clamp(5px, 0.8vh, 10px)',
-                        fontSize: 'clamp(12px, 1.4vw, 15px)',
+                        padding: 'clamp(9px, 1.3vh, 11px) clamp(12px, 1.8vw, 14px)',
+                        background: 'rgba(200, 162, 78, 0.04)',
+                        backdropFilter: 'blur(8px)',
+                        border: '1px solid rgba(200, 162, 78, 0.15)',
+                        borderRadius: 'clamp(8px, 1.2vh, 12px)',
+                        fontSize: 'clamp(12px, 1.4vw, 14px)',
                         textAlign: 'right',
-                        fontFamily: 'Cairo, sans-serif',
-                        direction: 'ltr'
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                        color: '#F0FDF4',
+                        outline: 'none',
+                        direction: 'ltr',
+                        transition: 'all 0.2s'
                       }}
                       placeholder="99999999"
+                      onFocus={(e) => {
+                        e.target.style.borderColor = '#C8A24E'
+                        e.target.style.boxShadow = '0 0 0 3px rgba(200,162,78,0.12)'
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.borderColor = 'rgba(200, 162, 78, 0.15)'
+                        e.target.style.boxShadow = 'none'
+                      }}
                     />
                   </div>
 
+                  {/* Submit Button */}
                   <button
                     type="submit"
                     disabled={loading}
                     style={{
                       width: '100%',
-                      padding: 'clamp(10px, 1.5vh, 15px)',
-                      background: loading ? '#95a5a6' : 'linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%)',
-                      color: 'white',
+                      padding: 'clamp(10px, 1.4vh, 12px) clamp(20px, 3.5vw, 28px)',
+                      background: loading ? 'rgba(200, 162, 78, 0.3)' : 'linear-gradient(135deg, #B8922E, #D4AF5E)',
+                      color: loading ? 'rgba(240, 253, 244, 0.5)' : '#0A0F0A',
                       border: 'none',
-                      borderRadius: 'clamp(5px, 0.8vh, 10px)',
-                      fontSize: 'clamp(13px, 1.5vw, 16px)',
+                      borderRadius: 'clamp(8px, 1.2vh, 12px)',
+                      fontSize: 'clamp(12px, 1.4vw, 14px)',
                       fontWeight: '700',
-                      fontFamily: 'Cairo, sans-serif',
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                       cursor: loading ? 'not-allowed' : 'pointer',
-                      boxShadow: '0 0.4vh 1.5vh rgba(26, 58, 58, 0.3)',
+                      boxShadow: loading ? 'none' : '0 4px 20px rgba(200,162,78,0.4)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: 'clamp(5px, 0.8vw, 10px)'
+                      gap: 'clamp(6px, 0.8vw, 10px)',
+                      transition: 'all 0.3s'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!loading) {
+                        e.currentTarget.style.transform = 'translateY(-2px)'
+                        e.currentTarget.style.boxShadow = '0 6px 28px rgba(200,162,78,0.6)'
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)'
+                      e.currentTarget.style.boxShadow = loading ? 'none' : '0 4px 20px rgba(200,162,78,0.4)'
                     }}
                   >
                     {loading && <span className="spinner"></span>}
@@ -696,12 +969,13 @@ export default function RegisterPage() {
             {/* CSV Import Tab */}
             {activeTab === 'import' && (
               <div className="tab-content">
+                {/* File Upload Area */}
                 <div style={{
-                  background: '#f0f9f9',
-                  padding: 'clamp(12px, 2vh, 20px)',
-                  borderRadius: 'clamp(6px, 1vh, 12px)',
-                  marginBottom: 'clamp(12px, 2vh, 20px)',
-                  border: '2px dashed #5fb3b3'
+                  background: 'rgba(200, 162, 78, 0.08)',
+                  padding: 'clamp(12px, 2vh, 16px)',
+                  borderRadius: 'clamp(10px, 1.5vh, 14px)',
+                  marginBottom: 'clamp(12px, 2vh, 16px)',
+                  border: '2px dashed rgba(200, 162, 78, 0.3)'
                 }}>
                   <input
                     id="csv-upload"
@@ -711,13 +985,18 @@ export default function RegisterPage() {
                     style={{
                       width: '100%',
                       padding: 'clamp(8px, 1.2vh, 10px)',
-                      fontSize: 'clamp(11px, 1.2vw, 14px)',
-                      fontFamily: 'Cairo, sans-serif'
+                      fontSize: 'clamp(11px, 1.2vw, 13px)',
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                      color: '#F0FDF4',
+                      background: 'rgba(200, 162, 78, 0.06)',
+                      border: '1px solid rgba(200, 162, 78, 0.2)',
+                      borderRadius: 'clamp(6px, 1vh, 8px)',
+                      cursor: 'pointer'
                     }}
                   />
                   <p style={{
-                    fontSize: 'clamp(9px, 1vw, 12px)',
-                    color: '#666666',
+                    fontSize: 'clamp(9px, 1vw, 11px)',
+                    color: 'rgba(240, 253, 244, 0.6)',
                     marginTop: 'clamp(8px, 1.2vh, 10px)',
                     textAlign: 'right',
                     lineHeight: '1.6'
@@ -732,25 +1011,38 @@ export default function RegisterPage() {
                   </p>
                 </div>
 
+                {/* Import Button */}
                 <button
                   onClick={handleCSVImport}
                   disabled={!csvFile || importing}
                   style={{
                     width: '100%',
-                    padding: 'clamp(10px, 1.5vh, 15px)',
-                    background: (!csvFile || importing) ? '#95a5a6' : '#3498db',
-                    color: 'white',
+                    padding: 'clamp(10px, 1.4vh, 12px) clamp(20px, 3.5vw, 28px)',
+                    background: (!csvFile || importing) ? 'rgba(200, 162, 78, 0.3)' : 'linear-gradient(135deg, #166534, #22C55E)',
+                    color: (!csvFile || importing) ? 'rgba(240, 253, 244, 0.5)' : '#FFFFFF',
                     border: 'none',
-                    borderRadius: 'clamp(5px, 0.8vh, 10px)',
-                    fontSize: 'clamp(13px, 1.5vw, 16px)',
+                    borderRadius: 'clamp(8px, 1.2vh, 12px)',
+                    fontSize: 'clamp(12px, 1.4vw, 14px)',
                     fontWeight: '700',
-                    fontFamily: 'Cairo, sans-serif',
+                    fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                     cursor: (!csvFile || importing) ? 'not-allowed' : 'pointer',
-                    boxShadow: '0 0.4vh 1.5vh rgba(52, 152, 219, 0.3)',
+                    boxShadow: (!csvFile || importing) ? 'none' : '0 4px 20px rgba(34, 197, 94, 0.4)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: 'clamp(5px, 0.8vw, 10px)'
+                    gap: 'clamp(6px, 0.8vw, 10px)',
+                    marginBottom: 'clamp(12px, 2vh, 16px)',
+                    transition: 'all 0.3s'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (csvFile && !importing) {
+                      e.currentTarget.style.transform = 'translateY(-2px)'
+                      e.currentTarget.style.boxShadow = '0 6px 28px rgba(34, 197, 94, 0.6)'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = (!csvFile || importing) ? 'none' : '0 4px 20px rgba(34, 197, 94, 0.4)'
                   }}
                 >
                   {importing && <span className="spinner"></span>}
@@ -760,30 +1052,35 @@ export default function RegisterPage() {
                 {/* Import Results */}
                 {importSuccess && (
                   <div style={{
-                    marginTop: 'clamp(12px, 2vh, 20px)',
-                    padding: 'clamp(10px, 1.5vh, 15px)',
-                    background: '#d4edda',
-                    borderRadius: 'clamp(5px, 0.8vh, 10px)',
-                    border: '1px solid #28a745'
+                    padding: 'clamp(12px, 1.8vh, 16px)',
+                    background: 'rgba(34, 197, 94, 0.12)',
+                    borderRadius: 'clamp(10px, 1.5vh, 14px)',
+                    border: '1px solid rgba(34, 197, 94, 0.3)'
                   }}>
                     <h3 style={{
-                      fontSize: 'clamp(13px, 1.5vw, 16px)',
+                      fontSize: 'clamp(13px, 1.5vw, 15px)',
                       fontWeight: '700',
-                      color: '#27ae60',
+                      color: '#4ADE80',
                       marginBottom: 'clamp(8px, 1.2vh, 10px)',
                       textAlign: 'center'
                     }}>
                       تفاصيل الاستيراد
                     </h3>
                     <div style={{
-                      fontSize: 'clamp(11px, 1.2vw, 14px)',
-                      color: '#155724',
+                      fontSize: 'clamp(11px, 1.2vw, 13px)',
+                      color: '#86EFAC',
                       textAlign: 'right',
-                      lineHeight: '2'
+                      lineHeight: '1.8'
                     }}>
-                      <div>✓ تم تسجيل: <strong>{importStats.success}</strong> متسابق</div>
-                      <div>⊘ تم تجاهل (مكرر): <strong>{importStats.skipped}</strong> متسابق</div>
-                      <div>✗ أخطاء: <strong>{importStats.errors}</strong> سطر</div>
+                      <div style={{ marginBottom: 'clamp(4px, 0.6vh, 6px)' }}>
+                        ✓ تم تسجيل: <strong style={{ color: '#4ADE80' }}>{importStats.success}</strong> متسابق
+                      </div>
+                      <div style={{ marginBottom: 'clamp(4px, 0.6vh, 6px)' }}>
+                        ⊘ تم تجاهل (مكرر): <strong style={{ color: '#D4AF5E' }}>{importStats.skipped}</strong> متسابق
+                      </div>
+                      <div>
+                        ✗ أخطاء: <strong style={{ color: '#FCA5A5' }}>{importStats.errors}</strong> سطر
+                      </div>
                     </div>
 
                     {/* Error Details */}
@@ -792,7 +1089,7 @@ export default function RegisterPage() {
                         <div style={{
                           fontWeight: '700',
                           marginBottom: 'clamp(8px, 1.2vh, 10px)',
-                          color: '#856404',
+                          color: '#D4AF5E',
                           fontSize: 'clamp(11px, 1.2vw, 13px)'
                         }}>
                           تفصيل الأخطاء:
@@ -801,7 +1098,9 @@ export default function RegisterPage() {
                           <div key={index} className="error-item">
                             <strong>السطر {error.row}:</strong> {error.name}
                             <br />
-                            <span style={{ fontSize: 'clamp(9px, 1vw, 12px)' }}>السبب: {error.reason}</span>
+                            <span style={{ fontSize: 'clamp(9px, 1vw, 11px)', opacity: 0.8 }}>
+                              السبب: {error.reason}
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -817,25 +1116,30 @@ export default function RegisterPage() {
             onClick={() => router.push('/dashboard')}
             style={{
               width: '100%',
-              padding: 'clamp(10px, 1.5vh, 15px)',
-              background: '#ffffff',
-              color: '#5fb3b3',
-              border: '2px solid #5fb3b3',
-              borderRadius: 'clamp(5px, 0.8vh, 10px)',
-              fontSize: 'clamp(13px, 1.5vw, 16px)',
+              padding: 'clamp(10px, 1.4vh, 12px) clamp(20px, 3.5vw, 28px)',
+              background: 'transparent',
+              color: '#D4AF5E',
+              border: '1px solid rgba(200, 162, 78, 0.3)',
+              borderRadius: 'clamp(8px, 1.2vh, 12px)',
+              fontSize: 'clamp(12px, 1.4vw, 14px)',
               fontWeight: '700',
-              fontFamily: 'Cairo, sans-serif',
+              fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
               cursor: 'pointer',
               transition: 'all 0.2s',
-              flexShrink: 0
+              flexShrink: 0,
+              opacity: 0.7,
+              position: 'relative',
+              zIndex: 1
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#5fb3b3'
-              e.currentTarget.style.color = 'white'
+              e.currentTarget.style.background = 'rgba(200, 162, 78, 0.08)'
+              e.currentTarget.style.opacity = '1'
+              e.currentTarget.style.borderColor = 'rgba(200, 162, 78, 0.5)'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#ffffff'
-              e.currentTarget.style.color = '#5fb3b3'
+              e.currentTarget.style.background = 'transparent'
+              e.currentTarget.style.opacity = '0.7'
+              e.currentTarget.style.borderColor = 'rgba(200, 162, 78, 0.3)'
             }}
           >
             العودة للقائمة الرئيسية
