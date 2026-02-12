@@ -406,7 +406,7 @@ export default function EvaluatePage() {
       <head>
         <meta charset="UTF-8">
         <title>شهادة تقييم - ${selectedCompetitor.full_name}</title>
-        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
           @page { 
@@ -414,7 +414,7 @@ export default function EvaluatePage() {
             margin: 0;
           }
           body { 
-            font-family: 'Noto Kufi Arabic', 'Sora', sans-serif; 
+            font-family: 'Noto Kufi Arabic', 'Sora', -apple-system, BlinkMacSystemFont, sans-serif; 
             direction: rtl;
             background: white;
             margin: 0;
@@ -428,6 +428,8 @@ export default function EvaluatePage() {
             page-break-inside: avoid;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
           }
           
           /* Minimal corner decorations */
@@ -500,7 +502,10 @@ export default function EvaluatePage() {
           }
           
           .content {
-            padding: 30px 40px 25px;
+            padding: 30px 40px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
           }
           
           /* Certificate Title */
@@ -555,17 +560,19 @@ export default function EvaluatePage() {
           }
           
           .score-breakdown-container {
-            margin: 25px 0 20px;
+            margin: 20px 0 0;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 25px;
-            align-items: end;
+            align-items: stretch;
+            flex: 1;
           }
           
           .score-section {
             text-align: center;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             height: 100%;
           }
           
@@ -582,7 +589,6 @@ export default function EvaluatePage() {
             padding: 25px;
             border-radius: 10px;
             box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-            margin-bottom: auto;
           }
           
           .score-green { 
@@ -601,16 +607,16 @@ export default function EvaluatePage() {
             border: 2px solid #dc3545;
           }
           
-          /* Signature Section - Aligned to bottom */
+          /* Signature Section */
           .signature-section {
-            margin-top: auto;
-            padding-top: 15px;
+            margin-top: 12px;
+            padding-top: 0;
             text-align: center;
           }
           
           .signature-space {
-            height: 35px;
-            margin-bottom: 6px;
+            height: 20px;
+            margin-bottom: 4px;
           }
           
           .signature-line {
@@ -630,6 +636,7 @@ export default function EvaluatePage() {
             flex-direction: column;
             gap: 10px;
             height: 100%;
+            justify-content: space-between;
           }
           
           .breakdown-title {
@@ -674,10 +681,7 @@ export default function EvaluatePage() {
           }
           
           .footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            margin-top: auto;
             background: #f8f9fa;
             padding: 15px 40px;
             text-align: center;
