@@ -247,7 +247,7 @@ export default function ResultsPage() {
       <head>
         <meta charset="UTF-8">
         <title>نتائج المسابقة</title>
-        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
           @page { 
@@ -255,7 +255,7 @@ export default function ResultsPage() {
             margin: 10mm;
           }
           body { 
-            font-family: 'Cairo', sans-serif; 
+            font-family: 'Noto Kufi Arabic', 'Sora', sans-serif; 
             direction: rtl;
             font-size: 9px;
             line-height: 1.3;
@@ -290,7 +290,7 @@ export default function ResultsPage() {
           .level-col {
             font-size: 7px;
           }
-          .row-num { font-weight: 600; color: #5fb3b3; }
+          .row-num { font-weight: 600; color: #C8A24E; }
           .score-excellent { color: #27ae60; font-weight: 700; }
           .score-very-good { color: #f39c12; font-weight: 700; }
           .score-good { color: #3498db; font-weight: 700; }
@@ -370,7 +370,7 @@ export default function ResultsPage() {
       <head>
         <meta charset="UTF-8">
         <title>الفائزون في المسابقة</title>
-        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
           @page { 
@@ -378,7 +378,7 @@ export default function ResultsPage() {
             margin: 12mm;
           }
           body { 
-            font-family: 'Cairo', sans-serif; 
+            font-family: 'Noto Kufi Arabic', 'Sora', sans-serif; 
             direction: rtl;
             font-size: 10px;
             line-height: 1.4;
@@ -613,7 +613,7 @@ export default function ResultsPage() {
       return `<div class="certificate" style="${index > 0 ? 'page-break-before: always;' : ''}"><div class="header"><div class="logo"><img src="/images/logo.svg" alt="شعار مركز رياض العلم"></div><h1>مسابقة مركز رياض العلم</h1><div class="subtitle">لحفظ القرآن الكريم</div><div class="edition">• الدورة الخامسة - رمضان 1447هـ •</div></div><div class="content"><div class="cert-title">شهادة تقييم</div><div class="participant-name">${competitor.full_name}</div><div class="details-grid"><div class="detail-card"><div class="detail-label">الولاية</div><div class="detail-value">${competitor.city}</div></div><div class="detail-card"><div class="detail-label">المستوى</div><div class="detail-value">${competitor.level}</div></div></div><div class="score-breakdown-container"><div class="score-section"><div class="score-label">• الدرجة النهائية •</div><div class="final-score ${finalScore >= 95 ? 'score-green' : finalScore >= 90 ? 'score-yellow' : 'score-red'}">${finalScore}</div><div class="signature-section"><div class="signature-space"></div><div class="signature-line"></div><div class="signature-name">مركز رياض العلم</div></div></div><div class="breakdown-side"><div class="breakdown-title">تفصيل الأخطاء</div><div class="breakdown-item"><div class="breakdown-label">تنبيه</div><div class="breakdown-value"><div class="breakdown-count">${tanbihCount}</div><div class="breakdown-deduction">-${tanbihCount} درجة</div></div></div><div class="breakdown-item"><div class="breakdown-label">فتح</div><div class="breakdown-value"><div class="breakdown-count">${fatehCount}</div><div class="breakdown-deduction">-${fatehCount * 2} درجة</div></div></div><div class="breakdown-item"><div class="breakdown-label">تشكيل</div><div class="breakdown-value"><div class="breakdown-count">${tashkeelCount}</div><div class="breakdown-deduction">-${tashkeelCount} درجة</div></div></div><div class="breakdown-item"><div class="breakdown-label">تجويد</div><div class="breakdown-value"><div class="breakdown-count">${tajweedCount}</div><div class="breakdown-deduction">-${tajweedCount * 0.5} درجة</div></div></div></div></div></div><div class="footer"><div class="footer-dates"><div class="footer-date">التاريخ الهجري: ${hijriDate}</div><div class="footer-date">التاريخ الميلادي: ${gregorianDate}</div></div></div></div>`
     }).join('')
 
-    const fullHTML = `<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="UTF-8"><title>شهادات التقييم - ${selectedCompetitors.length} متسابق</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet"><style>* { margin: 0; padding: 0; box-sizing: border-box; }@page { size: A4; margin: 0; }body { font-family: 'Cairo', sans-serif; direction: rtl; background: white; margin: 0; padding: 0; }.certificate { background: white; width: 210mm; height: 297mm; position: relative; page-break-inside: avoid; margin: 0; padding: 0; }.certificate::before, .certificate::after { content: ''; position: absolute; width: 30px; height: 30px; border: 1.5px solid #5fb3b3; opacity: 0.25; z-index: 10; }.certificate::before { top: 15px; right: 15px; border-bottom: none; border-left: none; }.certificate::after { bottom: 15px; left: 15px; border-top: none; border-right: none; }.header { background: linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%); padding: 30px 30px 25px; text-align: center; }.logo { width: 65px; height: 65px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; }.logo img { width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1); }.header h1 { color: white; font-size: 20px; font-weight: 700; margin-bottom: 6px; }.header .subtitle { color: rgba(255,255,255,0.95); font-size: 15px; font-weight: 500; margin-bottom: 8px; }.header .edition { color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }.content { padding: 30px 40px 25px; }.cert-title { text-align: center; font-size: 18px; font-weight: 700; color: #5fb3b3; margin-bottom: 20px; letter-spacing: 1.5px; }.participant-name { font-size: 22px; font-weight: 800; color: #1a3a3a; text-align: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #5fb3b3; }.details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; max-width: 500px; margin-left: auto; margin-right: auto; }.detail-card { background: #f8f9fa; padding: 10px 15px; border-radius: 6px; border-right: 3px solid #5fb3b3; text-align: right; }.detail-label { font-size: 11px; color: #6c757d; margin-bottom: 4px; font-weight: 600; }.detail-value { font-size: 14px; color: #1a3a3a; font-weight: 700; }.score-breakdown-container { margin: 25px 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 25px; align-items: end; }.score-section { text-align: center; display: flex; flex-direction: column; height: 100%; }.score-label { font-size: 13px; color: #495057; margin-bottom: 12px; font-weight: 700; }.final-score { font-size: 68px; font-weight: 900; padding: 25px; border-radius: 10px; box-shadow: 0 3px 12px rgba(0,0,0,0.06); margin-bottom: auto; }.score-green { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); color: #155724; border: 2px solid #28a745; }.score-yellow { background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%); color: #856404; border: 2px solid #ffc107; }.score-red { background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); color: #721c24; border: 2px solid #dc3545; }.signature-section { margin-top: auto; padding-top: 15px; text-align: center; }.signature-space { height: 35px; margin-bottom: 6px; }.signature-line { border-top: 1.5px solid #1a3a3a; width: 170px; margin: 0 auto 6px; }.signature-name { font-size: 12px; color: #495057; font-weight: 600; }.breakdown-side { display: flex; flex-direction: column; gap: 10px; height: 100%; }.breakdown-title { font-size: 13px; font-weight: 700; color: #495057; margin-bottom: 6px; text-align: right; }.breakdown-item { background: white; padding: 10px 14px; border-radius: 6px; border: 1.5px solid #e9ecef; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 4px rgba(0,0,0,0.02); }.breakdown-label { font-size: 13px; font-weight: 700; color: #495057; }.breakdown-value { text-align: left; }.breakdown-count { font-size: 18px; font-weight: 800; color: #1a3a3a; }.breakdown-deduction { font-size: 10px; color: #6c757d; font-weight: 600; }.footer { position: absolute; bottom: 0; left: 0; right: 0; background: #f8f9fa; padding: 15px 40px; text-align: center; border-top: 1px solid #dee2e6; }.footer-dates { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }.footer-date { color: #6c757d; font-size: 11px; font-weight: 600; }@media print { body { margin: 0; padding: 0; }.certificate { box-shadow: none; page-break-inside: avoid; page-break-after: always; }@page { size: A4; margin: 0; }}</style></head><body>${certificatesHTML}</body></html>`
+    const fullHTML = `<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="UTF-8"><title>شهادات التقييم - ${selectedCompetitors.length} متسابق</title><link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"><style>* { margin: 0; padding: 0; box-sizing: border-box; }@page { size: A4; margin: 0; }body { font-family: 'Noto Kufi Arabic', 'Sora', sans-serif; direction: rtl; background: white; margin: 0; padding: 0; }.certificate { background: white; width: 210mm; height: 297mm; position: relative; page-break-inside: avoid; margin: 0; padding: 0; }.certificate::before, .certificate::after { content: ''; position: absolute; width: 30px; height: 30px; border: 1.5px solid #5fb3b3; opacity: 0.25; z-index: 10; }.certificate::before { top: 15px; right: 15px; border-bottom: none; border-left: none; }.certificate::after { bottom: 15px; left: 15px; border-top: none; border-right: none; }.header { background: linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%); padding: 30px 30px 25px; text-align: center; }.logo { width: 65px; height: 65px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; }.logo img { width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1); }.header h1 { color: white; font-size: 20px; font-weight: 700; margin-bottom: 6px; }.header .subtitle { color: rgba(255,255,255,0.95); font-size: 15px; font-weight: 500; margin-bottom: 8px; }.header .edition { color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }.content { padding: 30px 40px 25px; }.cert-title { text-align: center; font-size: 18px; font-weight: 700; color: #5fb3b3; margin-bottom: 20px; letter-spacing: 1.5px; }.participant-name { font-size: 22px; font-weight: 800; color: #1a3a3a; text-align: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #5fb3b3; }.details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; max-width: 500px; margin-left: auto; margin-right: auto; }.detail-card { background: #f8f9fa; padding: 10px 15px; border-radius: 6px; border-right: 3px solid #5fb3b3; text-align: right; }.detail-label { font-size: 11px; color: #6c757d; margin-bottom: 4px; font-weight: 600; }.detail-value { font-size: 14px; color: #1a3a3a; font-weight: 700; }.score-breakdown-container { margin: 25px 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 25px; align-items: end; }.score-section { text-align: center; display: flex; flex-direction: column; height: 100%; }.score-label { font-size: 13px; color: #495057; margin-bottom: 12px; font-weight: 700; }.final-score { font-size: 68px; font-weight: 900; padding: 25px; border-radius: 10px; box-shadow: 0 3px 12px rgba(0,0,0,0.06); margin-bottom: auto; }.score-green { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); color: #155724; border: 2px solid #28a745; }.score-yellow { background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%); color: #856404; border: 2px solid #ffc107; }.score-red { background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); color: #721c24; border: 2px solid #dc3545; }.signature-section { margin-top: auto; padding-top: 15px; text-align: center; }.signature-space { height: 35px; margin-bottom: 6px; }.signature-line { border-top: 1.5px solid #1a3a3a; width: 170px; margin: 0 auto 6px; }.signature-name { font-size: 12px; color: #495057; font-weight: 600; }.breakdown-side { display: flex; flex-direction: column; gap: 10px; height: 100%; }.breakdown-title { font-size: 13px; font-weight: 700; color: #495057; margin-bottom: 6px; text-align: right; }.breakdown-item { background: white; padding: 10px 14px; border-radius: 6px; border: 1.5px solid #e9ecef; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 4px rgba(0,0,0,0.02); }.breakdown-label { font-size: 13px; font-weight: 700; color: #495057; }.breakdown-value { text-align: left; }.breakdown-count { font-size: 18px; font-weight: 800; color: #1a3a3a; }.breakdown-deduction { font-size: 10px; color: #6c757d; font-weight: 600; }.footer { position: absolute; bottom: 0; left: 0; right: 0; background: #f8f9fa; padding: 15px 40px; text-align: center; border-top: 1px solid #dee2e6; }.footer-dates { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }.footer-date { color: #6c757d; font-size: 11px; font-weight: 600; }@media print { body { margin: 0; padding: 0; }.certificate { box-shadow: none; page-break-inside: avoid; page-break-after: always; }@page { size: A4; margin: 0; }}</style></head><body>${certificatesHTML}</body></html>`
 
     printWindow.document.write(fullHTML)
     printWindow.document.close()
@@ -645,211 +645,92 @@ export default function ResultsPage() {
 
   return (
     <>
-      <style>{`
-        :root {
-          --vh: 1vh;
-        }
+      {/* Google Fonts */}
+      <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
+      <style>{`
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: calc(var(--vh, 1vh) * 100); width: 100vw; overflow: hidden; }
         body {
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
+          background: #0A0F0A;
+          font-family: 'Noto Kufi Arabic', 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+          color: #F0FDF4;
+          -webkit-font-smoothing: antialiased;
           min-height: calc(var(--vh, 1vh) * 100);
         }
-        
+        .bg-canvas { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+        .bg-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+        .bg-orb.green-1 { width: 500px; height: 500px; background: radial-gradient(circle, #22C55E, transparent 70%); bottom: -15%; left: 20%; animation: orbPulse1 15s ease-in-out infinite alternate; }
+        .bg-orb.green-2 { width: 350px; height: 350px; background: radial-gradient(circle, #166534, transparent 70%); top: 10%; right: -5%; animation: orbPulse2 20s ease-in-out infinite alternate; }
+        .bg-orb.gold-1 { width: 400px; height: 400px; background: radial-gradient(circle, #C8A24E, transparent 70%); top: 35%; left: -8%; opacity: 0.18; animation: orbPulse3 18s ease-in-out infinite alternate; }
+        .bg-orb.gold-2 { width: 300px; height: 300px; background: radial-gradient(circle, #D4AF5E, transparent 70%); bottom: 20%; right: -5%; opacity: 0.12; animation: orbPulse2 22s ease-in-out infinite alternate; }
+        @keyframes orbPulse1 { 0% { transform: translate(0,0) scale(1); opacity: 0.25; } 50% { transform: translate(30px,-20px) scale(1.15); opacity: 0.35; } 100% { transform: translate(-20px,10px) scale(0.95); opacity: 0.2; } }
+        @keyframes orbPulse2 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-40px,30px) scale(1.1); } }
+        @keyframes orbPulse3 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(30px,-20px) scale(1.08); } }
+        .bg-canvas::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(34,197,94,0.012) 2px, rgba(34,197,94,0.012) 4px); pointer-events: none; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(34,197,94,0.05); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: rgba(200,162,78,0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(200,162,78,0.5); }
+
         .app-container {
-          background: #ffffff;
+          background: rgba(34,197,94,0.06);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(34,197,94,0.15);
           padding: clamp(15px, 3vw, 30px);
-          border-radius: clamp(12px, 3vw, 20px);
-          box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+          border-radius: clamp(20px, 3vh, 32px);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 80px rgba(34,197,94,0.05);
           width: 100%;
           max-height: 90vh;
           overflow-y: auto;
+          position: relative;
         }
-
-        .compact-table {
-          width: 100%;
-          border-collapse: collapse;
-          font-size: clamp(10px, 2vw, 12px);
-        }
-
-        .compact-table th,
-        .compact-table td {
-          padding: clamp(4px, 1vw, 6px) clamp(4px, 1.5vw, 8px);
-          text-align: center;
-          border-bottom: 1px solid #e0e0e0;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-
-        .compact-table th {
-          background: #f5f5f5;
-          font-weight: 600;
-          color: #555555;
-          position: sticky;
-          top: 0;
-          z-index: 10;
-          font-size: clamp(9px, 1.8vw, 11px);
-          cursor: pointer;
-          user-select: none;
-        }
-
-        .compact-table th:hover {
-          background: #e8e8e8;
-        }
-
-        .compact-table .name-cell {
-          text-align: right;
-          font-weight: 600;
-          color: #333333;
-          max-width: 180px;
-        }
-
-        .compact-table .level-cell {
-          font-size: 10px;
-          max-width: 120px;
-        }
-
-        .compact-table tr:hover {
-          background: #f9f9f9;
-        }
-
-        .sort-indicator {
-          display: inline-block;
-          margin-left: 4px;
-          font-size: 10px;
-        }
-
-        .pagination {
-          display: flex;
-          gap: 5px;
-          justify-content: center;
-          align-items: center;
-          margin-top: 20px;
-        }
-
-        .page-button {
-          padding: 6px 12px;
-          border: 1px solid #e0e0e0;
-          background: white;
-          cursor: pointer;
-          border-radius: 5px;
-          font-family: 'Cairo', sans-serif;
-          font-size: 13px;
-          transition: all 0.2s;
-        }
-
-        .page-button:hover {
-          background: #f0f9f9;
-          border-color: #5fb3b3;
-        }
-
-        .page-button.active {
-          background: #5fb3b3;
-          color: white;
-          border-color: #5fb3b3;
-        }
-
-        .page-button:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-
-        .back-button {
-          width: 100%;
-          margin-top: 20px;
-          padding: 12px;
-          background: #ffffff;
-          color: #5fb3b3;
-          border: 2px solid #5fb3b3;
-          border-radius: 8px;
-          font-size: 15px;
-          font-weight: 700;
-          font-family: 'Cairo', sans-serif;
-          cursor: pointer;
-          transition: all 0.2s;
-        }
-
-        .back-button:hover {
-          background: #5fb3b3;
-          color: white;
-        }
-
-        .tab-button {
-          flex: 1;
-          padding: 12px 20px;
-          border: none;
-          background: #f5f5f5;
-          color: #666666;
-          font-size: 15px;
-          font-weight: 600;
-          font-family: 'Cairo', sans-serif;
-          cursor: pointer;
-          transition: all 0.3s;
-          border-bottom: 3px solid transparent;
-        }
-
-        .tab-button.active {
-          background: white;
-          color: #5fb3b3;
-          border-bottom-color: #5fb3b3;
-        }
-
-        .tab-button:hover {
-          background: #f0f9f9;
-        }
-
-        .winner-card {
-          background: white;
-          border: 2px solid #e0e0e0;
-          border-radius: 12px;
-          padding: 15px;
-          margin-bottom: 12px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          transition: all 0.2s;
-        }
-
-        .winner-card:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .winner-card.first {
-          border-color: #FFD700;
-          background: linear-gradient(135deg, #FFF9E6 0%, #FFFEF0 100%);
-        }
-
-        .winner-card.second {
-          border-color: #C0C0C0;
-          background: linear-gradient(135deg, #F5F5F5 0%, #FAFAFA 100%);
-        }
-
-        .winner-card.third {
-          border-color: #CD7F32;
-          background: linear-gradient(135deg, #FFF5E6 0%, #FFFAF0 100%);
-        }
-
-        .checkbox-column {
-          width: 40px;
-          text-align: center;
-        }
-
-        .checkbox-column input[type="checkbox"] {
-          width: 18px;
-          height: 18px;
-          cursor: pointer;
-          margin: 0;
-        }
-
+        .compact-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: clamp(10px, 2vw, 12px); }
+        .compact-table th, .compact-table td { padding: clamp(4px, 1vw, 6px) clamp(4px, 1.5vw, 8px); text-align: center; border-bottom: 1px solid rgba(34,197,94,0.1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .compact-table th { background: rgba(200,162,78,0.1); font-weight: 700; color: #C8A24E; position: sticky; top: 0; z-index: 10; font-size: clamp(9px, 1.8vw, 11px); cursor: pointer; user-select: none; letter-spacing: 0.3px; backdrop-filter: blur(10px); }
+        .compact-table th:hover { background: rgba(200,162,78,0.18); }
+        .compact-table .name-cell { text-align: right; font-weight: 600; color: #F0FDF4; max-width: 180px; }
+        .compact-table .level-cell { font-size: 10px; max-width: 120px; color: rgba(240,253,244,0.7); }
+        .compact-table tbody tr { transition: all 0.2s; }
+        .compact-table tbody tr:hover { background: rgba(200,162,78,0.08); }
+        .compact-table tbody tr td { color: rgba(240,253,244,0.8); }
+        .sort-indicator { display: inline-block; margin-left: 4px; font-size: 10px; color: #D4AF5E; }
+        .pagination { display: flex; gap: 5px; justify-content: center; align-items: center; margin-top: 20px; }
+        .page-button { padding: 6px 12px; border: 1px solid rgba(200,162,78,0.3); background: rgba(200,162,78,0.06); color: #D4AF5E; cursor: pointer; border-radius: clamp(6px, 0.8vh, 8px); font-family: 'Noto Kufi Arabic', 'Sora', sans-serif; font-size: 13px; font-weight: 600; transition: all 0.2s; backdrop-filter: blur(10px); }
+        .page-button:hover { background: rgba(200,162,78,0.15); border-color: rgba(200,162,78,0.5); }
+        .page-button.active { background: linear-gradient(135deg, #B8922E, #D4AF5E); color: #0A0F0A; border-color: transparent; box-shadow: 0 4px 16px rgba(200,162,78,0.4); }
+        .page-button:disabled { opacity: 0.35; cursor: not-allowed; }
+        .back-button { width: 100%; margin-top: 20px; padding: 12px; background: transparent; color: #D4AF5E; border: 1px solid rgba(200,162,78,0.3); border-radius: clamp(8px, 1.2vh, 12px); font-size: 15px; font-weight: 700; font-family: 'Noto Kufi Arabic', 'Sora', sans-serif; cursor: pointer; transition: all 0.2s; opacity: 0.7; }
+        .back-button:hover { background: rgba(200,162,78,0.08); opacity: 1; border-color: rgba(200,162,78,0.5); }
+        .tab-button { flex: 1; padding: 12px 20px; border: none; background: rgba(200,162,78,0.06); color: rgba(240,253,244,0.5); font-size: 15px; font-weight: 600; font-family: 'Noto Kufi Arabic', 'Sora', sans-serif; cursor: pointer; transition: all 0.3s; border-bottom: 3px solid transparent; }
+        .tab-button.active { background: rgba(34,197,94,0.08); color: #C8A24E; border-bottom-color: #C8A24E; }
+        .tab-button:hover { background: rgba(200,162,78,0.1); }
+        .winner-card { background: rgba(34,197,94,0.04); border: 1px solid rgba(34,197,94,0.15); border-radius: 12px; padding: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; backdrop-filter: blur(10px); }
+        .winner-card:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .winner-card.first { border-color: rgba(255,215,0,0.4); background: rgba(255,215,0,0.06); }
+        .winner-card.second { border-color: rgba(192,192,192,0.3); background: rgba(192,192,192,0.06); }
+        .winner-card.third { border-color: rgba(205,127,50,0.3); background: rgba(205,127,50,0.06); }
+        .checkbox-column { width: 40px; text-align: center; }
+        .checkbox-column input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; margin: 0; }
       `}</style>
 
+      {/* Animated Background */}
+      <div className="bg-canvas">
+        <div className="bg-orb green-1"></div>
+        <div className="bg-orb green-2"></div>
+        <div className="bg-orb gold-1"></div>
+        <div className="bg-orb gold-2"></div>
+      </div>
+
       <div style={{
-        minHeight: '100vh',
+        minHeight: 'calc(var(--vh, 1vh) * 100)',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '20px'
+        padding: 'clamp(10px, 2vh, 20px)',
+        position: 'relative',
+        zIndex: 1
       }}>
         <div className="app-container">
           
@@ -861,44 +742,47 @@ export default function ResultsPage() {
               width: '100%',
               marginBottom: 'clamp(15px, 3vw, 20px)',
               padding: 'clamp(10px, 2.5vw, 14px)',
-              background: '#ffffff',
-              color: '#5fb3b3',
-              border: '2px solid #5fb3b3',
-              borderRadius: '8px',
+              background: 'transparent',
+              color: '#D4AF5E',
+              border: '1px solid rgba(200, 162, 78, 0.3)',
+              borderRadius: 'clamp(8px, 1.2vh, 12px)',
               fontSize: 'clamp(13px, 3vw, 16px)',
               fontWeight: '700',
-              fontFamily: 'Cairo, sans-serif',
+              fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
               cursor: 'pointer',
-              transition: 'all 0.2s'
+              transition: 'all 0.2s',
+              opacity: 0.7
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#5fb3b3'
-              e.currentTarget.style.color = 'white'
+              e.currentTarget.style.background = 'rgba(200, 162, 78, 0.08)'
+              e.currentTarget.style.opacity = '1'
+              e.currentTarget.style.borderColor = 'rgba(200, 162, 78, 0.5)'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#ffffff'
-              e.currentTarget.style.color = '#5fb3b3'
+              e.currentTarget.style.background = 'transparent'
+              e.currentTarget.style.opacity = '0.7'
+              e.currentTarget.style.borderColor = 'rgba(200, 162, 78, 0.3)'
             }}
           >
             العودة للقائمة الرئيسية
           </button>
 
           <div style={{ marginBottom: '25px', textAlign: 'center' }}>
-            <div style={{ width: '50px', height: '50px', margin: '0 auto 10px' }}>
+            <div style={{ width: 'clamp(45px, 7vw, 60px)', height: 'clamp(45px, 7vw, 60px)', margin: '0 auto 10px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: 'linear-gradient(135deg, #0B1F0E, #0A0F0A)', border: '2px solid #C8A24E', boxShadow: '0 0 28px rgba(200,162,78,0.3), 0 0 8px rgba(200,162,78,0.2)' }}>
               <Image
                 src="/images/logo.svg"
                 alt="Logo"
                 width={50}
                 height={50}
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                style={{ width: '70%', height: '70%', objectFit: 'contain', filter: 'brightness(0) saturate(100%) invert(79%) sepia(18%) saturate(1234%) hue-rotate(359deg) brightness(95%) contrast(88%)' }}
                 priority
               />
             </div>
-            <h1 style={{ color: '#333', fontSize: '20px', fontWeight: '700', marginBottom: '5px' }}>
+            <h1 style={{ fontSize: '20px', fontWeight: '700', marginBottom: '5px', background: 'linear-gradient(135deg, #C8A24E, #E0C478, #D4AF5E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
               نتائج المسابقة
             </h1>
             {activeTab === 'all' && (
-              <p style={{ color: '#666', fontSize: '13px' }}>
+              <p style={{ color: 'rgba(240, 253, 244, 0.5)', fontSize: '13px' }}>
                 إجمالي: {filteredResults.length} نتيجة | الصفحة {currentPage} من {totalPages}
               </p>
             )}
@@ -911,7 +795,7 @@ export default function ResultsPage() {
             marginBottom: '0',
             borderRadius: '10px 10px 0 0',
             overflow: 'hidden',
-            border: '2px solid #e0e0e0',
+            border: '1px solid rgba(200, 162, 78, 0.2)',
             borderBottom: 'none'
           }}>
             <button
@@ -930,7 +814,7 @@ export default function ResultsPage() {
 
           {/* Tab Content */}
           <div style={{
-            border: '2px solid #e0e0e0',
+            border: '1px solid rgba(200, 162, 78, 0.2)',
             borderRadius: '0 0 10px 10px',
             padding: '20px',
             minHeight: '400px'
@@ -949,39 +833,42 @@ export default function ResultsPage() {
                     style={{
                       width: '100%',
                       padding: '10px',
-                      border: '2px solid #e0e0e0',
+                      border: '1px solid rgba(200, 162, 78, 0.25)',
                       borderRadius: '8px',
                       fontSize: '14px',
                       textAlign: 'right',
-                      fontFamily: 'Cairo, sans-serif',
-                      marginBottom: '10px'
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                      marginBottom: '10px',
+                      background: 'rgba(200, 162, 78, 0.06)',
+                      color: '#F0FDF4',
+                      outline: 'none'
                     }}
                   />
                   
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '8px' }}>
-                    <select value={filterGender} onChange={(e) => setFilterGender(e.target.value)} style={{ padding: '8px', border: '2px solid #e0e0e0', borderRadius: '6px', fontSize: '13px', fontFamily: 'Cairo, sans-serif', cursor: 'pointer' }}>
-                      <option value="">كل الأجناس</option>
-                      <option value="male">ذكر</option>
-                      <option value="female">أنثى</option>
+                    <select value={filterGender} onChange={(e) => setFilterGender(e.target.value)} style={{ padding: '8px', border: '1px solid rgba(200, 162, 78, 0.25)', borderRadius: '6px', fontSize: '13px', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: 'pointer', background: 'rgba(200, 162, 78, 0.06)', color: '#F0FDF4', outline: 'none' }}>
+                      <option value="" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>كل الأجناس</option>
+                      <option value="male" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>ذكر</option>
+                      <option value="female" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>أنثى</option>
                     </select>
 
-                    <select value={filterScoreRange} onChange={(e) => setFilterScoreRange(e.target.value)} style={{ padding: '8px', border: '2px solid #e0e0e0', borderRadius: '6px', fontSize: '13px', fontFamily: 'Cairo, sans-serif', cursor: 'pointer' }}>
-                      <option value="">كل الدرجات</option>
-                      <option value="excellent">ممتاز (95-100)</option>
-                      <option value="very_good">جيد جداً (90-94)</option>
-                      <option value="good">جيد (80-89)</option>
-                      <option value="pass">مقبول (60-79)</option>
-                      <option value="fail">راسب (&lt;60)</option>
+                    <select value={filterScoreRange} onChange={(e) => setFilterScoreRange(e.target.value)} style={{ padding: '8px', border: '1px solid rgba(200, 162, 78, 0.25)', borderRadius: '6px', fontSize: '13px', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: 'pointer', background: 'rgba(200, 162, 78, 0.06)', color: '#F0FDF4', outline: 'none' }}>
+                      <option value="" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>كل الدرجات</option>
+                      <option value="excellent" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>ممتاز (95-100)</option>
+                      <option value="very_good" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>جيد جداً (90-94)</option>
+                      <option value="good" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>جيد (80-89)</option>
+                      <option value="pass" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>مقبول (60-79)</option>
+                      <option value="fail" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>راسب (&lt;60)</option>
                     </select>
 
-                    <select value={filterLevel} onChange={(e) => setFilterLevel(e.target.value)} style={{ padding: '8px', border: '2px solid #e0e0e0', borderRadius: '6px', fontSize: '13px', fontFamily: 'Cairo, sans-serif', cursor: 'pointer', gridColumn: 'span 2' }}>
-                      <option value="">كل المستويات</option>
+                    <select value={filterLevel} onChange={(e) => setFilterLevel(e.target.value)} style={{ padding: '8px', border: '1px solid rgba(200, 162, 78, 0.25)', borderRadius: '6px', fontSize: '13px', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: 'pointer', gridColumn: 'span 2', background: 'rgba(200, 162, 78, 0.06)', color: '#F0FDF4', outline: 'none' }}>
+                      <option value="" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>كل المستويات</option>
                       {levels.map(level => (
-                        <option key={level} value={level}>{level}</option>
+                        <option key={level} value={level} style={{ background: '#0A0F0A', color: '#F0FDF4' }}>{level}</option>
                       ))}
                     </select>
 
-                    <button onClick={resetFilters} style={{ gridColumn: 'span 2', padding: '8px', background: '#f5f5f5', color: '#666', border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: '600', fontFamily: 'Cairo, sans-serif', cursor: 'pointer' }}>
+                    <button onClick={resetFilters} style={{ gridColumn: 'span 2', padding: '8px', background: 'rgba(200, 162, 78, 0.08)', color: 'rgba(240, 253, 244, 0.5)', border: '1px solid rgba(200, 162, 78, 0.15)', borderRadius: '6px', fontSize: '13px', fontWeight: '600', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: 'pointer', transition: 'all 0.2s' }}>
                       إعادة تعيين
                     </button>
                   </div>
@@ -993,14 +880,16 @@ export default function ResultsPage() {
                     onClick={handlePrintAllResults} 
                     style={{ 
                       padding: '8px 15px', 
-                      background: '#3498db', 
-                      color: 'white', 
+                      background: 'linear-gradient(135deg, #166534, #22C55E)', 
+                      color: '#FFFFFF', 
                       border: 'none', 
-                      borderRadius: '6px', 
+                      borderRadius: '8px', 
                       fontSize: '13px', 
-                      fontWeight: '600', 
-                      fontFamily: 'Cairo, sans-serif', 
-                      cursor: 'pointer' 
+                      fontWeight: '700', 
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', 
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 16px rgba(34, 197, 94, 0.3)',
+                      transition: 'all 0.2s' 
                     }}
                   >
                     طباعة النتائج
@@ -1011,14 +900,16 @@ export default function ResultsPage() {
                       onClick={handlePrintCertificates}
                       style={{ 
                         padding: '8px 15px', 
-                        background: '#3498db', 
-                        color: 'white', 
+                        background: 'linear-gradient(135deg, #B8922E, #D4AF5E)', 
+                        color: '#0A0F0A', 
                         border: 'none', 
-                        borderRadius: '6px', 
+                        borderRadius: '8px', 
                         fontSize: '13px', 
-                        fontWeight: '600', 
-                        fontFamily: 'Cairo, sans-serif', 
-                        cursor: 'pointer'
+                        fontWeight: '700', 
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', 
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 16px rgba(200,162,78,0.3)',
+                        transition: 'all 0.2s'
                       }}
                     >
                       طباعة الشهادات ({selectedResults.length})
@@ -1028,10 +919,10 @@ export default function ResultsPage() {
 
                 {/* Table */}
                 <div style={{ overflowX: 'auto' }}>
-                  {loading && <div style={{ textAlign: 'center', padding: '30px', color: '#666' }}>جاري التحميل...</div>}
+                  {loading && <div style={{ textAlign: 'center', padding: '30px', color: 'rgba(240, 253, 244, 0.5)' }}>جاري التحميل...</div>}
 
                   {!loading && filteredResults.length === 0 && (
-                    <div style={{ textAlign: 'center', padding: '30px', color: '#666' }}>لا توجد نتائج</div>
+                    <div style={{ textAlign: 'center', padding: '30px', color: 'rgba(240, 253, 244, 0.4)' }}>لا توجد نتائج</div>
                   )}
 
                   {!loading && currentResults.length > 0 && (
@@ -1173,32 +1064,36 @@ export default function ResultsPage() {
                     onChange={(e) => setWinnersGenderFilter(e.target.value)} 
                     style={{ 
                       padding: '10px 15px', 
-                      border: '2px solid #e0e0e0', 
+                      border: '1px solid rgba(200, 162, 78, 0.25)', 
                       borderRadius: '8px', 
                       fontSize: '14px', 
-                      fontFamily: 'Cairo, sans-serif', 
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', 
                       cursor: 'pointer',
-                      minWidth: '150px'
+                      minWidth: '150px',
+                      background: 'rgba(200, 162, 78, 0.06)',
+                      color: '#F0FDF4',
+                      outline: 'none'
                     }}
                   >
-                    <option value="">كل الفئات</option>
-                    <option value="male">الذكور فقط</option>
-                    <option value="female">الإناث فقط</option>
+                    <option value="" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>كل الفئات</option>
+                    <option value="male" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>الذكور فقط</option>
+                    <option value="female" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>الإناث فقط</option>
                   </select>
 
                   <button 
                     onClick={handlePrintWinners} 
                     style={{ 
                       padding: '10px 20px', 
-                      background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)', 
-                      color: '#333', 
+                      background: 'linear-gradient(135deg, #B8922E, #D4AF5E)', 
+                      color: '#0A0F0A', 
                       border: 'none', 
                       borderRadius: '8px', 
                       fontSize: '15px', 
                       fontWeight: '700', 
-                      fontFamily: 'Cairo, sans-serif', 
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', 
                       cursor: 'pointer', 
-                      boxShadow: '0 4px 12px rgba(255, 215, 0, 0.3)' 
+                      boxShadow: '0 4px 16px rgba(200,162,78,0.4)',
+                      transition: 'all 0.2s' 
                     }}
                   >
                     🖨️ طباعة قائمة الفائزين
@@ -1220,8 +1115,10 @@ export default function ResultsPage() {
                     return (
                       <div key={level} style={{ marginBottom: '30px' }}>
                         <h3 style={{
-                          background: 'linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%)',
-                          color: 'white',
+                          background: 'linear-gradient(135deg, rgba(200, 162, 78, 0.15), rgba(34, 197, 94, 0.1))',
+                          color: '#C8A24E',
+                          border: '1px solid rgba(200, 162, 78, 0.2)',
+                          backdropFilter: 'blur(10px)',
                           padding: '12px 15px',
                           borderRadius: '10px',
                           fontSize: '14px',
@@ -1236,14 +1133,14 @@ export default function ResultsPage() {
                         {showMale && (
                           <div style={{ marginBottom: '20px' }}>
                             <h4 style={{
-                              background: '#f5f5f5',
+                              background: 'rgba(34, 197, 94, 0.06)',
                               padding: '8px 12px',
                               borderRadius: '8px',
                               fontSize: '13px',
                               fontWeight: '600',
-                              color: '#333',
+                              color: 'rgba(240, 253, 244, 0.7)',
                               marginBottom: '10px',
-                              borderRight: '4px solid #5fb3b3'
+                              borderRight: '4px solid #C8A24E'
                             }}>
                               🎖️ فئة الذكور
                             </h4>
@@ -1260,10 +1157,10 @@ export default function ResultsPage() {
                                     {index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'}
                                   </div>
                                   <div style={{ flex: 1, margin: '0 15px' }}>
-                                    <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a3a3a', marginBottom: '4px' }}>
+                                    <div style={{ fontSize: '14px', fontWeight: '700', color: '#F0FDF4', marginBottom: '4px' }}>
                                       {winner.full_name}
                                     </div>
-                                    <div style={{ fontSize: '12px', color: '#666' }}>
+                                    <div style={{ fontSize: '12px', color: 'rgba(240, 253, 244, 0.5)' }}>
                                       {winner.city} • {winner.mobile}
                                     </div>
                                   </div>
@@ -1272,14 +1169,14 @@ export default function ResultsPage() {
                                     fontWeight: '800',
                                     minWidth: '60px',
                                     textAlign: 'center',
-                                    color: index === 0 ? '#27ae60' : index === 1 ? '#f39c12' : '#3498db'
+                                    color: index === 0 ? '#4ADE80' : index === 1 ? '#D4AF5E' : '#60A5FA'
                                   }}>
                                     {winner.final_score}
                                   </div>
                                 </div>
                               ))
                             ) : (
-                              <div style={{ textAlign: 'center', padding: '20px', color: '#999', fontSize: '13px', fontStyle: 'italic' }}>
+                              <div style={{ textAlign: 'center', padding: '20px', color: 'rgba(240, 253, 244, 0.3)', fontSize: '13px', fontStyle: 'italic' }}>
                                 لا يوجد فائزون
                               </div>
                             )}
@@ -1290,14 +1187,14 @@ export default function ResultsPage() {
                         {showFemale && (
                           <div>
                             <h4 style={{
-                              background: '#f5f5f5',
+                              background: 'rgba(34, 197, 94, 0.06)',
                               padding: '8px 12px',
                               borderRadius: '8px',
                               fontSize: '13px',
                               fontWeight: '600',
-                              color: '#333',
+                              color: 'rgba(240, 253, 244, 0.7)',
                               marginBottom: '10px',
-                              borderRight: '4px solid #5fb3b3'
+                              borderRight: '4px solid #C8A24E'
                             }}>
                               🎖️ فئة الإناث
                             </h4>
@@ -1314,10 +1211,10 @@ export default function ResultsPage() {
                                     {index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'}
                                   </div>
                                   <div style={{ flex: 1, margin: '0 15px' }}>
-                                    <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a3a3a', marginBottom: '4px' }}>
+                                    <div style={{ fontSize: '14px', fontWeight: '700', color: '#F0FDF4', marginBottom: '4px' }}>
                                       {winner.full_name}
                                     </div>
-                                    <div style={{ fontSize: '12px', color: '#666' }}>
+                                    <div style={{ fontSize: '12px', color: 'rgba(240, 253, 244, 0.5)' }}>
                                       {winner.city} • {winner.mobile}
                                     </div>
                                   </div>
@@ -1326,14 +1223,14 @@ export default function ResultsPage() {
                                     fontWeight: '800',
                                     minWidth: '60px',
                                     textAlign: 'center',
-                                    color: index === 0 ? '#27ae60' : index === 1 ? '#f39c12' : '#3498db'
+                                    color: index === 0 ? '#4ADE80' : index === 1 ? '#D4AF5E' : '#60A5FA'
                                   }}>
                                     {winner.final_score}
                                   </div>
                                 </div>
                               ))
                             ) : (
-                              <div style={{ textAlign: 'center', padding: '20px', color: '#999', fontSize: '13px', fontStyle: 'italic' }}>
+                              <div style={{ textAlign: 'center', padding: '20px', color: 'rgba(240, 253, 244, 0.3)', fontSize: '13px', fontStyle: 'italic' }}>
                                 لا يوجد فائزات
                               </div>
                             )}
