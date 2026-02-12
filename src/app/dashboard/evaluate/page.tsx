@@ -1389,7 +1389,7 @@ export default function EvaluatePage() {
                   backdropFilter: 'blur(10px)',
                   padding: 'clamp(10px, 1.5vh, 16px)',
                   border: '1px solid rgba(34, 197, 94, 0.15)',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
                   overflow: 'hidden'
                 }}>
                   <h3 style={{
@@ -1510,14 +1510,15 @@ export default function EvaluatePage() {
                   
                   {/* تنبيه */}
                   <div style={{
-                    background: '#ffffff',
+                    background: 'rgba(34, 197, 94, 0.08)',
+                    backdropFilter: 'blur(12px)',
                     borderRadius: '12px',
                     padding: 'clamp(12px, 1.8vh, 18px)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    boxShadow: '0 3px 12px rgba(0,0,0,0.08)',
-                    border: '1px solid rgba(200, 162, 78, 0.3)',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+                    border: '1px solid rgba(34, 197, 94, 0.2)',
                     overflow: 'hidden',
                     boxSizing: 'border-box',
                     transition: 'all 0.3s ease'
@@ -1535,7 +1536,7 @@ export default function EvaluatePage() {
                       </div>
                       <div style={{
                         fontSize: 'clamp(10px, 1.1vw, 12px)',
-                        color: '#888',
+                        color: 'rgba(240, 253, 244, 0.6)',
                         fontWeight: '500',
                         lineHeight: '1'
                       }}>
@@ -1654,14 +1655,15 @@ export default function EvaluatePage() {
 
                   {/* فتح */}
                   <div style={{
-                    background: '#ffffff',
+                    background: 'rgba(34, 197, 94, 0.08)',
+                    backdropFilter: 'blur(12px)',
                     borderRadius: '12px',
                     padding: 'clamp(12px, 1.8vh, 18px)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    boxShadow: '0 3px 12px rgba(0,0,0,0.08)',
-                    border: '1px solid rgba(200, 162, 78, 0.3)',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+                    border: '1px solid rgba(34, 197, 94, 0.2)',
                     overflow: 'hidden',
                     boxSizing: 'border-box',
                     transition: 'all 0.3s ease'
@@ -1679,7 +1681,7 @@ export default function EvaluatePage() {
                       </div>
                       <div style={{
                         fontSize: 'clamp(10px, 1.1vw, 12px)',
-                        color: '#888',
+                        color: 'rgba(240, 253, 244, 0.6)',
                         fontWeight: '500',
                         lineHeight: '1'
                       }}>
@@ -1790,14 +1792,15 @@ export default function EvaluatePage() {
 
                   {/* تشكيل */}
                   <div style={{
-                    background: '#ffffff',
+                    background: 'rgba(34, 197, 94, 0.08)',
+                    backdropFilter: 'blur(12px)',
                     borderRadius: '12px',
                     padding: 'clamp(12px, 1.8vh, 18px)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    boxShadow: '0 3px 12px rgba(0,0,0,0.08)',
-                    border: '1px solid rgba(200, 162, 78, 0.3)',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+                    border: '1px solid rgba(34, 197, 94, 0.2)',
                     overflow: 'hidden',
                     boxSizing: 'border-box',
                     transition: 'all 0.3s ease'
@@ -1815,7 +1818,7 @@ export default function EvaluatePage() {
                       </div>
                       <div style={{
                         fontSize: 'clamp(10px, 1.1vw, 12px)',
-                        color: '#888',
+                        color: 'rgba(240, 253, 244, 0.6)',
                         fontWeight: '500',
                         lineHeight: '1'
                       }}>
@@ -1926,14 +1929,15 @@ export default function EvaluatePage() {
 
                   {/* تجويد */}
                   <div style={{
-                    background: '#ffffff',
+                    background: 'rgba(34, 197, 94, 0.08)',
+                    backdropFilter: 'blur(12px)',
                     borderRadius: '12px',
                     padding: 'clamp(12px, 1.8vh, 18px)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    boxShadow: '0 3px 12px rgba(0,0,0,0.08)',
-                    border: '1px solid rgba(200, 162, 78, 0.3)',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+                    border: '1px solid rgba(34, 197, 94, 0.2)',
                     overflow: 'hidden',
                     boxSizing: 'border-box',
                     transition: 'all 0.3s ease'
@@ -1951,7 +1955,7 @@ export default function EvaluatePage() {
                       </div>
                       <div style={{
                         fontSize: 'clamp(10px, 1.1vw, 12px)',
-                        color: '#888',
+                        color: 'rgba(240, 253, 244, 0.6)',
                         fontWeight: '500',
                         lineHeight: '1'
                       }}>
@@ -2269,3 +2273,4 @@ export default function EvaluatePage() {
     </>
   )
 }
+//hi
