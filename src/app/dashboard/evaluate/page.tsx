@@ -1062,7 +1062,14 @@ export default function EvaluatePage() {
           font-size: 12px;
           background: rgba(255, 255, 255, 0.95);
           border-radius: 10px;
-          overflow: hidden;
+        }
+
+        .compact-table thead tr:first-child th:first-child {
+          border-top-right-radius: 10px;
+        }
+
+        .compact-table thead tr:first-child th:last-child {
+          border-top-left-radius: 10px;
         }
 
         .compact-table th,
