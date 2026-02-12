@@ -681,8 +681,8 @@ export default function LiveStatsPage() {
                 <div
                   className="logo-container"
                   style={{
-                    width: "clamp(50px, 5vw, 85px)",
-                    height: "clamp(50px, 5vw, 85px)",
+                    width: "clamp(100px, 10vw, 170px)",
+                    height: "clamp(100px, 10vw, 170px)",
                     flexShrink: 0,
                   }}
                 >
@@ -1046,7 +1046,7 @@ export default function LiveStatsPage() {
                               <div
                                 style={{
                                   flex: 1,
-                                  fontSize: "clamp(11px, 0.9vw, 16px)",
+                                  fontSize: "clamp(14px, 1.2vw, 20px)",
                                   fontWeight: isActive ? "700" : "600",
                                   color: isActive ? "#0B1F0E" : "#999",
                                   fontStyle: isActive ? "normal" : "italic",
