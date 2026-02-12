@@ -686,16 +686,18 @@ export default function ResultsPage() {
           overflow-y: auto;
           position: relative;
         }
-        .compact-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: clamp(10px, 2vw, 12px); }
-        .compact-table th, .compact-table td { padding: clamp(4px, 1vw, 6px) clamp(4px, 1.5vw, 8px); text-align: center; border-bottom: 1px solid rgba(34,197,94,0.1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .compact-table th { background: rgba(200,162,78,0.1); font-weight: 700; color: #C8A24E; position: sticky; top: 0; z-index: 10; font-size: clamp(9px, 1.8vw, 11px); cursor: pointer; user-select: none; letter-spacing: 0.3px; backdrop-filter: blur(10px); }
-        .compact-table th:hover { background: rgba(200,162,78,0.18); }
-        .compact-table .name-cell { text-align: right; font-weight: 600; color: #F0FDF4; max-width: 180px; }
-        .compact-table .level-cell { font-size: 10px; max-width: 120px; color: rgba(240,253,244,0.7); }
+        .compact-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: clamp(10px, 2vw, 12px); background: #FFFFFF; border-radius: 10px; }
+        .compact-table thead tr:first-child th:first-child { border-top-right-radius: 10px; }
+        .compact-table thead tr:first-child th:last-child { border-top-left-radius: 10px; }
+        .compact-table th, .compact-table td { padding: clamp(4px, 1vw, 6px) clamp(4px, 1.5vw, 8px); text-align: center; border-bottom: 1px solid rgba(200,162,78,0.12); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .compact-table th { background: #C8A24E; font-weight: 700; color: #0A0F0A; position: sticky; top: 0; z-index: 10; font-size: clamp(9px, 1.8vw, 11px); cursor: pointer; user-select: none; letter-spacing: 0.3px; }
+        .compact-table th:hover { background: #B8922E; }
+        .compact-table .name-cell { text-align: right; font-weight: 600; color: #1A1A1A; max-width: 180px; }
+        .compact-table .level-cell { font-size: 10px; max-width: 120px; color: #555; }
         .compact-table tbody tr { transition: all 0.2s; }
         .compact-table tbody tr:hover { background: rgba(200,162,78,0.08); }
-        .compact-table tbody tr td { color: rgba(240,253,244,0.8); }
-        .sort-indicator { display: inline-block; margin-left: 4px; font-size: 10px; color: #D4AF5E; }
+        .compact-table tbody tr td { color: #333; }
+        .sort-indicator { display: inline-block; margin-left: 4px; font-size: 10px; color: #0A0F0A; }
         .pagination { display: flex; gap: 5px; justify-content: center; align-items: center; margin-top: 20px; }
         .page-button { padding: 6px 12px; border: 1px solid rgba(200,162,78,0.3); background: rgba(200,162,78,0.06); color: #D4AF5E; cursor: pointer; border-radius: clamp(6px, 0.8vh, 8px); font-family: 'Noto Kufi Arabic', 'Sora', sans-serif; font-size: 13px; font-weight: 600; transition: all 0.2s; backdrop-filter: blur(10px); }
         .page-button:hover { background: rgba(200,162,78,0.15); border-color: rgba(200,162,78,0.5); }
@@ -919,10 +921,10 @@ export default function ResultsPage() {
 
                 {/* Table */}
                 <div style={{ overflowX: 'auto' }}>
-                  {loading && <div style={{ textAlign: 'center', padding: '30px', color: 'rgba(240, 253, 244, 0.5)' }}>جاري التحميل...</div>}
+                  {loading && <div style={{ textAlign: 'center', padding: '30px', color: '#666' }}>جاري التحميل...</div>}
 
                   {!loading && filteredResults.length === 0 && (
-                    <div style={{ textAlign: 'center', padding: '30px', color: 'rgba(240, 253, 244, 0.4)' }}>لا توجد نتائج</div>
+                    <div style={{ textAlign: 'center', padding: '30px', color: '#666' }}>لا توجد نتائج</div>
                   )}
 
                   {!loading && currentResults.length > 0 && (
@@ -985,7 +987,7 @@ export default function ResultsPage() {
                               onChange={() => toggleSelect(result.id)}
                             />
                           </td>
-                            <td style={{ fontWeight: '600', color: '#C8A24E' }}>{startIndex + index + 1}</td>
+                            <td style={{ fontWeight: '600', color: '#0B1F0E' }}>{startIndex + index + 1}</td>
                             <td className="name-cell">{result.full_name}</td>
                             <td>{result.gender === 'male' ? 'ذكر' : 'أنثى'}</td>
                             <td className="level-cell">{result.level.split(':')[0]}</td>
@@ -995,8 +997,8 @@ export default function ResultsPage() {
                               <span style={{
                                 fontWeight: '700',
                                 fontSize: '12px',
-                                color: result.final_score >= 95 ? '#4ADE80' : 
-                                      result.final_score >= 90 ? '#D4AF5E' : '#FCA5A5'
+                                color: result.final_score >= 95 ? '#166534' : 
+                                      result.final_score >= 90 ? '#A07C2E' : '#dc2626'
                               }}>
                                 {result.final_score}
                               </span>
