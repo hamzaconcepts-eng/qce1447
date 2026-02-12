@@ -505,11 +505,11 @@ export default function LiveStatsPage() {
           height: 100%;
           background: linear-gradient(
             90deg,
-            #22C55E 0%,
-            #166534 25%,
-            #22C55E 50%,
-            #166534 75%,
-            #22C55E 100%
+            #166534 0%,
+            #0B1F0E 25%,
+            #166534 50%,
+            #0B1F0E 75%,
+            #166534 100%
           );
           background-size: 200% 100%;
           border-radius: clamp(8px, 0.8vh, 15px);
