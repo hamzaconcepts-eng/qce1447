@@ -693,14 +693,13 @@ export default function RegisterPage() {
                       style={{
                         width: '100%',
                         padding: 'clamp(9px, 1.3vh, 11px) clamp(12px, 1.8vw, 14px)',
-                        background: 'rgba(200, 162, 78, 0.04)',
-                        backdropFilter: 'blur(8px)',
-                        border: '1px solid rgba(200, 162, 78, 0.15)',
+                        background: '#FFFFFF',
+                        border: '1px solid rgba(200, 162, 78, 0.3)',
                         borderRadius: 'clamp(8px, 1.2vh, 12px)',
                         fontSize: 'clamp(12px, 1.4vw, 14px)',
                         textAlign: 'right',
                         fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                        color: '#F0FDF4',
+                        color: '#0A0F0A',
                         outline: 'none',
                         transition: 'all 0.2s'
                       }}
@@ -710,7 +709,7 @@ export default function RegisterPage() {
                         e.target.style.boxShadow = '0 0 0 3px rgba(200,162,78,0.12)'
                       }}
                       onBlur={(e) => {
-                        e.target.style.borderColor = 'rgba(200, 162, 78, 0.15)'
+                        e.target.style.borderColor = 'rgba(200, 162, 78, 0.3)'
                         e.target.style.boxShadow = 'none'
                       }}
                     />
@@ -741,7 +740,7 @@ export default function RegisterPage() {
                         cursor: 'pointer',
                         fontSize: 'clamp(12px, 1.4vw, 14px)',
                         gap: 'clamp(6px, 0.8vw, 8px)',
-                        color: '#86EFAC'
+                        color: '#F0FDF4'
                       }}>
                         <input
                           type="radio"
@@ -764,7 +763,7 @@ export default function RegisterPage() {
                         cursor: 'pointer',
                         fontSize: 'clamp(12px, 1.4vw, 14px)',
                         gap: 'clamp(6px, 0.8vw, 8px)',
-                        color: '#86EFAC'
+                        color: '#F0FDF4'
                       }}>
                         <input
                           type="radio"
@@ -805,14 +804,13 @@ export default function RegisterPage() {
                       style={{
                         width: '100%',
                         padding: 'clamp(9px, 1.3vh, 11px) clamp(12px, 1.8vw, 14px)',
-                        background: 'rgba(200, 162, 78, 0.04)',
-                        backdropFilter: 'blur(8px)',
-                        border: '1px solid rgba(200, 162, 78, 0.15)',
+                        background: '#FFFFFF',
+                        border: '1px solid rgba(200, 162, 78, 0.3)',
                         borderRadius: 'clamp(8px, 1.2vh, 12px)',
                         fontSize: 'clamp(12px, 1.4vw, 14px)',
                         textAlign: 'right',
                         fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                        color: '#F0FDF4',
+                        color: '#0A0F0A',
                         outline: 'none',
                         cursor: 'pointer',
                         transition: 'all 0.2s'
@@ -822,13 +820,13 @@ export default function RegisterPage() {
                         e.target.style.boxShadow = '0 0 0 3px rgba(200,162,78,0.12)'
                       }}
                       onBlur={(e) => {
-                        e.target.style.borderColor = 'rgba(200, 162, 78, 0.15)'
+                        e.target.style.borderColor = 'rgba(200, 162, 78, 0.3)'
                         e.target.style.boxShadow = 'none'
                       }}
                     >
-                      <option value="" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>اختر المستوى</option>
+                      <option value="" style={{ background: '#FFFFFF', color: '#0A0F0A' }}>اختر المستوى</option>
                       {levels.map((lvl, index) => (
-                        <option key={index} value={lvl} style={{ background: '#0A0F0A', color: '#F0FDF4' }}>
+                        <option key={index} value={lvl} style={{ background: '#FFFFFF', color: '#0A0F0A' }}>
                           {lvl}
                         </option>
                       ))}
@@ -857,14 +855,13 @@ export default function RegisterPage() {
                       style={{
                         width: '100%',
                         padding: 'clamp(9px, 1.3vh, 11px) clamp(12px, 1.8vw, 14px)',
-                        background: 'rgba(200, 162, 78, 0.04)',
-                        backdropFilter: 'blur(8px)',
-                        border: '1px solid rgba(200, 162, 78, 0.15)',
+                        background: '#FFFFFF',
+                        border: '1px solid rgba(200, 162, 78, 0.3)',
                         borderRadius: 'clamp(8px, 1.2vh, 12px)',
                         fontSize: 'clamp(12px, 1.4vw, 14px)',
                         textAlign: 'right',
                         fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                        color: '#F0FDF4',
+                        color: '#0A0F0A',
                         outline: 'none',
                         transition: 'all 0.2s'
                       }}
@@ -874,7 +871,7 @@ export default function RegisterPage() {
                         e.target.style.boxShadow = '0 0 0 3px rgba(200,162,78,0.12)'
                       }}
                       onBlur={(e) => {
-                        e.target.style.borderColor = 'rgba(200, 162, 78, 0.15)'
+                        e.target.style.borderColor = 'rgba(200, 162, 78, 0.3)'
                         e.target.style.boxShadow = 'none'
                       }}
                     />
@@ -902,14 +899,13 @@ export default function RegisterPage() {
                       style={{
                         width: '100%',
                         padding: 'clamp(9px, 1.3vh, 11px) clamp(12px, 1.8vw, 14px)',
-                        background: 'rgba(200, 162, 78, 0.04)',
-                        backdropFilter: 'blur(8px)',
-                        border: '1px solid rgba(200, 162, 78, 0.15)',
+                        background: '#FFFFFF',
+                        border: '1px solid rgba(200, 162, 78, 0.3)',
                         borderRadius: 'clamp(8px, 1.2vh, 12px)',
                         fontSize: 'clamp(12px, 1.4vw, 14px)',
                         textAlign: 'right',
                         fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                        color: '#F0FDF4',
+                        color: '#0A0F0A',
                         outline: 'none',
                         direction: 'ltr',
                         transition: 'all 0.2s'
@@ -920,7 +916,7 @@ export default function RegisterPage() {
                         e.target.style.boxShadow = '0 0 0 3px rgba(200,162,78,0.12)'
                       }}
                       onBlur={(e) => {
-                        e.target.style.borderColor = 'rgba(200, 162, 78, 0.15)'
+                        e.target.style.borderColor = 'rgba(200, 162, 78, 0.3)'
                         e.target.style.boxShadow = 'none'
                       }}
                     />
