@@ -1022,7 +1022,7 @@ export default function LiveStatsPage() {
                                   padding:
                                     "clamp(3px, 0.3vh, 5px) clamp(4px, 0.4vw, 8px)",
                                   background:
-                                    "linear-gradient(135deg, #C8A24E 0%, #A07C2E 100%)",
+                                    "linear-gradient(135deg, #166534 0%, #0B1F0E 100%)",
                                   color: "white",
                                   borderRadius: "clamp(3px, 0.3vh, 6px)",
                                   fontSize: "clamp(8px, 0.6vw, 11px)",
