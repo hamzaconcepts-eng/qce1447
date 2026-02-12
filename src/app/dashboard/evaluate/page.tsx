@@ -1,5 +1,7 @@
 'use client'
 
+// Google Fonts loaded via next/font or global CSS
+
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
@@ -412,7 +414,7 @@ export default function EvaluatePage() {
             margin: 0;
           }
           body { 
-            font-family: 'Cairo', sans-serif; 
+            font-family: 'Noto Kufi Arabic', 'Sora', sans-serif; 
             direction: rtl;
             background: white;
             margin: 0;
@@ -435,7 +437,7 @@ export default function EvaluatePage() {
             position: absolute;
             width: 30px;
             height: 30px;
-            border: 1.5px solid #5fb3b3;
+            border: 1.5px solid #C8A24E;
             opacity: 0.25;
             z-index: 10;
           }
@@ -455,7 +457,7 @@ export default function EvaluatePage() {
           }
           
           .header {
-            background: linear-gradient(135deg, #1a3a3a 0%, #5fb3b3 100%);
+            background: linear-gradient(135deg, #0B1F0E 0%, #C8A24E 100%);
             padding: 30px 30px 25px;
             text-align: center;
           }
@@ -506,7 +508,7 @@ export default function EvaluatePage() {
             text-align: center;
             font-size: 18px;
             font-weight: 700;
-            color: #5fb3b3;
+            color: #C8A24E;
             margin-bottom: 20px;
             letter-spacing: 1.5px;
           }
@@ -514,11 +516,11 @@ export default function EvaluatePage() {
           .participant-name {
             font-size: 22px;
             font-weight: 800;
-            color: #1a3a3a;
+            color: #0B1F0E;
             text-align: center;
             margin-bottom: 20px;
             padding-bottom: 12px;
-            border-bottom: 2px solid #5fb3b3;
+            border-bottom: 2px solid #C8A24E;
           }
           
           .details-grid {
@@ -535,7 +537,7 @@ export default function EvaluatePage() {
             background: #f8f9fa;
             padding: 10px 15px;
             border-radius: 6px;
-            border-right: 3px solid #5fb3b3;
+            border-right: 3px solid #C8A24E;
             text-align: right;
           }
           
@@ -548,7 +550,7 @@ export default function EvaluatePage() {
           
           .detail-value {
             font-size: 14px;
-            color: #1a3a3a;
+            color: #0B1F0E;
             font-weight: 700;
           }
           
@@ -612,7 +614,7 @@ export default function EvaluatePage() {
           }
           
           .signature-line {
-            border-top: 1.5px solid #1a3a3a;
+            border-top: 1.5px solid #0B1F0E;
             width: 170px;
             margin: 0 auto 6px;
           }
@@ -662,7 +664,7 @@ export default function EvaluatePage() {
           .breakdown-count {
             font-size: 18px;
             font-weight: 800;
-            color: #1a3a3a;
+            color: #0B1F0E;
           }
           
           .breakdown-deduction {
@@ -826,9 +828,20 @@ export default function EvaluatePage() {
 
   return (
     <>
+      {/* Animated Background */}
+      <div className="bg-canvas">
+        <div className="bg-orb green-1"></div>
+        <div className="bg-orb green-2"></div>
+        <div className="bg-orb gold-1"></div>
+        <div className="bg-orb gold-2"></div>
+      </div>
+
       <style jsx global>{`
         body {
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
+          background: #0A0F0A;
+          font-family: 'Noto Kufi Arabic', 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+          color: #F0FDF4;
+          -webkit-font-smoothing: antialiased;
           min-height: calc(var(--vh, 1vh) * 100);
         }
         
@@ -874,7 +887,7 @@ export default function EvaluatePage() {
         .group-title {
           font-size: 16px;
           font-weight: 600;
-          color: #5fb3b3;
+          color: #C8A24E;
           margin-bottom: 15px;
           text-align: center;
           padding-bottom: 10px;
@@ -892,7 +905,7 @@ export default function EvaluatePage() {
           border-radius: 6px;
           font-size: 12px;
           font-weight: 600;
-          font-family: 'Cairo', sans-serif;
+          font-family: 'Noto Kufi Arabic', 'Sora', sans-serif;
           cursor: pointer;
           transition: all 0.2s;
         }
@@ -978,20 +991,20 @@ export default function EvaluatePage() {
           background: white;
           cursor: pointer;
           border-radius: 5px;
-          font-family: 'Cairo', sans-serif;
+          font-family: 'Noto Kufi Arabic', 'Sora', sans-serif;
           font-size: 13px;
           transition: all 0.2s;
         }
 
         .page-button:hover {
           background: #f0f9f9;
-          border-color: #5fb3b3;
+          border-color: #C8A24E;
         }
 
         .page-button.active {
-          background: #5fb3b3;
+          background: #C8A24E;
           color: white;
-          border-color: #5fb3b3;
+          border-color: #C8A24E;
         }
 
         .page-button:disabled {
@@ -1004,18 +1017,18 @@ export default function EvaluatePage() {
           margin-top: 20px;
           padding: 12px;
           background: #ffffff;
-          color: #5fb3b3;
-          border: 2px solid #5fb3b3;
+          color: #C8A24E;
+          border: 2px solid #C8A24E;
           border-radius: 8px;
           font-size: 15px;
           font-weight: 700;
-          font-family: 'Cairo', sans-serif;
+          font-family: 'Noto Kufi Arabic', 'Sora', sans-serif;
           cursor: pointer;
           transition: all 0.2s;
         }
 
         .back-button:hover {
-          background: #5fb3b3;
+          background: #C8A24E;
           color: white;
         }
 
@@ -1040,7 +1053,7 @@ export default function EvaluatePage() {
         justifyContent: 'center',
         alignItems: 'center',
         padding: '20px',
-        background: 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)'
+        background: 'linear-gradient(135deg, #C8A24E 0%, #0B1F0E 100%)'
       }}>
         
         <div className="app-container">
@@ -1066,7 +1079,7 @@ export default function EvaluatePage() {
             </div>
 
             <h1 style={{
-              color: '#333333',
+              color: '#F0FDF4',
               fontSize: '22px',
               fontWeight: '700',
               marginBottom: '5px'
@@ -1076,7 +1089,7 @@ export default function EvaluatePage() {
 
             {!selectedCompetitor && (
               <p style={{
-                color: '#666666',
+                color: 'rgba(240, 253, 244, 0.7)',
                 fontSize: '14px'
               }}>
                 إجمالي: {filteredCompetitors.length} متسابق | الصفحة {currentPage} من {totalPages}
@@ -1096,11 +1109,11 @@ export default function EvaluatePage() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '2px solid #e0e0e0',
+                    border: '1px solid rgba(200, 162, 78, 0.3)',
                     borderRadius: '10px',
                     fontSize: '15px',
                     textAlign: 'right',
-                    fontFamily: 'Cairo, sans-serif',
+                    fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                     marginBottom: '10px'
                   }}
                 />
@@ -1116,10 +1129,10 @@ export default function EvaluatePage() {
                     onChange={(e) => setFilterGender(e.target.value)}
                     style={{
                       padding: '10px',
-                      border: '2px solid #e0e0e0',
+                      border: '1px solid rgba(200, 162, 78, 0.3)',
                       borderRadius: '8px',
                       fontSize: '14px',
-                      fontFamily: 'Cairo, sans-serif',
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                       cursor: 'pointer'
                     }}
                   >
@@ -1133,10 +1146,10 @@ export default function EvaluatePage() {
                     onChange={(e) => setFilterStatus(e.target.value)}
                     style={{
                       padding: '10px',
-                      border: '2px solid #e0e0e0',
+                      border: '1px solid rgba(200, 162, 78, 0.3)',
                       borderRadius: '8px',
                       fontSize: '14px',
-                      fontFamily: 'Cairo, sans-serif',
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                       cursor: 'pointer'
                     }}
                   >
@@ -1150,10 +1163,10 @@ export default function EvaluatePage() {
                     onChange={(e) => setFilterLevel(e.target.value)}
                     style={{
                       padding: '10px',
-                      border: '2px solid #e0e0e0',
+                      border: '1px solid rgba(200, 162, 78, 0.3)',
                       borderRadius: '8px',
                       fontSize: '14px',
-                      fontFamily: 'Cairo, sans-serif',
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                       cursor: 'pointer',
                       gridColumn: 'span 2'
                     }}
@@ -1169,13 +1182,13 @@ export default function EvaluatePage() {
                     style={{
                       gridColumn: 'span 2',
                       padding: '10px',
-                      background: '#f5f5f5',
-                      color: '#666666',
+                      background: 'rgba(200, 162, 78, 0.08)',
+                      color: 'rgba(240, 253, 244, 0.7)',
                       border: 'none',
                       borderRadius: '8px',
                       fontSize: '14px',
                       fontWeight: '600',
-                      fontFamily: 'Cairo, sans-serif',
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                       cursor: 'pointer'
                     }}
                   >
@@ -1187,13 +1200,13 @@ export default function EvaluatePage() {
               {/* Competitors Table */}
               <div style={{ overflowX: 'auto', maxWidth: '100%' }}>
                 {loading && (
-                  <div style={{ textAlign: 'center', padding: '40px', color: '#666666' }}>
+                  <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(240, 253, 244, 0.7)' }}>
                     جاري التحميل...
                   </div>
                 )}
 
                 {!loading && filteredCompetitors.length === 0 && (
-                  <div style={{ textAlign: 'center', padding: '40px', color: '#666666' }}>
+                  <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(240, 253, 244, 0.7)' }}>
                     لا توجد نتائج
                   </div>
                 )}
@@ -1241,7 +1254,7 @@ export default function EvaluatePage() {
                           key={competitor.id}
                           onClick={() => handleSelectCompetitor(competitor)}
                         >
-                          <td style={{ fontWeight: '600', color: '#5fb3b3' }}>
+                          <td style={{ fontWeight: '600', color: '#C8A24E' }}>
                             {startIndex + index + 1}
                           </td>
                           <td className="name-cell">
@@ -1379,7 +1392,7 @@ export default function EvaluatePage() {
                   <h3 style={{
                     fontSize: 'clamp(13px, 1.6vw, 17px)',
                     fontWeight: '700',
-                    color: '#1a3a3a',
+                    color: '#0B1F0E',
                     margin: '0 0 clamp(6px, 0.8vh, 10px) 0',
                     textAlign: 'center',
                     lineHeight: '1.2'
@@ -1388,7 +1401,7 @@ export default function EvaluatePage() {
                   </h3>
                   <div style={{
                     fontSize: 'clamp(9px, 1.05vw, 11px)',
-                    color: '#555',
+                    color: '#C8A24E',
                     lineHeight: '1.6',
                     textAlign: 'right'
                   }}>
@@ -1459,14 +1472,14 @@ export default function EvaluatePage() {
                   <h2 style={{
                     fontSize: 'clamp(15px, 2.1vw, 23px)',
                     fontWeight: '800',
-                    color: '#1a3a3a',
+                    color: '#0B1F0E',
                     margin: 0,
                     lineHeight: '1.1',
                     textAlign: 'center',
                     flexShrink: 0,
                     letterSpacing: '-0.3px'
                   }}>
-                    {selectedCompetitor.full_name}
+                    {selectedCompetitor?.full_name}
                   </h2>
 
                   <p style={{
@@ -1477,7 +1490,7 @@ export default function EvaluatePage() {
                     textAlign: 'center',
                     flexShrink: 0
                   }}>
-                    {selectedCompetitor.gender === 'male' ? 'ذكر' : 'أنثى'} • {selectedCompetitor.level} • {selectedCompetitor.city}
+                    {selectedCompetitor?.gender === 'male' ? 'ذكر' : 'أنثى'} • {selectedCompetitor?.level} • {selectedCompetitor?.city}
                   </p>
                 </div>
 
@@ -1501,7 +1514,7 @@ export default function EvaluatePage() {
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     boxShadow: '0 3px 12px rgba(0,0,0,0.08)',
-                    border: '2px solid #e0e0e0',
+                    border: '1px solid rgba(200, 162, 78, 0.3)',
                     overflow: 'hidden',
                     boxSizing: 'border-box',
                     transition: 'all 0.3s ease'
@@ -1510,7 +1523,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
-                        color: '#1a3a3a',
+                        color: '#0B1F0E',
                         marginBottom: 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
@@ -1539,7 +1552,7 @@ export default function EvaluatePage() {
                         style={{
                           flex: 1,
                           height: '100%',
-                          background: 'linear-gradient(135deg, #5fb3b3 0%, #4a9d9d 100%)',
+                          background: 'linear-gradient(135deg, #C8A24E 0%, #4a9d9d 100%)',
                           color: 'white',
                           border: 'none',
                           borderRadius: '10px',
@@ -1575,7 +1588,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(36px, 5vw, 56px)',
                         fontWeight: '900',
-                        color: '#1a3a3a',
+                        color: '#0B1F0E',
                         minWidth: 'clamp(45px, 6vw, 70px)',
                         textAlign: 'center',
                         lineHeight: '1',
@@ -1631,7 +1644,7 @@ export default function EvaluatePage() {
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     boxShadow: '0 3px 12px rgba(0,0,0,0.08)',
-                    border: '2px solid #e0e0e0',
+                    border: '1px solid rgba(200, 162, 78, 0.3)',
                     overflow: 'hidden',
                     boxSizing: 'border-box',
                     transition: 'all 0.3s ease'
@@ -1640,7 +1653,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
-                        color: '#1a3a3a',
+                        color: '#0B1F0E',
                         marginBottom: 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
@@ -1669,7 +1682,7 @@ export default function EvaluatePage() {
                         style={{
                           flex: 1,
                           height: '100%',
-                          background: 'linear-gradient(135deg, #5fb3b3 0%, #4a9d9d 100%)',
+                          background: 'linear-gradient(135deg, #C8A24E 0%, #4a9d9d 100%)',
                           color: 'white',
                           border: 'none',
                           borderRadius: '10px',
@@ -1703,7 +1716,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(36px, 5vw, 56px)',
                         fontWeight: '900',
-                        color: '#1a3a3a',
+                        color: '#0B1F0E',
                         minWidth: 'clamp(45px, 6vw, 70px)',
                         textAlign: 'center',
                         lineHeight: '1',
@@ -1759,7 +1772,7 @@ export default function EvaluatePage() {
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     boxShadow: '0 3px 12px rgba(0,0,0,0.08)',
-                    border: '2px solid #e0e0e0',
+                    border: '1px solid rgba(200, 162, 78, 0.3)',
                     overflow: 'hidden',
                     boxSizing: 'border-box',
                     transition: 'all 0.3s ease'
@@ -1768,7 +1781,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
-                        color: '#1a3a3a',
+                        color: '#0B1F0E',
                         marginBottom: 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
@@ -1797,7 +1810,7 @@ export default function EvaluatePage() {
                         style={{
                           flex: 1,
                           height: '100%',
-                          background: 'linear-gradient(135deg, #5fb3b3 0%, #4a9d9d 100%)',
+                          background: 'linear-gradient(135deg, #C8A24E 0%, #4a9d9d 100%)',
                           color: 'white',
                           border: 'none',
                           borderRadius: '10px',
@@ -1831,7 +1844,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(36px, 5vw, 56px)',
                         fontWeight: '900',
-                        color: '#1a3a3a',
+                        color: '#0B1F0E',
                         minWidth: 'clamp(45px, 6vw, 70px)',
                         textAlign: 'center',
                         lineHeight: '1',
@@ -1887,7 +1900,7 @@ export default function EvaluatePage() {
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     boxShadow: '0 3px 12px rgba(0,0,0,0.08)',
-                    border: '2px solid #e0e0e0',
+                    border: '1px solid rgba(200, 162, 78, 0.3)',
                     overflow: 'hidden',
                     boxSizing: 'border-box',
                     transition: 'all 0.3s ease'
@@ -1896,7 +1909,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
-                        color: '#1a3a3a',
+                        color: '#0B1F0E',
                         marginBottom: 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
@@ -1925,7 +1938,7 @@ export default function EvaluatePage() {
                         style={{
                           flex: 1,
                           height: '100%',
-                          background: 'linear-gradient(135deg, #5fb3b3 0%, #4a9d9d 100%)',
+                          background: 'linear-gradient(135deg, #C8A24E 0%, #4a9d9d 100%)',
                           color: 'white',
                           border: 'none',
                           borderRadius: '10px',
@@ -1959,7 +1972,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(36px, 5vw, 56px)',
                         fontWeight: '900',
-                        color: '#1a3a3a',
+                        color: '#0B1F0E',
                         minWidth: 'clamp(45px, 6vw, 70px)',
                         textAlign: 'center',
                         lineHeight: '1',
@@ -2046,13 +2059,13 @@ export default function EvaluatePage() {
                     disabled={saving}
                     style={{
                       padding: 'clamp(11px, 1.7vh, 17px)',
-                      background: saving ? '#95a5a6' : 'linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%)',
+                      background: saving ? '#95a5a6' : 'linear-gradient(135deg, #C8A24E 0%, #0B1F0E 100%)',
                       color: 'white',
                       border: 'none',
                       borderRadius: '10px',
                       fontSize: 'clamp(13px, 1.7vw, 17px)',
                       fontWeight: '700',
-                      fontFamily: 'Cairo, sans-serif',
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                       cursor: saving ? 'not-allowed' : 'pointer',
                       boxShadow: '0 3px 12px rgba(95, 179, 179, 0.25)',
                       flexShrink: 0
@@ -2067,12 +2080,12 @@ export default function EvaluatePage() {
                     style={{
                       padding: 'clamp(7px, 1.2vh, 11px)',
                       background: '#ffffff',
-                      color: '#5fb3b3',
-                      border: '1.5px solid #5fb3b3',
+                      color: '#C8A24E',
+                      border: '1.5px solid #C8A24E',
                       borderRadius: '8px',
                       fontSize: 'clamp(10px, 1.25vw, 13px)',
                       fontWeight: '700',
-                      fontFamily: 'Cairo, sans-serif',
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
@@ -2081,12 +2094,12 @@ export default function EvaluatePage() {
                       flexShrink: 0
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = '#5fb3b3';
+                      e.currentTarget.style.background = '#C8A24E';
                       e.currentTarget.style.color = 'white';
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.background = '#ffffff';
-                      e.currentTarget.style.color = '#5fb3b3';
+                      e.currentTarget.style.color = '#C8A24E';
                     }}
                   >
                     <span>📄</span>
@@ -2099,22 +2112,22 @@ export default function EvaluatePage() {
                     style={{
                       padding: 'clamp(10px, 1.6vh, 14px)',
                       background: '#ffffff',
-                      color: '#5fb3b3',
-                      border: '1.5px solid #5fb3b3',
+                      color: '#C8A24E',
+                      border: '1.5px solid #C8A24E',
                       borderRadius: '8px',
                       fontSize: 'clamp(11px, 1.4vw, 15px)',
                       fontWeight: '700',
-                      fontFamily: 'Cairo, sans-serif',
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                       cursor: 'pointer',
                       flexShrink: 0
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = '#5fb3b3';
+                      e.currentTarget.style.background = '#C8A24E';
                       e.currentTarget.style.color = 'white';
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.background = '#ffffff';
-                      e.currentTarget.style.color = '#5fb3b3';
+                      e.currentTarget.style.color = '#C8A24E';
                     }}
                   >
                     العودة إلى قائمة المتسابقين
@@ -2141,7 +2154,7 @@ export default function EvaluatePage() {
         <div className="modal-overlay" onClick={() => setShowBackWarning(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2 style={{
-              color: '#333333',
+              color: '#F0FDF4',
               fontSize: '20px',
               fontWeight: '700',
               marginBottom: '15px',
@@ -2172,7 +2185,7 @@ export default function EvaluatePage() {
                   borderRadius: '8px',
                   fontSize: '15px',
                   fontWeight: '600',
-                  fontFamily: 'Cairo, sans-serif',
+                  fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                   cursor: 'pointer'
                 }}
               >
@@ -2189,7 +2202,7 @@ export default function EvaluatePage() {
                   borderRadius: '8px',
                   fontSize: '15px',
                   fontWeight: '600',
-                  fontFamily: 'Cairo, sans-serif',
+                  fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                   cursor: 'pointer'
                 }}
               >
