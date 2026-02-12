@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase'
@@ -28,7 +28,6 @@ type SortDirection = 'asc' | 'desc'
 export default function CompetitorsPage() {
   const [user, setUser] = useState<User | null>(null)
   const [competitors, setCompetitors] = useState<Competitor[]>([])
-  const [filteredCompetitors, setFilteredCompetitors] = useState<Competitor[]>([])
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
@@ -95,53 +94,7 @@ export default function CompetitorsPage() {
     fetchCompetitors()
   }, [router])
 
-  useEffect(() => {
-    applyFilters()
-  }, [competitors, searchTerm, filterGender, filterLevel, filterStatus, sortField, sortDirection])
-
-  useEffect(() => {
-    // Reset to page 1 when filters change
-    setCurrentPage(1)
-  }, [searchTerm, filterGender, filterLevel, filterStatus])
-
-  // Fix: ensure currentPage is valid after data changes (e.g. after delete)
-  useEffect(() => {
-    const maxPage = Math.ceil(filteredCompetitors.length / itemsPerPage)
-    if (currentPage > maxPage && maxPage > 0) {
-      setCurrentPage(maxPage)
-    } else if (maxPage === 0 && currentPage !== 1) {
-      setCurrentPage(1)
-    }
-  }, [filteredCompetitors, currentPage])
-
-  const fetchCompetitors = async () => {
-    try {
-      const supabase = createClient()
-      const { data, error } = await supabase
-        .from('competitors')
-        .select('*')
-        .order('created_at', { ascending: false })
-
-      if (error) throw error
-
-      setCompetitors(data || [])
-      setLoading(false)
-    } catch (error) {
-      console.error('Error fetching competitors:', error)
-      setLoading(false)
-    }
-  }
-
-  const handleSort = (field: SortField) => {
-    if (sortField === field) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
-    } else {
-      setSortField(field)
-      setSortDirection('asc')
-    }
-  }
-
-  const applyFilters = () => {
+  const filteredCompetitors = React.useMemo(() => {
     let filtered = [...competitors]
 
     if (searchTerm) {
@@ -160,8 +113,8 @@ export default function CompetitorsPage() {
         const nameWords = nameLower.split(/\s+/)
         
         // Check if all search words exist in name (any order)
-        const allWordsMatch = searchWords.every(searchWord =>
-          nameWords.some(nameWord => nameWord.includes(searchWord))
+        const allWordsMatch = searchWords.every((searchWord: string) =>
+          nameWords.some((nameWord: string) => nameWord.includes(searchWord))
         )
         
         return allWordsMatch
@@ -200,7 +153,39 @@ export default function CompetitorsPage() {
       return 0
     })
 
-    setFilteredCompetitors(filtered)
+    return filtered
+  }, [competitors, searchTerm, filterGender, filterLevel, filterStatus, sortField, sortDirection])
+
+  useEffect(() => {
+    // Reset to page 1 when filters change
+    setCurrentPage(1)
+  }, [searchTerm, filterGender, filterLevel, filterStatus])
+
+  const fetchCompetitors = async () => {
+    try {
+      const supabase = createClient()
+      const { data, error } = await supabase
+        .from('competitors')
+        .select('*')
+        .order('created_at', { ascending: false })
+
+      if (error) throw error
+
+      setCompetitors(data || [])
+      setLoading(false)
+    } catch (error) {
+      console.error('Error fetching competitors:', error)
+      setLoading(false)
+    }
+  }
+
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+    } else {
+      setSortField(field)
+      setSortDirection('asc')
+    }
   }
 
   // Pagination calculations
@@ -263,17 +248,26 @@ export default function CompetitorsPage() {
         }
       }
 
-      // Remove deleted items from local state immediately 
-      // This triggers the applyFilters useEffect automatically
-      const deletedSet = new Set(idsToDelete)
-      setCompetitors(prev => prev.filter(c => !deletedSet.has(c.id)))
-      setSelectedIds(new Set())
+      // Re-fetch fresh data from server
+      const { data: freshData, error: fetchError } = await supabase
+        .from('competitors')
+        .select('*')
+        .order('created_at', { ascending: false })
+
+      if (fetchError) throw fetchError
       
-      // Close modal and reset
+      const newData = freshData || []
+
+      // Close modal FIRST, then update data
       setShowDeleteModal(false)
       setDeletePassword('')
       setDeletingId(null)
       setIsDeleting(false)
+      setSelectedIds(new Set())
+      setCurrentPage(1)
+
+      // Update competitors - this will trigger the applyFilters useEffect
+      setCompetitors(newData)
       
       // Show non-blocking success toast
       setShowDeleteSuccess(true)
