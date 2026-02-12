@@ -1528,6 +1528,7 @@ export default function EvaluatePage() {
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
                         color: '#F0FDF4',
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                         marginBottom: 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
@@ -1574,8 +1575,8 @@ export default function EvaluatePage() {
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
-                          e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)';
-                          e.currentTarget.style.color = '#0A0F0A';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #C8A24E 0%, #5fb3b3 100%)';
+                          e.currentTarget.style.color = '#FFFFFF';
                           e.currentTarget.style.border = 'none';
                           e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,162,78,0.5)';
                         }}
@@ -1629,8 +1630,8 @@ export default function EvaluatePage() {
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
-                          e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)';
-                          e.currentTarget.style.color = '#0A0F0A';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #C8A24E 0%, #5fb3b3 100%)';
+                          e.currentTarget.style.color = '#FFFFFF';
                           e.currentTarget.style.border = 'none';
                           e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,162,78,0.5)';
                         }}
@@ -1673,6 +1674,7 @@ export default function EvaluatePage() {
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
                         color: '#F0FDF4',
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                         marginBottom: 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
@@ -1766,8 +1768,8 @@ export default function EvaluatePage() {
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
-                          e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)';
-                          e.currentTarget.style.color = '#0A0F0A';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #C8A24E 0%, #5fb3b3 100%)';
+                          e.currentTarget.style.color = '#FFFFFF';
                           e.currentTarget.style.border = 'none';
                           e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,162,78,0.5)';
                         }}
@@ -1810,6 +1812,7 @@ export default function EvaluatePage() {
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
                         color: '#F0FDF4',
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                         marginBottom: 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
@@ -1903,8 +1906,8 @@ export default function EvaluatePage() {
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
-                          e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)';
-                          e.currentTarget.style.color = '#0A0F0A';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #C8A24E 0%, #5fb3b3 100%)';
+                          e.currentTarget.style.color = '#FFFFFF';
                           e.currentTarget.style.border = 'none';
                           e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,162,78,0.5)';
                         }}
@@ -1947,6 +1950,7 @@ export default function EvaluatePage() {
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
                         color: '#F0FDF4',
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                         marginBottom: 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
@@ -2040,8 +2044,8 @@ export default function EvaluatePage() {
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
-                          e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)';
-                          e.currentTarget.style.color = '#0A0F0A';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #C8A24E 0%, #5fb3b3 100%)';
+                          e.currentTarget.style.color = '#FFFFFF';
                           e.currentTarget.style.border = 'none';
                           e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,162,78,0.5)';
                         }}
@@ -2273,4 +2277,3 @@ export default function EvaluatePage() {
     </>
   )
 }
-//hi
