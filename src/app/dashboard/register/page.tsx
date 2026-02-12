@@ -525,13 +525,13 @@ export default function RegisterPage() {
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           border: '1px solid rgba(34, 197, 94, 0.15)',
-          padding: 'clamp(18px, 2.5vh, 28px) clamp(20px, 2.8vw, 28px)',
+          padding: 'clamp(14px, 2vh, 22px) clamp(16px, 2.2vw, 24px)',
           borderRadius: 'clamp(20px, 3vh, 32px)',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 80px rgba(34, 197, 94, 0.05)',
           width: '100%',
-          maxWidth: 'clamp(380px, 92vw, 600px)',
+          maxWidth: 'clamp(380px, 92vw, 550px)',
           height: 'auto',
-          maxHeight: '94vh',
+          maxHeight: '92vh',
           overflow: 'visible',
           display: 'flex',
           flexDirection: 'column',
@@ -554,9 +554,9 @@ export default function RegisterPage() {
 
           {/* Logo with Gold Border */}
           <div style={{
-            width: 'clamp(55px, 9vw, 70px)',
-            height: 'clamp(55px, 9vw, 70px)',
-            margin: '0 auto clamp(10px, 1.5vh, 14px)',
+            width: 'clamp(45px, 7vw, 60px)',
+            height: 'clamp(45px, 7vw, 60px)',
+            margin: '0 auto clamp(8px, 1.2vh, 12px)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -571,8 +571,8 @@ export default function RegisterPage() {
             <Image
               src="/images/logo.svg"
               alt="شعار مركز رياض العلم"
-              width={70}
-              height={70}
+              width={60}
+              height={60}
               style={{ 
                 width: '70%', 
                 height: '70%', 
@@ -585,8 +585,8 @@ export default function RegisterPage() {
 
           {/* Title with Gold Gradient */}
           <h1 style={{
-            marginBottom: 'clamp(12px, 1.8vh, 16px)',
-            fontSize: 'clamp(16px, 2.2vw, 20px)',
+            marginBottom: 'clamp(8px, 1.2vh, 12px)',
+            fontSize: 'clamp(14px, 1.9vw, 18px)',
             fontWeight: '700',
             lineHeight: '1.3',
             textAlign: 'center',
@@ -605,7 +605,7 @@ export default function RegisterPage() {
           <div style={{
             display: 'flex',
             gap: 'clamp(8px, 1.2vw, 12px)',
-            marginBottom: 'clamp(14px, 2vh, 18px)',
+            marginBottom: 'clamp(10px, 1.5vh, 14px)',
             flexShrink: 0,
             position: 'relative',
             zIndex: 1,
@@ -663,7 +663,7 @@ export default function RegisterPage() {
             overflowY: 'auto',
             overflowX: 'hidden',
             paddingRight: 'clamp(4px, 0.6vw, 8px)',
-            marginBottom: 'clamp(10px, 1.5vh, 14px)',
+            marginBottom: 'clamp(8px, 1.2vh, 10px)',
             position: 'relative',
             zIndex: 1
           }}>
@@ -672,11 +672,11 @@ export default function RegisterPage() {
               <div className="tab-content">
                 <form onSubmit={handleSubmit}>
                   {/* Full Name */}
-                  <div style={{ marginBottom: 'clamp(10px, 1.5vh, 14px)' }}>
+                  <div style={{ marginBottom: 'clamp(8px, 1.2vh, 10px)' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: 'clamp(4px, 0.6vh, 6px)',
-                      fontSize: 'clamp(10px, 1.1vw, 12px)',
+                      marginBottom: 'clamp(3px, 0.5vh, 4px)',
+                      fontSize: 'clamp(9px, 1vw, 11px)',
                       fontWeight: '600',
                       color: '#C8A24E',
                       opacity: 0.7,
@@ -716,11 +716,11 @@ export default function RegisterPage() {
                   </div>
 
                   {/* Gender */}
-                  <div style={{ marginBottom: 'clamp(10px, 1.5vh, 14px)', textAlign: 'right' }}>
+                  <div style={{ marginBottom: 'clamp(8px, 1.2vh, 10px)', textAlign: 'right' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: 'clamp(6px, 0.8vh, 8px)',
-                      fontSize: 'clamp(10px, 1.1vw, 12px)',
+                      marginBottom: 'clamp(4px, 0.6vh, 6px)',
+                      fontSize: 'clamp(9px, 1vw, 11px)',
                       fontWeight: '600',
                       color: '#C8A24E',
                       opacity: 0.7,
@@ -784,11 +784,11 @@ export default function RegisterPage() {
                   </div>
 
                   {/* Level */}
-                  <div style={{ marginBottom: 'clamp(10px, 1.5vh, 14px)' }}>
+                  <div style={{ marginBottom: 'clamp(8px, 1.2vh, 10px)' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: 'clamp(4px, 0.6vh, 6px)',
-                      fontSize: 'clamp(10px, 1.1vw, 12px)',
+                      marginBottom: 'clamp(3px, 0.5vh, 4px)',
+                      fontSize: 'clamp(9px, 1vw, 11px)',
                       fontWeight: '600',
                       color: '#C8A24E',
                       opacity: 0.7,
@@ -834,11 +834,11 @@ export default function RegisterPage() {
                   </div>
 
                   {/* City */}
-                  <div style={{ marginBottom: 'clamp(10px, 1.5vh, 14px)' }}>
+                  <div style={{ marginBottom: 'clamp(8px, 1.2vh, 10px)' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: 'clamp(4px, 0.6vh, 6px)',
-                      fontSize: 'clamp(10px, 1.1vw, 12px)',
+                      marginBottom: 'clamp(3px, 0.5vh, 4px)',
+                      fontSize: 'clamp(9px, 1vw, 11px)',
                       fontWeight: '600',
                       color: '#C8A24E',
                       opacity: 0.7,
@@ -878,11 +878,11 @@ export default function RegisterPage() {
                   </div>
 
                   {/* Mobile */}
-                  <div style={{ marginBottom: 'clamp(12px, 2vh, 16px)' }}>
+                  <div style={{ marginBottom: 'clamp(10px, 1.5vh, 12px)' }}>
                     <label style={{
                       display: 'block',
-                      marginBottom: 'clamp(4px, 0.6vh, 6px)',
-                      fontSize: 'clamp(10px, 1.1vw, 12px)',
+                      marginBottom: 'clamp(3px, 0.5vh, 4px)',
+                      fontSize: 'clamp(9px, 1vw, 11px)',
                       fontWeight: '600',
                       color: '#C8A24E',
                       opacity: 0.7,
