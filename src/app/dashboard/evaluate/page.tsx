@@ -1332,7 +1332,7 @@ export default function EvaluatePage() {
                 padding: 'clamp(6px, 1vh, 12px)',
                 overflow: 'hidden',
                 boxSizing: 'border-box',
-                background: '#ffffff'
+                background: '#0A0F0A'
               }}>
                 
                 {/* FIXED ALERTS */}
@@ -1382,17 +1382,17 @@ export default function EvaluatePage() {
                 <div style={{
                   gridColumn: '1 / 2',
                   gridRow: '1 / 2',
-                  background: '#f8f9fa',
+                  background: 'rgba(34, 197, 94, 0.08)',
                   borderRadius: '10px',
                   padding: 'clamp(10px, 1.5vh, 16px)',
-                  border: '1.5px solid #e0e0e0',
+                  border: '1px solid rgba(34, 197, 94, 0.15)',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
                   overflow: 'hidden'
                 }}>
                   <h3 style={{
                     fontSize: 'clamp(13px, 1.6vw, 17px)',
                     fontWeight: '700',
-                    color: '#0B1F0E',
+                    color: '#F0FDF4',
                     margin: '0 0 clamp(6px, 0.8vh, 10px) 0',
                     textAlign: 'center',
                     lineHeight: '1.2'
@@ -1452,7 +1452,7 @@ export default function EvaluatePage() {
                   <h1 style={{
                     fontSize: 'clamp(13px, 1.7vw, 17px)',
                     fontWeight: '600',
-                    color: '#666',
+                    color: 'rgba(240, 253, 244, 0.7)',
                     margin: 0,
                     textAlign: 'center',
                     lineHeight: '1.1',
@@ -1472,7 +1472,7 @@ export default function EvaluatePage() {
                   <h2 style={{
                     fontSize: 'clamp(15px, 2.1vw, 23px)',
                     fontWeight: '800',
-                    color: '#0B1F0E',
+                    color: '#F0FDF4',
                     margin: 0,
                     lineHeight: '1.1',
                     textAlign: 'center',
@@ -1484,7 +1484,7 @@ export default function EvaluatePage() {
 
                   <p style={{
                     fontSize: 'clamp(9px, 1.1vw, 12px)',
-                    color: '#666',
+                    color: 'rgba(240, 253, 244, 0.7)',
                     margin: 0,
                     lineHeight: '1.3',
                     textAlign: 'center',
@@ -1523,7 +1523,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
-                        color: '#0B1F0E',
+                        color: '#F0FDF4',
                         marginBottom: 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
@@ -1594,7 +1594,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(36px, 5vw, 56px)',
                         fontWeight: '900',
-                        color: '#0B1F0E',
+                        color: '#F0FDF4',
                         minWidth: 'clamp(45px, 6vw, 70px)',
                         textAlign: 'center',
                         lineHeight: '1',
@@ -1665,7 +1665,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
-                        color: '#0B1F0E',
+                        color: '#F0FDF4',
                         marginBottom: 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
@@ -1728,7 +1728,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(36px, 5vw, 56px)',
                         fontWeight: '900',
-                        color: '#0B1F0E',
+                        color: '#F0FDF4',
                         minWidth: 'clamp(45px, 6vw, 70px)',
                         textAlign: 'center',
                         lineHeight: '1',
@@ -1799,7 +1799,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
-                        color: '#0B1F0E',
+                        color: '#F0FDF4',
                         marginBottom: 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
@@ -1862,7 +1862,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(36px, 5vw, 56px)',
                         fontWeight: '900',
-                        color: '#0B1F0E',
+                        color: '#F0FDF4',
                         minWidth: 'clamp(45px, 6vw, 70px)',
                         textAlign: 'center',
                         lineHeight: '1',
@@ -1933,7 +1933,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
-                        color: '#0B1F0E',
+                        color: '#F0FDF4',
                         marginBottom: 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
@@ -1996,7 +1996,7 @@ export default function EvaluatePage() {
                       <div style={{
                         fontSize: 'clamp(36px, 5vw, 56px)',
                         fontWeight: '900',
-                        color: '#0B1F0E',
+                        color: '#F0FDF4',
                         minWidth: 'clamp(45px, 6vw, 70px)',
                         textAlign: 'center',
                         lineHeight: '1',
