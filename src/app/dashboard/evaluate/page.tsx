@@ -1559,7 +1559,7 @@ export default function EvaluatePage() {
                           height: '100%',
                           background: 'transparent',
                           color: '#C8A24E',
-                          border: '2px solid #C8A24E',
+                          border: '1px solid rgba(200, 162, 78, 0.4)',
                           borderRadius: '10px',
                   backdropFilter: 'blur(10px)',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
@@ -1584,7 +1584,7 @@ export default function EvaluatePage() {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
                           e.currentTarget.style.background = 'transparent';
                           e.currentTarget.style.color = '#C8A24E';
-                          e.currentTarget.style.border = '2px solid #C8A24E';
+                          e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.4)';
                           e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
@@ -1616,7 +1616,7 @@ export default function EvaluatePage() {
                           height: '100%',
                           background: 'transparent',
                           color: '#C8A24E',
-                          border: '2px solid #C8A24E',
+                          border: '1px solid rgba(200, 162, 78, 0.4)',
                           borderRadius: '10px',
                   backdropFilter: 'blur(10px)',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
@@ -1639,7 +1639,7 @@ export default function EvaluatePage() {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
                           e.currentTarget.style.background = 'transparent';
                           e.currentTarget.style.color = '#C8A24E';
-                          e.currentTarget.style.border = '2px solid #C8A24E';
+                          e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.4)';
                           e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
@@ -1705,7 +1705,7 @@ export default function EvaluatePage() {
                           height: '100%',
                           background: 'transparent',
                           color: '#C8A24E',
-                          border: '2px solid #C8A24E',
+                          border: '1px solid rgba(200, 162, 78, 0.4)',
                           borderRadius: '10px',
                   backdropFilter: 'blur(10px)',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
@@ -1728,7 +1728,7 @@ export default function EvaluatePage() {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
                           e.currentTarget.style.background = 'transparent';
                           e.currentTarget.style.color = '#C8A24E';
-                          e.currentTarget.style.border = '2px solid #C8A24E';
+                          e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.4)';
                           e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
@@ -1760,7 +1760,7 @@ export default function EvaluatePage() {
                           height: '100%',
                           background: 'transparent',
                           color: '#C8A24E',
-                          border: '2px solid #C8A24E',
+                          border: '1px solid rgba(200, 162, 78, 0.4)',
                           borderRadius: '10px',
                   backdropFilter: 'blur(10px)',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
@@ -1783,7 +1783,7 @@ export default function EvaluatePage() {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
                           e.currentTarget.style.background = 'transparent';
                           e.currentTarget.style.color = '#C8A24E';
-                          e.currentTarget.style.border = '2px solid #C8A24E';
+                          e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.4)';
                           e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
@@ -1849,7 +1849,7 @@ export default function EvaluatePage() {
                           height: '100%',
                           background: 'transparent',
                           color: '#C8A24E',
-                          border: '2px solid #C8A24E',
+                          border: '1px solid rgba(200, 162, 78, 0.4)',
                           borderRadius: '10px',
                   backdropFilter: 'blur(10px)',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
@@ -1872,7 +1872,7 @@ export default function EvaluatePage() {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
                           e.currentTarget.style.background = 'transparent';
                           e.currentTarget.style.color = '#C8A24E';
-                          e.currentTarget.style.border = '2px solid #C8A24E';
+                          e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.4)';
                           e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
@@ -1904,7 +1904,7 @@ export default function EvaluatePage() {
                           height: '100%',
                           background: 'transparent',
                           color: '#C8A24E',
-                          border: '2px solid #C8A24E',
+                          border: '1px solid rgba(200, 162, 78, 0.4)',
                           borderRadius: '10px',
                   backdropFilter: 'blur(10px)',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
@@ -1927,7 +1927,7 @@ export default function EvaluatePage() {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
                           e.currentTarget.style.background = 'transparent';
                           e.currentTarget.style.color = '#C8A24E';
-                          e.currentTarget.style.border = '2px solid #C8A24E';
+                          e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.4)';
                           e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
@@ -1993,7 +1993,7 @@ export default function EvaluatePage() {
                           height: '100%',
                           background: 'transparent',
                           color: '#C8A24E',
-                          border: '2px solid #C8A24E',
+                          border: '1px solid rgba(200, 162, 78, 0.4)',
                           borderRadius: '10px',
                   backdropFilter: 'blur(10px)',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
@@ -2016,7 +2016,7 @@ export default function EvaluatePage() {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
                           e.currentTarget.style.background = 'transparent';
                           e.currentTarget.style.color = '#C8A24E';
-                          e.currentTarget.style.border = '2px solid #C8A24E';
+                          e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.4)';
                           e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
@@ -2048,7 +2048,7 @@ export default function EvaluatePage() {
                           height: '100%',
                           background: 'transparent',
                           color: '#C8A24E',
-                          border: '2px solid #C8A24E',
+                          border: '1px solid rgba(200, 162, 78, 0.4)',
                           borderRadius: '10px',
                   backdropFilter: 'blur(10px)',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
@@ -2071,7 +2071,7 @@ export default function EvaluatePage() {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
                           e.currentTarget.style.background = 'transparent';
                           e.currentTarget.style.color = '#C8A24E';
-                          e.currentTarget.style.border = '2px solid #C8A24E';
+                          e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.4)';
                           e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
