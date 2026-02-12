@@ -458,22 +458,25 @@ export default function CompetitorsPage() {
           border-collapse: separate;
           border-spacing: 0;
           font-size: 12px;
+          background: rgba(255, 255, 255, 0.95);
+          border-radius: 10px;
+          overflow: hidden;
         }
 
         .compact-table th,
         .compact-table td {
           padding: 6px 8px;
           text-align: center;
-          border-bottom: 1px solid rgba(34, 197, 94, 0.1);
+          border-bottom: 1px solid rgba(200, 162, 78, 0.12);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
         }
 
         .compact-table th {
-          background: rgba(200, 162, 78, 0.1);
+          background: linear-gradient(135deg, #0B1F0E, #166534);
           font-weight: 700;
-          color: #C8A24E;
+          color: #FFFFFF;
           position: sticky;
           top: 0;
           z-index: 10;
@@ -481,25 +484,23 @@ export default function CompetitorsPage() {
           cursor: pointer;
           user-select: none;
           letter-spacing: 0.3px;
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
         }
 
         .compact-table th:hover {
-          background: rgba(200, 162, 78, 0.18);
+          background: linear-gradient(135deg, #166534, #0B1F0E);
         }
 
         .compact-table .name-cell {
           text-align: right;
           font-weight: 600;
-          color: #F0FDF4;
+          color: #1A1A1A;
           max-width: 180px;
         }
 
         .compact-table .level-cell {
           font-size: 10px;
           max-width: 120px;
-          color: rgba(240, 253, 244, 0.7);
+          color: #555;
         }
 
         .compact-table tbody tr {
@@ -511,7 +512,7 @@ export default function CompetitorsPage() {
         }
 
         .compact-table tbody tr td {
-          color: rgba(240, 253, 244, 0.8);
+          color: #333;
         }
 
         .sort-indicator {
@@ -648,6 +649,38 @@ export default function CompetitorsPage() {
         zIndex: 1
       }}>
         <div className="app-container">
+
+          {/* Back Button - Top */}
+          <button
+            onClick={() => router.push('/dashboard')}
+            style={{
+              width: '100%',
+              marginBottom: 'clamp(12px, 2vh, 18px)',
+              padding: 'clamp(10px, 1.5vh, 14px)',
+              background: 'transparent',
+              color: '#D4AF5E',
+              border: '1px solid rgba(200, 162, 78, 0.3)',
+              borderRadius: 'clamp(8px, 1.2vh, 12px)',
+              fontSize: 'clamp(13px, 1.8vw, 15px)',
+              fontWeight: '700',
+              fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              opacity: 0.7
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(200, 162, 78, 0.08)'
+              e.currentTarget.style.opacity = '1'
+              e.currentTarget.style.borderColor = 'rgba(200, 162, 78, 0.5)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent'
+              e.currentTarget.style.opacity = '0.7'
+              e.currentTarget.style.borderColor = 'rgba(200, 162, 78, 0.3)'
+            }}
+          >
+            العودة للقائمة الرئيسية
+          </button>
           
           {/* Header */}
           <div style={{ marginBottom: '25px', textAlign: 'center' }}>
@@ -812,19 +845,19 @@ export default function CompetitorsPage() {
                       <td>
                         <input type="checkbox" checked={selectedIds.has(competitor.id)} onChange={() => toggleSelection(competitor.id)} />
                       </td>
-                      <td style={{ fontWeight: '600', color: '#C8A24E' }}>{startIndex + index + 1}</td>
+                      <td style={{ fontWeight: '600', color: '#0B1F0E' }}>{startIndex + index + 1}</td>
                       <td className="name-cell">{competitor.full_name}</td>
                       <td>{competitor.gender === 'male' ? 'ذكر' : 'أنثى'}</td>
                       <td className="level-cell">{competitor.level.split(':')[0]}</td>
                       <td>{competitor.city}</td>
                       <td style={{ direction: 'ltr' }}>{competitor.mobile}</td>
                       <td>
-                        <span style={{ display: 'inline-block', padding: '3px 8px', borderRadius: '10px', fontSize: '10px', fontWeight: '600', background: competitor.status === 'evaluated' ? 'rgba(34, 197, 94, 0.15)' : 'rgba(200, 162, 78, 0.15)', color: competitor.status === 'evaluated' ? '#4ADE80' : '#D4AF5E', border: competitor.status === 'evaluated' ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(200, 162, 78, 0.3)' }}>
+                        <span style={{ display: 'inline-block', padding: '3px 8px', borderRadius: '10px', fontSize: '10px', fontWeight: '600', background: competitor.status === 'evaluated' ? 'rgba(22, 101, 52, 0.1)' : 'rgba(200, 162, 78, 0.1)', color: competitor.status === 'evaluated' ? '#166534' : '#A07C2E', border: competitor.status === 'evaluated' ? '1px solid rgba(22, 101, 52, 0.25)' : '1px solid rgba(200, 162, 78, 0.25)' }}>
                           {competitor.status === 'evaluated' ? 'تم التقييم' : 'لم يتم التقييم'}
                         </span>
                       </td>
                       <td>
-                        <button onClick={() => handleDelete(competitor.id)} style={{ padding: '4px 10px', background: 'rgba(220, 38, 38, 0.2)', color: '#FCA5A5', border: '1px solid rgba(220, 38, 38, 0.3)', borderRadius: '5px', fontSize: '11px', fontWeight: '600', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: 'pointer', transition: 'all 0.2s' }}>
+                        <button onClick={() => handleDelete(competitor.id)} style={{ padding: '4px 10px', background: 'rgba(220, 38, 38, 0.08)', color: '#dc2626', border: '1px solid rgba(220, 38, 38, 0.2)', borderRadius: '5px', fontSize: '11px', fontWeight: '600', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: 'pointer', transition: 'all 0.2s' }}>
                           حذف
                         </button>
                       </td>
