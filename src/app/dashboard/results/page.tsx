@@ -1162,7 +1162,7 @@ export default function ResultsPage() {
                                     fontWeight: '800',
                                     minWidth: '60px',
                                     textAlign: 'center',
-                                    color: index === 0 ? '#4ADE80' : index === 1 ? '#D4AF5E' : '#60A5FA'
+                                    color: winner.final_score >= 95 ? '#4ADE80' : winner.final_score >= 90 ? '#D4AF5E' : '#FCA5A5'
                                   }}>
                                     {winner.final_score}
                                   </div>
@@ -1216,7 +1216,7 @@ export default function ResultsPage() {
                                     fontWeight: '800',
                                     minWidth: '60px',
                                     textAlign: 'center',
-                                    color: index === 0 ? '#4ADE80' : index === 1 ? '#D4AF5E' : '#60A5FA'
+                                    color: winner.final_score >= 95 ? '#4ADE80' : winner.final_score >= 90 ? '#D4AF5E' : '#FCA5A5'
                                   }}>
                                     {winner.final_score}
                                   </div>
