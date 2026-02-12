@@ -686,7 +686,7 @@ export default function ResultsPage() {
           overflow-y: auto;
           position: relative;
         }
-        .compact-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: clamp(10px, 2vw, 12px); background: rgba(255, 255, 255, 0.95); border-radius: 10px; }
+        .compact-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: clamp(10px, 2vw, 12px); background: #FFFFFF; border-radius: 10px; }
         .compact-table thead tr:first-child th:first-child { border-top-right-radius: 10px; }
         .compact-table thead tr:first-child th:last-child { border-top-left-radius: 10px; }
         .compact-table th, .compact-table td { padding: clamp(4px, 1vw, 6px) clamp(4px, 1.5vw, 8px); text-align: center; border-bottom: 1px solid rgba(200,162,78,0.12); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -921,10 +921,10 @@ export default function ResultsPage() {
 
                 {/* Table */}
                 <div style={{ overflowX: 'auto' }}>
-                  {loading && <div style={{ textAlign: 'center', padding: '30px', color: 'rgba(240, 253, 244, 0.5)' }}>جاري التحميل...</div>}
+                  {loading && <div style={{ textAlign: 'center', padding: '30px', color: '#666' }}>جاري التحميل...</div>}
 
                   {!loading && filteredResults.length === 0 && (
-                    <div style={{ textAlign: 'center', padding: '30px', color: 'rgba(240, 253, 244, 0.4)' }}>لا توجد نتائج</div>
+                    <div style={{ textAlign: 'center', padding: '30px', color: '#666' }}>لا توجد نتائج</div>
                   )}
 
                   {!loading && currentResults.length > 0 && (
