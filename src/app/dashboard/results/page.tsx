@@ -992,7 +992,9 @@ export default function ResultsPage() {
                             <td>
                               <span style={{
                                 fontWeight: '700',
-                                fontSize: '12px'
+                                fontSize: '12px',
+                                color: result.final_score >= 95 ? '#4ADE80' : 
+                                      result.final_score >= 90 ? '#D4AF5E' : '#FCA5A5'
                               }}>
                                 {result.final_score}
                               </span>
