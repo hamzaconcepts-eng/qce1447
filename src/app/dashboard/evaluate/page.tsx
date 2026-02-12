@@ -1615,8 +1615,8 @@ export default function EvaluatePage() {
                           flex: 1,
                           height: '100%',
                           background: 'transparent',
-                          color: '#22C55E',
-                          border: '2px solid #22C55E',
+                          color: '#C8A24E',
+                          border: '2px solid #C8A24E',
                           borderRadius: '10px',
                   backdropFilter: 'blur(10px)',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
@@ -1638,8 +1638,8 @@ export default function EvaluatePage() {
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
                           e.currentTarget.style.background = 'transparent';
-                          e.currentTarget.style.color = '#22C55E';
-                          e.currentTarget.style.border = '2px solid #22C55E';
+                          e.currentTarget.style.color = '#C8A24E';
+                          e.currentTarget.style.border = '2px solid #C8A24E';
                           e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
@@ -1753,8 +1753,8 @@ export default function EvaluatePage() {
                           flex: 1,
                           height: '100%',
                           background: 'transparent',
-                          color: '#22C55E',
-                          border: '2px solid #22C55E',
+                          color: '#C8A24E',
+                          border: '2px solid #C8A24E',
                           borderRadius: '10px',
                   backdropFilter: 'blur(10px)',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
@@ -1776,8 +1776,8 @@ export default function EvaluatePage() {
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
                           e.currentTarget.style.background = 'transparent';
-                          e.currentTarget.style.color = '#22C55E';
-                          e.currentTarget.style.border = '2px solid #22C55E';
+                          e.currentTarget.style.color = '#C8A24E';
+                          e.currentTarget.style.border = '2px solid #C8A24E';
                           e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
@@ -1891,8 +1891,8 @@ export default function EvaluatePage() {
                           flex: 1,
                           height: '100%',
                           background: 'transparent',
-                          color: '#22C55E',
-                          border: '2px solid #22C55E',
+                          color: '#C8A24E',
+                          border: '2px solid #C8A24E',
                           borderRadius: '10px',
                   backdropFilter: 'blur(10px)',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
@@ -1914,8 +1914,8 @@ export default function EvaluatePage() {
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
                           e.currentTarget.style.background = 'transparent';
-                          e.currentTarget.style.color = '#22C55E';
-                          e.currentTarget.style.border = '2px solid #22C55E';
+                          e.currentTarget.style.color = '#C8A24E';
+                          e.currentTarget.style.border = '2px solid #C8A24E';
                           e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
@@ -2029,8 +2029,8 @@ export default function EvaluatePage() {
                           flex: 1,
                           height: '100%',
                           background: 'transparent',
-                          color: '#22C55E',
-                          border: '2px solid #22C55E',
+                          color: '#C8A24E',
+                          border: '2px solid #C8A24E',
                           borderRadius: '10px',
                   backdropFilter: 'blur(10px)',
                           fontSize: 'clamp(28px, 3.8vw, 42px)',
@@ -2052,8 +2052,8 @@ export default function EvaluatePage() {
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = 'scale(1) translateY(0)';
                           e.currentTarget.style.background = 'transparent';
-                          e.currentTarget.style.color = '#22C55E';
-                          e.currentTarget.style.border = '2px solid #22C55E';
+                          e.currentTarget.style.color = '#C8A24E';
+                          e.currentTarget.style.border = '2px solid #C8A24E';
                           e.currentTarget.style.boxShadow = 'none';
                         }}
                         onMouseDown={(e) => {
