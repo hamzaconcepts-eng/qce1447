@@ -327,7 +327,7 @@ export default function CompetitorsPage() {
       <head>
         <meta charset="UTF-8">
         <title>قائمة المتسابقين</title>
-        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
           @page { 
@@ -335,7 +335,7 @@ export default function CompetitorsPage() {
             margin: 10mm;
           }
           body { 
-            font-family: 'Cairo', sans-serif; 
+            font-family: 'Noto Kufi Arabic', 'Sora', -apple-system, BlinkMacSystemFont, sans-serif; 
             direction: rtl;
             font-size: 9px;
             line-height: 1.3;
@@ -370,7 +370,7 @@ export default function CompetitorsPage() {
           .level-col {
             font-size: 7px;
           }
-          .row-num { font-weight: 600; color: #5fb3b3; }
+          .row-num { font-weight: 600; color: #C8A24E; }
         </style>
       </head>
       <body>
@@ -421,25 +421,54 @@ export default function CompetitorsPage() {
 
   return (
     <>
+      {/* Google Fonts */}
+      <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
       <style jsx global>{`
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: calc(var(--vh, 1vh) * 100); width: 100vw; overflow: hidden; }
         body {
-          background: linear-gradient(135deg, #5fb3b3 0%, #1a3a3a 100%);
+          background: #0A0F0A;
+          font-family: 'Noto Kufi Arabic', 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+          color: #F0FDF4;
+          -webkit-font-smoothing: antialiased;
           min-height: calc(var(--vh, 1vh) * 100);
         }
+
+        .bg-canvas { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+        .bg-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+        .bg-orb.green-1 { width: 500px; height: 500px; background: radial-gradient(circle, #22C55E, transparent 70%); bottom: -15%; left: 20%; animation: orbPulse1 15s ease-in-out infinite alternate; }
+        .bg-orb.green-2 { width: 350px; height: 350px; background: radial-gradient(circle, #166534, transparent 70%); top: 10%; right: -5%; animation: orbPulse2 20s ease-in-out infinite alternate; }
+        .bg-orb.gold-1 { width: 400px; height: 400px; background: radial-gradient(circle, #C8A24E, transparent 70%); top: 35%; left: -8%; opacity: 0.18; animation: orbPulse3 18s ease-in-out infinite alternate; }
+        .bg-orb.gold-2 { width: 300px; height: 300px; background: radial-gradient(circle, #D4AF5E, transparent 70%); bottom: 20%; right: -5%; opacity: 0.12; animation: orbPulse2 22s ease-in-out infinite alternate; }
+        @keyframes orbPulse1 { 0% { transform: translate(0, 0) scale(1); opacity: 0.25; } 50% { transform: translate(30px, -20px) scale(1.15); opacity: 0.35; } 100% { transform: translate(-20px, 10px) scale(0.95); opacity: 0.2; } }
+        @keyframes orbPulse2 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-40px, 30px) scale(1.1); } }
+        @keyframes orbPulse3 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, -20px) scale(1.08); } }
+        .bg-canvas::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(34, 197, 94, 0.012) 2px, rgba(34, 197, 94, 0.012) 4px); pointer-events: none; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(34, 197, 94, 0.05); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: rgba(200, 162, 78, 0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(200, 162, 78, 0.5); }
         
         .app-container {
-          background: #ffffff;
+          background: rgba(34, 197, 94, 0.06);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(34, 197, 94, 0.15);
           padding: 30px;
-          border-radius: 20px;
-          box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+          border-radius: clamp(20px, 3vh, 32px);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 80px rgba(34, 197, 94, 0.05);
           width: 100%;
           max-height: 90vh;
           overflow-y: auto;
+          position: relative;
         }
 
         .compact-table {
           width: 100%;
-          border-collapse: collapse;
+          border-collapse: separate;
+          border-spacing: 0;
           font-size: 12px;
         }
 
@@ -447,48 +476,61 @@ export default function CompetitorsPage() {
         .compact-table td {
           padding: 6px 8px;
           text-align: center;
-          border-bottom: 1px solid #e0e0e0;
+          border-bottom: 1px solid rgba(34, 197, 94, 0.1);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
         }
 
         .compact-table th {
-          background: #f5f5f5;
-          font-weight: 600;
-          color: #555555;
+          background: rgba(200, 162, 78, 0.1);
+          font-weight: 700;
+          color: #C8A24E;
           position: sticky;
           top: 0;
           z-index: 10;
           font-size: 11px;
           cursor: pointer;
           user-select: none;
+          letter-spacing: 0.3px;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
         }
 
         .compact-table th:hover {
-          background: #e8e8e8;
+          background: rgba(200, 162, 78, 0.18);
         }
 
         .compact-table .name-cell {
           text-align: right;
           font-weight: 600;
-          color: #333333;
+          color: #F0FDF4;
           max-width: 180px;
         }
 
         .compact-table .level-cell {
           font-size: 10px;
           max-width: 120px;
+          color: rgba(240, 253, 244, 0.7);
         }
 
-        .compact-table tr:hover {
-          background: #f9f9f9;
+        .compact-table tbody tr {
+          transition: all 0.2s;
+        }
+
+        .compact-table tbody tr:hover {
+          background: rgba(200, 162, 78, 0.08);
+        }
+
+        .compact-table tbody tr td {
+          color: rgba(240, 253, 244, 0.8);
         }
 
         .sort-indicator {
           display: inline-block;
           margin-left: 4px;
           font-size: 10px;
+          color: #D4AF5E;
         }
 
         .pagination {
@@ -501,28 +543,32 @@ export default function CompetitorsPage() {
 
         .page-button {
           padding: 6px 12px;
-          border: 1px solid #e0e0e0;
-          background: white;
+          border: 1px solid rgba(200, 162, 78, 0.3);
+          background: rgba(200, 162, 78, 0.06);
+          color: #D4AF5E;
           cursor: pointer;
-          border-radius: 5px;
-          font-family: 'Cairo', sans-serif;
+          border-radius: clamp(6px, 0.8vh, 8px);
+          font-family: 'Noto Kufi Arabic', 'Sora', sans-serif;
           font-size: 13px;
+          font-weight: 600;
           transition: all 0.2s;
+          backdrop-filter: blur(10px);
         }
 
         .page-button:hover {
-          background: #f0f9f9;
-          border-color: #5fb3b3;
+          background: rgba(200, 162, 78, 0.15);
+          border-color: rgba(200, 162, 78, 0.5);
         }
 
         .page-button.active {
-          background: #5fb3b3;
-          color: white;
-          border-color: #5fb3b3;
+          background: linear-gradient(135deg, #B8922E, #D4AF5E);
+          color: #0A0F0A;
+          border-color: transparent;
+          box-shadow: 0 4px 16px rgba(200,162,78,0.4);
         }
 
         .page-button:disabled {
-          opacity: 0.5;
+          opacity: 0.35;
           cursor: not-allowed;
         }
 
@@ -530,20 +576,22 @@ export default function CompetitorsPage() {
           width: 100%;
           margin-top: 20px;
           padding: 12px;
-          background: #ffffff;
-          color: #5fb3b3;
-          border: 2px solid #5fb3b3;
-          border-radius: 8px;
+          background: transparent;
+          color: #D4AF5E;
+          border: 1px solid rgba(200, 162, 78, 0.3);
+          border-radius: clamp(8px, 1.2vh, 12px);
           font-size: 15px;
           font-weight: 700;
-          font-family: 'Cairo', sans-serif;
+          font-family: 'Noto Kufi Arabic', 'Sora', sans-serif;
           cursor: pointer;
           transition: all 0.2s;
+          opacity: 0.7;
         }
 
         .back-button:hover {
-          background: #5fb3b3;
-          color: white;
+          background: rgba(200, 162, 78, 0.08);
+          opacity: 1;
+          border-color: rgba(200, 162, 78, 0.5);
         }
 
         @keyframes spin {
@@ -562,31 +610,65 @@ export default function CompetitorsPage() {
         }
       `}</style>
 
+      {/* Animated Background */}
+      <div className="bg-canvas">
+        <div className="bg-orb green-1"></div>
+        <div className="bg-orb green-2"></div>
+        <div className="bg-orb gold-1"></div>
+        <div className="bg-orb gold-2"></div>
+      </div>
+
       <div style={{
         minHeight: 'calc(var(--vh, 1vh) * 100)',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '20px'
+        padding: 'clamp(10px, 2vh, 20px)',
+        position: 'relative',
+        zIndex: 1
       }}>
         <div className="app-container">
           
           {/* Header */}
           <div style={{ marginBottom: '25px', textAlign: 'center' }}>
-            <div style={{ width: '50px', height: '50px', margin: '0 auto 10px' }}>
+            <div style={{
+              width: 'clamp(45px, 7vw, 60px)',
+              height: 'clamp(45px, 7vw, 60px)',
+              margin: '0 auto 10px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #0B1F0E, #0A0F0A)',
+              border: '2px solid #C8A24E',
+              boxShadow: '0 0 28px rgba(200,162,78,0.3), 0 0 8px rgba(200,162,78,0.2)'
+            }}>
               <Image
                 src="/images/logo.svg"
                 alt="Logo"
                 width={50}
                 height={50}
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                style={{ 
+                  width: '70%', 
+                  height: '70%', 
+                  objectFit: 'contain',
+                  filter: 'brightness(0) saturate(100%) invert(79%) sepia(18%) saturate(1234%) hue-rotate(359deg) brightness(95%) contrast(88%)'
+                }}
                 priority
               />
             </div>
-            <h1 style={{ color: '#333', fontSize: '20px', fontWeight: '700', marginBottom: '5px' }}>
+            <h1 style={{
+              fontSize: '20px',
+              fontWeight: '700',
+              marginBottom: '5px',
+              background: 'linear-gradient(135deg, #C8A24E, #E0C478, #D4AF5E)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
               قائمة المتسابقين
             </h1>
-            <p style={{ color: '#666', fontSize: '13px' }}>
+            <p style={{ color: 'rgba(240, 253, 244, 0.5)', fontSize: '13px' }}>
               إجمالي: {filteredCompetitors.length} متسابق | الصفحة {currentPage} من {totalPages}
             </p>
           </div>
@@ -601,36 +683,41 @@ export default function CompetitorsPage() {
               style={{
                 width: '100%',
                 padding: '10px',
-                border: '2px solid #e0e0e0',
+                border: '1px solid rgba(200, 162, 78, 0.25)',
                 borderRadius: '8px',
                 fontSize: '14px',
                 textAlign: 'right',
-                fontFamily: 'Cairo, sans-serif',
-                marginBottom: '10px'
+                fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                marginBottom: '10px',
+                background: 'rgba(200, 162, 78, 0.06)',
+                color: '#F0FDF4',
+                outline: 'none'
               }}
+              onFocus={(e) => { e.target.style.borderColor = '#C8A24E'; e.target.style.boxShadow = '0 0 0 3px rgba(200,162,78,0.12)' }}
+              onBlur={(e) => { e.target.style.borderColor = 'rgba(200, 162, 78, 0.25)'; e.target.style.boxShadow = 'none' }}
             />
             
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '8px' }}>
-              <select value={filterGender} onChange={(e) => setFilterGender(e.target.value)} style={{ padding: '8px', border: '2px solid #e0e0e0', borderRadius: '6px', fontSize: '13px', fontFamily: 'Cairo, sans-serif', cursor: 'pointer' }}>
-                <option value="">كل الأجناس</option>
-                <option value="male">ذكر</option>
-                <option value="female">أنثى</option>
+              <select value={filterGender} onChange={(e) => setFilterGender(e.target.value)} style={{ padding: '8px', border: '1px solid rgba(200, 162, 78, 0.25)', borderRadius: '6px', fontSize: '13px', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: 'pointer', background: 'rgba(200, 162, 78, 0.06)', color: '#F0FDF4', outline: 'none' }}>
+                <option value="" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>كل الأجناس</option>
+                <option value="male" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>ذكر</option>
+                <option value="female" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>أنثى</option>
               </select>
 
-              <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} style={{ padding: '8px', border: '2px solid #e0e0e0', borderRadius: '6px', fontSize: '13px', fontFamily: 'Cairo, sans-serif', cursor: 'pointer' }}>
-                <option value="">كل الحالات</option>
-                <option value="evaluated">تم التقييم</option>
-                <option value="not_evaluated">لم يتم التقييم</option>
+              <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} style={{ padding: '8px', border: '1px solid rgba(200, 162, 78, 0.25)', borderRadius: '6px', fontSize: '13px', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: 'pointer', background: 'rgba(200, 162, 78, 0.06)', color: '#F0FDF4', outline: 'none' }}>
+                <option value="" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>كل الحالات</option>
+                <option value="evaluated" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>تم التقييم</option>
+                <option value="not_evaluated" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>لم يتم التقييم</option>
               </select>
 
-              <select value={filterLevel} onChange={(e) => setFilterLevel(e.target.value)} style={{ padding: '8px', border: '2px solid #e0e0e0', borderRadius: '6px', fontSize: '13px', fontFamily: 'Cairo, sans-serif', cursor: 'pointer', gridColumn: 'span 2' }}>
-                <option value="">كل المستويات</option>
+              <select value={filterLevel} onChange={(e) => setFilterLevel(e.target.value)} style={{ padding: '8px', border: '1px solid rgba(200, 162, 78, 0.25)', borderRadius: '6px', fontSize: '13px', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: 'pointer', gridColumn: 'span 2', background: 'rgba(200, 162, 78, 0.06)', color: '#F0FDF4', outline: 'none' }}>
+                <option value="" style={{ background: '#0A0F0A', color: '#F0FDF4' }}>كل المستويات</option>
                 {levels.map(level => (
-                  <option key={level} value={level}>{level}</option>
+                  <option key={level} value={level} style={{ background: '#0A0F0A', color: '#F0FDF4' }}>{level}</option>
                 ))}
               </select>
 
-              <button onClick={resetFilters} style={{ gridColumn: 'span 2', padding: '8px', background: '#f5f5f5', color: '#666', border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: '600', fontFamily: 'Cairo, sans-serif', cursor: 'pointer' }}>
+              <button onClick={resetFilters} style={{ gridColumn: 'span 2', padding: '8px', background: 'rgba(200, 162, 78, 0.08)', color: 'rgba(240, 253, 244, 0.5)', border: '1px solid rgba(200, 162, 78, 0.15)', borderRadius: '6px', fontSize: '13px', fontWeight: '600', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: 'pointer', transition: 'all 0.2s' }}>
                 إعادة تعيين
               </button>
             </div>
@@ -638,23 +725,23 @@ export default function CompetitorsPage() {
 
           {/* Action Buttons */}
           <div style={{ display: 'flex', gap: '8px', marginBottom: '15px', flexWrap: 'wrap' }}>
-            <button onClick={handlePrint} style={{ padding: '8px 15px', background: '#3498db', color: 'white', border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: '600', fontFamily: 'Cairo, sans-serif', cursor: 'pointer' }}>
+            <button onClick={handlePrint} style={{ padding: '8px 15px', background: 'linear-gradient(135deg, #166534, #22C55E)', color: '#FFFFFF', border: 'none', borderRadius: '8px', fontSize: '13px', fontWeight: '700', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: 'pointer', boxShadow: '0 4px 16px rgba(34, 197, 94, 0.3)', transition: 'all 0.2s' }}>
               طباعة PDF
             </button>
-            <button onClick={handleDeleteSelected} disabled={selectedIds.size === 0} style={{ padding: '8px 15px', background: selectedIds.size === 0 ? '#95a5a6' : '#e67e22', color: 'white', border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: '600', fontFamily: 'Cairo, sans-serif', cursor: selectedIds.size === 0 ? 'not-allowed' : 'pointer' }}>
+            <button onClick={handleDeleteSelected} disabled={selectedIds.size === 0} style={{ padding: '8px 15px', background: selectedIds.size === 0 ? 'rgba(200, 162, 78, 0.2)' : 'linear-gradient(135deg, #B8922E, #D4AF5E)', color: selectedIds.size === 0 ? 'rgba(240, 253, 244, 0.4)' : '#0A0F0A', border: 'none', borderRadius: '8px', fontSize: '13px', fontWeight: '700', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: selectedIds.size === 0 ? 'not-allowed' : 'pointer', boxShadow: selectedIds.size === 0 ? 'none' : '0 4px 16px rgba(200,162,78,0.3)', transition: 'all 0.2s' }}>
               حذف المحدد ({selectedIds.size})
             </button>
-            <button onClick={handleDeleteAll} style={{ padding: '8px 15px', background: '#e74c3c', color: 'white', border: 'none', borderRadius: '6px', fontSize: '13px', fontWeight: '600', fontFamily: 'Cairo, sans-serif', cursor: 'pointer' }}>
+            <button onClick={handleDeleteAll} style={{ padding: '8px 15px', background: 'linear-gradient(135deg, #dc2626, #ef4444)', color: 'white', border: 'none', borderRadius: '8px', fontSize: '13px', fontWeight: '700', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: 'pointer', boxShadow: '0 4px 16px rgba(220, 38, 38, 0.3)', transition: 'all 0.2s' }}>
               حذف الكل
             </button>
           </div>
 
           {/* Table */}
           <div style={{ overflowX: 'auto' }}>
-            {loading && <div style={{ textAlign: 'center', padding: '30px', color: '#666' }}>جاري التحميل...</div>}
+            {loading && <div style={{ textAlign: 'center', padding: '30px', color: 'rgba(240, 253, 244, 0.5)' }}>جاري التحميل...</div>}
 
             {!loading && filteredCompetitors.length === 0 && (
-              <div style={{ textAlign: 'center', padding: '30px', color: '#666' }}>لا توجد نتائج</div>
+              <div style={{ textAlign: 'center', padding: '30px', color: 'rgba(240, 253, 244, 0.4)' }}>لا توجد نتائج</div>
             )}
 
             {!loading && currentCompetitors.length > 0 && (
@@ -705,19 +792,19 @@ export default function CompetitorsPage() {
                       <td>
                         <input type="checkbox" checked={selectedIds.has(competitor.id)} onChange={() => toggleSelection(competitor.id)} />
                       </td>
-                      <td style={{ fontWeight: '600', color: '#5fb3b3' }}>{startIndex + index + 1}</td>
+                      <td style={{ fontWeight: '600', color: '#C8A24E' }}>{startIndex + index + 1}</td>
                       <td className="name-cell">{competitor.full_name}</td>
                       <td>{competitor.gender === 'male' ? 'ذكر' : 'أنثى'}</td>
                       <td className="level-cell">{competitor.level.split(':')[0]}</td>
                       <td>{competitor.city}</td>
                       <td style={{ direction: 'ltr' }}>{competitor.mobile}</td>
                       <td>
-                        <span style={{ display: 'inline-block', padding: '3px 8px', borderRadius: '10px', fontSize: '10px', fontWeight: '600', background: competitor.status === 'evaluated' ? '#d4edda' : '#fff3cd', color: competitor.status === 'evaluated' ? '#27ae60' : '#f39c12' }}>
+                        <span style={{ display: 'inline-block', padding: '3px 8px', borderRadius: '10px', fontSize: '10px', fontWeight: '600', background: competitor.status === 'evaluated' ? 'rgba(34, 197, 94, 0.15)' : 'rgba(200, 162, 78, 0.15)', color: competitor.status === 'evaluated' ? '#4ADE80' : '#D4AF5E', border: competitor.status === 'evaluated' ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(200, 162, 78, 0.3)' }}>
                           {competitor.status === 'evaluated' ? 'تم التقييم' : 'لم يتم التقييم'}
                         </span>
                       </td>
                       <td>
-                        <button onClick={() => handleDelete(competitor.id)} style={{ padding: '4px 10px', background: '#e74c3c', color: 'white', border: 'none', borderRadius: '5px', fontSize: '11px', fontWeight: '600', fontFamily: 'Cairo, sans-serif', cursor: 'pointer' }}>
+                        <button onClick={() => handleDelete(competitor.id)} style={{ padding: '4px 10px', background: 'rgba(220, 38, 38, 0.2)', color: '#FCA5A5', border: '1px solid rgba(220, 38, 38, 0.3)', borderRadius: '5px', fontSize: '11px', fontWeight: '600', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', cursor: 'pointer', transition: 'all 0.2s' }}>
                           حذف
                         </button>
                       </td>
@@ -771,10 +858,10 @@ export default function CompetitorsPage() {
 
       {/* Delete Modal */}
       {showDeleteModal && (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }} onClick={() => !isDeleting && setShowDeleteModal(false)}>
-          <div style={{ background: 'white', padding: '25px', borderRadius: '12px', maxWidth: '400px', width: '90%' }} onClick={(e) => e.stopPropagation()}>
-            <h2 style={{ color: '#333', fontSize: '18px', fontWeight: '700', marginBottom: '12px', textAlign: 'center' }}>تأكيد الحذف</h2>
-            <p style={{ color: '#666', fontSize: '14px', marginBottom: '15px', textAlign: 'center' }}>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }} onClick={() => !isDeleting && setShowDeleteModal(false)}>
+          <div style={{ background: 'rgba(34, 197, 94, 0.08)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(34, 197, 94, 0.2)', padding: '25px', borderRadius: 'clamp(16px, 2.5vh, 24px)', maxWidth: '400px', width: '90%', boxShadow: '0 16px 64px rgba(0, 0, 0, 0.5), 0 0 80px rgba(34, 197, 94, 0.05)' }} onClick={(e) => e.stopPropagation()}>
+            <h2 style={{ color: '#FCA5A5', fontSize: '18px', fontWeight: '700', marginBottom: '12px', textAlign: 'center' }}>⚠️ تأكيد الحذف</h2>
+            <p style={{ color: 'rgba(240, 253, 244, 0.8)', fontSize: '14px', marginBottom: '15px', textAlign: 'center' }}>
               {deleteMode === 'single' && 'هل أنت متأكد من حذف هذا المتسابق؟'}
               {deleteMode === 'selected' && `هل أنت متأكد من حذف ${selectedIds.size} متسابق؟`}
               {deleteMode === 'all' && `هل أنت متأكد من حذف جميع المتسابقين (${competitors.length} متسابق)؟`}
@@ -788,13 +875,16 @@ export default function CompetitorsPage() {
               style={{ 
                 width: '100%', 
                 padding: '10px', 
-                border: '2px solid #e0e0e0', 
+                border: '1px solid rgba(200, 162, 78, 0.25)', 
                 borderRadius: '8px', 
                 fontSize: '14px', 
                 marginBottom: '15px', 
-                fontFamily: 'Cairo, sans-serif', 
+                fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', 
                 textAlign: 'center',
-                opacity: isDeleting ? 0.6 : 1
+                opacity: isDeleting ? 0.6 : 1,
+                background: 'rgba(200, 162, 78, 0.06)',
+                color: '#F0FDF4',
+                outline: 'none'
               }} 
             />
             <div style={{ display: 'flex', gap: '8px' }}>
@@ -804,18 +894,20 @@ export default function CompetitorsPage() {
                 style={{ 
                   flex: 1, 
                   padding: '10px', 
-                  background: isDeleting ? '#95a5a6' : '#e74c3c', 
+                  background: isDeleting ? 'rgba(200, 162, 78, 0.2)' : 'linear-gradient(135deg, #dc2626, #ef4444)', 
                   color: 'white', 
                   border: 'none', 
-                  borderRadius: '6px', 
+                  borderRadius: '8px', 
                   fontSize: '14px', 
-                  fontWeight: '600', 
-                  fontFamily: 'Cairo, sans-serif', 
+                  fontWeight: '700', 
+                  fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', 
                   cursor: isDeleting ? 'not-allowed' : 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '8px'
+                  gap: '8px',
+                  boxShadow: isDeleting ? 'none' : '0 4px 16px rgba(220, 38, 38, 0.3)',
+                  transition: 'all 0.2s'
                 }}
               >
                 {isDeleting && <span className="spinner"></span>}
@@ -827,15 +919,16 @@ export default function CompetitorsPage() {
                 style={{ 
                   flex: 1, 
                   padding: '10px', 
-                  background: '#95a5a6', 
-                  color: 'white', 
-                  border: 'none', 
-                  borderRadius: '6px', 
+                  background: 'rgba(200, 162, 78, 0.1)', 
+                  color: '#D4AF5E', 
+                  border: '1px solid rgba(200, 162, 78, 0.3)', 
+                  borderRadius: '8px', 
                   fontSize: '14px', 
-                  fontWeight: '600', 
-                  fontFamily: 'Cairo, sans-serif', 
+                  fontWeight: '700', 
+                  fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', 
                   cursor: isDeleting ? 'not-allowed' : 'pointer',
-                  opacity: isDeleting ? 0.6 : 1
+                  opacity: isDeleting ? 0.6 : 1,
+                  transition: 'all 0.2s'
                 }}
               >
                 إلغاء
