@@ -681,8 +681,8 @@ export default function LiveStatsPage() {
                 <div
                   className="logo-container"
                   style={{
-                    width: "clamp(50px, 5vw, 85px)",
-                    height: "clamp(50px, 5vw, 85px)",
+                    width: "clamp(100px, 10vw, 170px)",
+                    height: "clamp(100px, 10vw, 170px)",
                     flexShrink: 0,
                   }}
                 >
