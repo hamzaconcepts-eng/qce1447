@@ -53,6 +53,7 @@ export default function CompetitorsPage() {
   const [deletePassword, setDeletePassword] = useState('')
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [showDeleteSuccess, setShowDeleteSuccess] = useState(false)
 
   const levels = [
     'المستوى الأول: المرحلة الجامعية | الحج والمؤمنون',
@@ -284,7 +285,48 @@ export default function CompetitorsPage() {
       setSelectedIds(new Set())
 
       // Refresh competitors list
-      await fetchCompetitors()
+      const supabaseRefresh = createClient()
+      const { data: freshData, error: fetchError } = await supabaseRefresh
+        .from('competitors')
+        .select('*')
+        .order('created_at', { ascending: false })
+
+      if (fetchError) throw fetchError
+
+      const newCompetitors = freshData || []
+      setCompetitors(newCompetitors)
+      
+      // Immediately recompute filtered list so table updates right away
+      let filtered = [...newCompetitors]
+      if (searchTerm) {
+        filtered = filtered.filter(c => {
+          const searchLower = searchTerm.toLowerCase().trim()
+          const nameLower = c.full_name.toLowerCase()
+          if (nameLower.includes(searchLower)) return true
+          if (c.mobile.includes(searchTerm)) return true
+          const searchWords = searchLower.split(/\s+/)
+          const nameWords = nameLower.split(/\s+/)
+          return searchWords.every((sw: string) => nameWords.some((nw: string) => nw.includes(sw)))
+        })
+      }
+      if (filterGender) filtered = filtered.filter(c => c.gender === filterGender)
+      if (filterLevel) filtered = filtered.filter(c => c.level === filterLevel)
+      if (filterStatus) filtered = filtered.filter(c => c.status === filterStatus)
+      filtered.sort((a, b) => {
+        let aValue = a[sortField]; let bValue = b[sortField]
+        if (sortField === 'gender') { aValue = a.gender === 'male' ? 'ذكر' : 'أنثى'; bValue = b.gender === 'male' ? 'ذكر' : 'أنثى' }
+        if (sortField === 'status') { aValue = a.status === 'evaluated' ? 'تم التقييم' : 'لم يتم التقييم'; bValue = b.status === 'evaluated' ? 'تم التقييم' : 'لم يتم التقييم' }
+        if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1
+        if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1
+        return 0
+      })
+      setFilteredCompetitors(filtered)
+
+      // Fix pagination if current page is now out of bounds
+      const maxPage = Math.ceil(filtered.length / itemsPerPage)
+      if (currentPage > maxPage) {
+        setCurrentPage(maxPage > 0 ? maxPage : 1)
+      }
       
       // Close modal and reset
       setShowDeleteModal(false)
@@ -292,7 +334,9 @@ export default function CompetitorsPage() {
       setDeletingId(null)
       setIsDeleting(false)
       
-      alert('تم الحذف بنجاح')
+      // Show non-blocking success toast
+      setShowDeleteSuccess(true)
+      setTimeout(() => setShowDeleteSuccess(false), 3000)
       
     } catch (error) {
       console.error('Error deleting:', error)
@@ -607,6 +651,11 @@ export default function CompetitorsPage() {
           to { transform: rotate(360deg); }
         }
 
+        @keyframes slideIn {
+          from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
+          to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+
         .spinner {
           display: inline-block;
           width: 16px;
@@ -626,6 +675,33 @@ export default function CompetitorsPage() {
         <div className="bg-orb gold-1"></div>
         <div className="bg-orb gold-2"></div>
       </div>
+
+      {/* Delete Success Toast */}
+      {showDeleteSuccess && (
+        <div style={{
+          position: 'fixed',
+          top: '15px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          background: 'rgba(34, 197, 94, 0.12)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          padding: '10px 24px',
+          borderRadius: '10px',
+          fontSize: '13px',
+          textAlign: 'center',
+          color: '#4ADE80',
+          border: '1px solid rgba(34, 197, 94, 0.3)',
+          fontWeight: '700',
+          fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+          zIndex: 2000,
+          boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+          maxWidth: '85vw',
+          animation: 'slideIn 0.3s ease-out'
+        }}>
+          ✓ تم الحذف بنجاح
+        </div>
+      )}
 
       <div style={{
         minHeight: 'calc(var(--vh, 1vh) * 100)',
