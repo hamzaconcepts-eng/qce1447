@@ -448,7 +448,7 @@ export default function LoginPage() {
                 background: 'linear-gradient(135deg, #B8922E, #D4AF5E)',
                 color: '#0A0F0A',
                 border: 'none',
-                borderRadius: '999px',
+                borderRadius: '12px',
                 fontSize: 'clamp(14px, 1.8vw, 15px)',
                 fontWeight: '700',
                 fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
