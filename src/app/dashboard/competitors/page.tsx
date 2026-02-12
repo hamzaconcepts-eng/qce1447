@@ -460,7 +460,14 @@ export default function CompetitorsPage() {
           font-size: 12px;
           background: rgba(255, 255, 255, 0.95);
           border-radius: 10px;
-          overflow: hidden;
+        }
+
+        .compact-table thead tr:first-child th:first-child {
+          border-top-right-radius: 10px;
+        }
+
+        .compact-table thead tr:first-child th:last-child {
+          border-top-left-radius: 10px;
         }
 
         .compact-table th,
@@ -474,9 +481,9 @@ export default function CompetitorsPage() {
         }
 
         .compact-table th {
-          background: #0B1F0E;
+          background: #C8A24E;
           font-weight: 700;
-          color: #FFFFFF;
+          color: #0A0F0A;
           position: sticky;
           top: 0;
           z-index: 10;
@@ -487,7 +494,7 @@ export default function CompetitorsPage() {
         }
 
         .compact-table th:hover {
-          background: #143322;
+          background: #B8922E;
         }
 
         .compact-table .name-cell {
@@ -519,7 +526,7 @@ export default function CompetitorsPage() {
           display: inline-block;
           margin-left: 4px;
           font-size: 10px;
-          color: #D4AF5E;
+          color: #0A0F0A;
         }
 
         .pagination {
