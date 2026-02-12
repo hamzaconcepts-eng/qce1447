@@ -1083,9 +1083,9 @@ export default function EvaluatePage() {
         }
 
         .compact-table th {
-          background: #0B1F0E;
+          background: #C8A24E;
           font-weight: 700;
-          color: #FFFFFF;
+          color: #0A0F0A;
           position: sticky;
           top: 0;
           z-index: 10;
@@ -1096,7 +1096,7 @@ export default function EvaluatePage() {
         }
 
         .compact-table th:hover {
-          background: #143322;
+          background: #B8922E;
         }
 
         .compact-table .name-cell {
