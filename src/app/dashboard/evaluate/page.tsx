@@ -2,7 +2,7 @@
 
 // Google Fonts loaded via next/font or global CSS
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase'
@@ -82,11 +82,6 @@ export default function EvaluatePage() {
   const [showAlreadyEvaluated, setShowAlreadyEvaluated] = useState(false)
   const [saving, setSaving] = useState(false)
 
-  // Refs used by the debounced auto-save (avoids stale closures)
-  const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const existingEvaluationRef = useRef<Evaluation | null>(null)
-  // Prevents two concurrent INSERT requests (which would conflict in the DB)
-  const insertInProgressRef = useRef(false)
 
   const levels = [
     'المستوى الأول: المرحلة الجامعية | الحج والمؤمنون',
@@ -140,140 +135,6 @@ export default function EvaluatePage() {
     calculateFinalScore()
   }, [tanbihCount, fatehCount, tashkeelCount, tajweedCount, waqfCount])
 
-  // Keep ref in sync so the auto-save timer always sees the latest value
-  useEffect(() => {
-    existingEvaluationRef.current = existingEvaluation
-  }, [existingEvaluation])
-
-  // Debounced auto-save: writes to DB immediately (0 ms) after a button tap.
-  // The debounce timer still ensures that if React fires two renders in the
-  // same frame only the last state is written, preventing duplicate requests.
-  useEffect(() => {
-    if (!hasChanges || !selectedCompetitor || !user) return
-
-    if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current)
-
-    autoSaveTimerRef.current = setTimeout(async () => {
-      try {
-        const supabase = createClient()
-        const currentScore = Math.max(
-          0,
-          100 - (tanbihCount + fatehCount + tashkeelCount + tajweedCount + waqfCount)
-        )
-        const payload = {
-          competitor_id: selectedCompetitor.id,
-          evaluator_name: user.username,
-          tanbih_count: tanbihCount,
-          fateh_count: fatehCount,
-          tashkeel_count: tashkeelCount,
-          tajweed_count: tajweedCount,
-          waqf_count: waqfCount,
-          final_score: currentScore
-        }
-        const existing = existingEvaluationRef.current
-        if (existing?.id) {
-          const { data } = await supabase
-            .from('evaluations')
-            .update({ ...payload, updated_at: new Date().toISOString() })
-            .eq('id', existing.id)
-            .select()
-            .single()
-          if (data) {
-            // Update ref immediately so the next timer sees the correct row
-            existingEvaluationRef.current = data
-            setExistingEvaluation(data)
-          }
-        } else if (!insertInProgressRef.current) {
-          // Guard: only one INSERT at a time — prevents duplicate-key conflicts
-          // when the user taps faster than the network round-trip completes
-          insertInProgressRef.current = true
-          try {
-            const { data } = await supabase
-              .from('evaluations')
-              .insert([payload])
-              .select()
-              .single()
-            if (data) {
-              // Update ref immediately before the React render cycle
-              existingEvaluationRef.current = data
-              setExistingEvaluation(data)
-              setAllEvaluations(prev => [
-                ...prev.filter(e => e.evaluator_name !== user.username),
-                data
-              ])
-            }
-          } finally {
-            insertInProgressRef.current = false
-          }
-        }
-      } catch (err) {
-        console.error('Auto-save error:', err)
-      }
-    }, 0)
-
-    return () => {
-      if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current)
-    }
-  }, [tanbihCount, fatehCount, tashkeelCount, tajweedCount, waqfCount, hasChanges, selectedCompetitor, user])
-
-  // Realtime subscription — instant updates when the evaluations table is
-  // added to the Supabase Realtime publication in the dashboard.
-  useEffect(() => {
-    if (!selectedCompetitor || !user) return
-
-    const supabase = createClient()
-    const channel = supabase
-      .channel(`evaluations-competitor-${selectedCompetitor.id}`)
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'evaluations' },
-        (payload) => {
-          const changed = payload.new as Evaluation
-          if (!changed?.evaluator_name) return
-          if (changed.evaluator_name === user.username) return
-          if (changed.competitor_id !== selectedCompetitor.id) return
-
-          setAllEvaluations(prev => [
-            ...prev.filter(e => e.evaluator_name !== changed.evaluator_name),
-            changed
-          ])
-        }
-      )
-      .subscribe()
-
-    return () => {
-      supabase.removeChannel(channel)
-    }
-  }, [selectedCompetitor?.id, user?.username])
-
-  // Polling fallback — guaranteed sync every 300 ms regardless of whether
-  // Realtime is configured. Only fetches the other evaluator's rows so it
-  // never overwrites the current user's live local state.
-  useEffect(() => {
-    if (!selectedCompetitor || !user) return
-
-    const refresh = async () => {
-      try {
-        const supabase = createClient()
-        const { data } = await supabase
-          .from('evaluations')
-          .select('*')
-          .eq('competitor_id', selectedCompetitor.id)
-          .neq('evaluator_name', user.username)
-
-        if (!data) return
-        const others = data as Evaluation[]
-        setAllEvaluations(prev => {
-          const myRow = prev.find(e => e.evaluator_name === user.username)
-          return myRow ? [myRow, ...others] : others
-        })
-      } catch (err) { console.error('Polling error:', err) }
-    }
-
-    refresh() // immediate check on competitor open
-    const interval = setInterval(refresh, 300)
-    return () => clearInterval(interval)
-  }, [selectedCompetitor?.id, user?.username])
 
   const fetchCompetitors = async () => {
     try {
@@ -387,7 +248,6 @@ export default function EvaluatePage() {
     setSelectedCompetitor(competitor)
     setHasChanges(false)
     setShowSaveSuccess(false)
-    insertInProgressRef.current = false
 
     // NEW: Update active evaluation to show on live stats dashboard
     await updateActiveEvaluation(competitor)
@@ -494,12 +354,16 @@ export default function EvaluatePage() {
         .update({ status: 'evaluated' })
         .eq('id', selectedCompetitor.id)
 
-      // Update existing evaluation with the saved data
       setExistingEvaluation(savedEvaluation)
-      setAllEvaluations(prev => [
-        ...prev.filter(e => e.evaluator_name !== user.username),
-        savedEvaluation
-      ])
+
+      // Refetch all evaluations ordered by created_at so boxes reflect save order
+      const { data: allEvals } = await supabase
+        .from('evaluations')
+        .select('*')
+        .eq('competitor_id', selectedCompetitor.id)
+        .order('created_at', { ascending: true })
+      setAllEvaluations((allEvals || []) as Evaluation[])
+
       setHasChanges(false)
       setShowSaveSuccess(true)
       setSaving(false)
@@ -998,30 +862,9 @@ export default function EvaluatePage() {
   }
 
   // Build the displayed evaluators list (2 slots).
-  // Includes the current user's LIVE data as soon as they start evaluating
-  // (hasChanges) or already have a saved evaluation, so their name appears
-  // immediately without waiting for a save.
+  // Ordered by created_at (ascending): first saver → right box, second saver → left box (RTL).
   const displayedEvaluations: (Evaluation | null)[] = [null, null]
   allEvaluations.forEach((ev, idx) => { if (idx < 2) displayedEvaluations[idx] = ev })
-  if (selectedCompetitor && (hasChanges || existingEvaluation)) {
-    const myLive: Evaluation = {
-      competitor_id: selectedCompetitor.id,
-      evaluator_name: user.username,
-      tanbih_count: tanbihCount,
-      fateh_count: fatehCount,
-      tashkeel_count: tashkeelCount,
-      tajweed_count: tajweedCount,
-      waqf_count: waqfCount,
-      final_score: finalScore
-    }
-    const mySlot = allEvaluations.findIndex(e => e.evaluator_name === user.username)
-    if (mySlot >= 0) {
-      displayedEvaluations[mySlot] = myLive
-    } else {
-      const empty = displayedEvaluations.findIndex(s => s === null)
-      if (empty >= 0) displayedEvaluations[empty] = myLive
-    }
-  }
 
   return (
     <>
