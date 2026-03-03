@@ -324,17 +324,33 @@ export default function EvaluatePage() {
         final_score: finalScore
       }
 
-      const { data, error } = await supabase
+      // Fresh lookup: check if a row already exists for this evaluator+competitor
+      const { data: existingRow } = await supabase
         .from('evaluations')
-        .upsert(
-          { ...evaluationData, updated_at: new Date().toISOString() },
-          { onConflict: 'competitor_id,evaluator_name' }
-        )
-        .select()
-        .single()
+        .select('id')
+        .eq('competitor_id', selectedCompetitor.id)
+        .eq('evaluator_name', user.username)
+        .maybeSingle()
 
-      if (error) throw error
-      const savedEvaluation = data
+      let savedEvaluation
+      if (existingRow?.id) {
+        const { data, error } = await supabase
+          .from('evaluations')
+          .update({ ...evaluationData, updated_at: new Date().toISOString() })
+          .eq('id', existingRow.id)
+          .select()
+          .single()
+        if (error) throw error
+        savedEvaluation = data
+      } else {
+        const { data, error } = await supabase
+          .from('evaluations')
+          .insert([evaluationData])
+          .select()
+          .single()
+        if (error) throw error
+        savedEvaluation = data
+      }
 
       await supabase
         .from('competitors')
