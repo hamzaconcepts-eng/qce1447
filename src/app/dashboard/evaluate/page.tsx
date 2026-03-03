@@ -70,6 +70,7 @@ export default function EvaluatePage() {
   const [fatehCount, setFatehCount] = useState(0)
   const [tashkeelCount, setTashkeelCount] = useState(0)
   const [tajweedCount, setTajweedCount] = useState(0)
+  const [waqfCount, setWaqfCount] = useState(0)
   const [finalScore, setFinalScore] = useState(100)
 
   // UI states
@@ -129,7 +130,7 @@ export default function EvaluatePage() {
 
   useEffect(() => {
     calculateFinalScore()
-  }, [tanbihCount, fatehCount, tashkeelCount, tajweedCount])
+  }, [tanbihCount, fatehCount, tashkeelCount, tajweedCount, waqfCount])
 
   const fetchCompetitors = async () => {
     try {
@@ -229,7 +230,7 @@ export default function EvaluatePage() {
   const currentCompetitors = filteredCompetitors.slice(startIndex, endIndex)
 
   const calculateFinalScore = () => {
-    const deduction = (tanbihCount * 1) + (fatehCount * 2) + (tashkeelCount * 1) + (tajweedCount * 0.5)
+    const deduction = tanbihCount + fatehCount + tashkeelCount + tajweedCount + waqfCount
     const score = Math.max(0, 100 - deduction)
     setFinalScore(Number(score.toFixed(1)))
   }
@@ -260,6 +261,7 @@ export default function EvaluatePage() {
       setFatehCount(data.fateh_count)
       setTashkeelCount(data.tashkeel_count)
       setTajweedCount(data.tajweed_count)
+      setWaqfCount(data.waqf_count || 0)
       setShowAlreadyEvaluated(true)
     } else {
       setExistingEvaluation(null)
@@ -267,27 +269,30 @@ export default function EvaluatePage() {
       setFatehCount(0)
       setTashkeelCount(0)
       setTajweedCount(0)
+      setWaqfCount(0)
       setShowAlreadyEvaluated(false)
     }
   }
 
-  const incrementCount = (type: 'tanbih' | 'fateh' | 'tashkeel' | 'tajweed') => {
+  const incrementCount = (type: 'tanbih' | 'fateh' | 'tashkeel' | 'tajweed' | 'waqf') => {
     setHasChanges(true)
     switch (type) {
       case 'tanbih': setTanbihCount(prev => prev + 1); break
       case 'fateh': setFatehCount(prev => prev + 1); break
       case 'tashkeel': setTashkeelCount(prev => prev + 1); break
       case 'tajweed': setTajweedCount(prev => prev + 1); break
+      case 'waqf': setWaqfCount(prev => prev + 1); break
     }
   }
 
-  const decrementCount = (type: 'tanbih' | 'fateh' | 'tashkeel' | 'tajweed') => {
+  const decrementCount = (type: 'tanbih' | 'fateh' | 'tashkeel' | 'tajweed' | 'waqf') => {
     setHasChanges(true)
     switch (type) {
       case 'tanbih': setTanbihCount(prev => Math.max(0, prev - 1)); break
       case 'fateh': setFatehCount(prev => Math.max(0, prev - 1)); break
       case 'tashkeel': setTashkeelCount(prev => Math.max(0, prev - 1)); break
       case 'tajweed': setTajweedCount(prev => Math.max(0, prev - 1)); break
+      case 'waqf': setWaqfCount(prev => Math.max(0, prev - 1)); break
     }
   }
 
@@ -306,6 +311,7 @@ export default function EvaluatePage() {
         fateh_count: fatehCount,
         tashkeel_count: tashkeelCount,
         tajweed_count: tajweedCount,
+        waqf_count: waqfCount,
         final_score: finalScore
       }
 
@@ -1669,13 +1675,16 @@ export default function EvaluatePage() {
                       • <strong style={{ color: '#C8A24E' }}>تنبيه:</strong> خصم درجة واحدة (-1) لكل خطأ
                     </p>
                     <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                      • <strong style={{ color: '#C8A24E' }}>فتح:</strong> خصم درجتين (-2) لكل خطأ
+                      • <strong style={{ color: '#C8A24E' }}>فتح:</strong> خصم درجة واحدة (-1) لكل خطأ
                     </p>
                     <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
                       • <strong style={{ color: '#C8A24E' }}>تشكيل:</strong> خصم درجة واحدة (-1) لكل خطأ
                     </p>
+                    <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
+                      • <strong style={{ color: '#C8A24E' }}>تجويد:</strong> خصم درجة واحدة (-1) لكل خطأ
+                    </p>
                     <p style={{ margin: 0 }}>
-                      • <strong style={{ color: '#C8A24E' }}>تجويد:</strong> خصم نصف درجة (-0.5) لكل خطأ
+                      • <strong style={{ color: '#C8A24E' }}>الوقف والابتداء:</strong> خصم درجة واحدة (-1) لكل خطأ
                     </p>
                   </div>
                 </div>
@@ -1767,13 +1776,13 @@ export default function EvaluatePage() {
                   </p>
                 </div>
 
-                {/* BOTTOM LEFT - 2x2 Grid of ALL Evaluation Criteria */}
+                {/* BOTTOM LEFT - 2x2 + 1 Grid of ALL Evaluation Criteria */}
                 <div style={{
                   gridColumn: '1 / 2',
                   gridRow: '2 / 3',
                   display: 'grid',
                   gridTemplateColumns: '1fr 1fr',
-                  gridTemplateRows: '1fr 1fr',
+                  gridTemplateRows: '1fr 1fr auto',
                   gap: 'clamp(8px, 1.2vw, 14px)',
                   overflow: 'hidden'
                 }}>
@@ -1957,7 +1966,7 @@ export default function EvaluatePage() {
                         fontWeight: '500',
                         lineHeight: '1'
                       }}>
-                        {fatehCount === 0 ? '(-0)' : `(-${fatehCount * 2})`}
+                        {fatehCount === 0 ? '(-0)' : `(-${fatehCount})`}
                       </div>
                     </div>
 
@@ -2245,7 +2254,7 @@ export default function EvaluatePage() {
                         fontWeight: '500',
                         lineHeight: '1'
                       }}>
-                        {tajweedCount === 0 ? '(-0)' : `(-${tajweedCount * 0.5})`}
+                        {tajweedCount === 0 ? '(-0)' : `(-${tajweedCount})`}
                       </div>
                     </div>
 
@@ -2350,6 +2359,143 @@ export default function EvaluatePage() {
                         onMouseUp={(e) => {
                           e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
                         }}
+                      >
+                        −
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* الوقف والابتداء */}
+                  <div style={{
+                    gridColumn: 'span 2',
+                    background: 'rgba(34, 197, 94, 0.08)',
+                    backdropFilter: 'blur(12px)',
+                    borderRadius: '12px',
+                    padding: 'clamp(12px, 1.8vh, 18px)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+                    border: '1px solid rgba(34, 197, 94, 0.2)',
+                    overflow: 'hidden',
+                    boxSizing: 'border-box',
+                    transition: 'all 0.3s ease'
+                  }}>
+                    <div style={{ textAlign: 'center', marginBottom: 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
+                      <div style={{
+                        fontSize: 'clamp(18px, 2.5vw, 28px)',
+                        fontWeight: '900',
+                        color: '#F0FDF4',
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                        marginBottom: 'clamp(5px, 0.8vh, 8px)',
+                        lineHeight: '1',
+                        letterSpacing: '-0.5px'
+                      }}>
+                        الوقف والابتداء
+                      </div>
+                      <div style={{
+                        fontSize: 'clamp(10px, 1.1vw, 12px)',
+                        color: 'rgba(240, 253, 244, 0.6)',
+                        fontWeight: '500',
+                        lineHeight: '1'
+                      }}>
+                        {waqfCount === 0 ? '(-0)' : `(-${waqfCount})`}
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: 'clamp(8px, 1.2vw, 12px)',
+                      flex: 1
+                    }}>
+                      <button
+                        onClick={() => incrementCount('waqf')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: 'transparent',
+                          color: '#C8A24E',
+                          border: '1px solid rgba(200, 162, 78, 0.4)',
+                          borderRadius: '10px',
+                          backdropFilter: 'blur(10px)',
+                          fontSize: 'clamp(28px, 3.8vw, 42px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: 'none',
+                          transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)';
+                          e.currentTarget.style.color = '#0A0F0A';
+                          e.currentTarget.style.border = 'none';
+                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,162,78,0.5)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1) translateY(0)';
+                          e.currentTarget.style.background = 'transparent';
+                          e.currentTarget.style.color = '#C8A24E';
+                          e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.4)';
+                          e.currentTarget.style.boxShadow = 'none';
+                        }}
+                        onMouseDown={(e) => { e.currentTarget.style.transform = 'scale(0.95)'; }}
+                        onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)'; }}
+                      >
+                        +
+                      </button>
+
+                      <div style={{
+                        fontSize: 'clamp(36px, 5vw, 56px)',
+                        fontWeight: '900',
+                        color: '#F0FDF4',
+                        minWidth: 'clamp(45px, 6vw, 70px)',
+                        textAlign: 'center',
+                        lineHeight: '1',
+                        textShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                      }}>
+                        {waqfCount}
+                      </div>
+
+                      <button
+                        onClick={() => decrementCount('waqf')}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          background: 'transparent',
+                          color: '#C8A24E',
+                          border: '1px solid rgba(200, 162, 78, 0.4)',
+                          borderRadius: '10px',
+                          backdropFilter: 'blur(10px)',
+                          fontSize: 'clamp(28px, 3.8vw, 42px)',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: 'none',
+                          transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)';
+                          e.currentTarget.style.color = '#0A0F0A';
+                          e.currentTarget.style.border = 'none';
+                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,162,78,0.5)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1) translateY(0)';
+                          e.currentTarget.style.background = 'transparent';
+                          e.currentTarget.style.color = '#C8A24E';
+                          e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.4)';
+                          e.currentTarget.style.boxShadow = 'none';
+                        }}
+                        onMouseDown={(e) => { e.currentTarget.style.transform = 'scale(0.95)'; }}
+                        onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)'; }}
                       >
                         −
                       </button>
