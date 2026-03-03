@@ -855,6 +855,32 @@ export default function EvaluatePage() {
     return null
   }
 
+  // Build the displayed evaluators list (2 slots).
+  // Includes the current user's LIVE data as soon as they start evaluating
+  // (hasChanges) or already have a saved evaluation, so their name appears
+  // immediately without waiting for a save.
+  const displayedEvaluations: (Evaluation | null)[] = [null, null]
+  allEvaluations.forEach((ev, idx) => { if (idx < 2) displayedEvaluations[idx] = ev })
+  if (selectedCompetitor && (hasChanges || existingEvaluation)) {
+    const myLive: Evaluation = {
+      competitor_id: selectedCompetitor.id,
+      evaluator_name: user.username,
+      tanbih_count: tanbihCount,
+      fateh_count: fatehCount,
+      tashkeel_count: tashkeelCount,
+      tajweed_count: tajweedCount,
+      waqf_count: waqfCount,
+      final_score: finalScore
+    }
+    const mySlot = allEvaluations.findIndex(e => e.evaluator_name === user.username)
+    if (mySlot >= 0) {
+      displayedEvaluations[mySlot] = myLive
+    } else {
+      const empty = displayedEvaluations.findIndex(s => s === null)
+      if (empty >= 0) displayedEvaluations[empty] = myLive
+    }
+  }
+
   return (
     <>
       {/* Animated Background */}
@@ -1731,7 +1757,7 @@ export default function EvaluatePage() {
                     {/* Evaluator 1 + Evaluator 2 */}
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(4px, 0.5vw, 6px)', flex: 1 }}>
                       {[0, 1].map(idx => {
-                        const ev = allEvaluations[idx]
+                        const ev = displayedEvaluations[idx]
                         const scoreColor = ev
                           ? (ev.final_score >= 95 ? '#4ADE80' : ev.final_score >= 90 ? '#D4AF5E' : '#FCA5A5')
                           : 'rgba(200,162,78,0.4)'
@@ -1807,8 +1833,8 @@ export default function EvaluatePage() {
                       })}
                     </div>
 
-                    {/* Average score — shown when both have evaluated */}
-                    {allEvaluations.length >= 2 && (
+                    {/* Average score — shown when both slots are filled */}
+                    {displayedEvaluations[0] && displayedEvaluations[1] && (
                       <div style={{
                         textAlign: 'center',
                         paddingTop: 'clamp(3px, 0.4vh, 5px)',
@@ -1821,7 +1847,7 @@ export default function EvaluatePage() {
                           color: '#C8A24E',
                           fontSize: 'clamp(12px, 1.4vw, 16px)'
                         }}>
-                          {Number((allEvaluations.reduce((s, e) => s + e.final_score, 0) / allEvaluations.length).toFixed(1))}
+                          {Number(((displayedEvaluations[0]!.final_score + displayedEvaluations[1]!.final_score) / 2).toFixed(1))}
                         </span>
                       </div>
                     )}
