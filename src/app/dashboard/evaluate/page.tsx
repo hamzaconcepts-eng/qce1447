@@ -75,6 +75,9 @@ export default function EvaluatePage() {
   const [finalScore, setFinalScore] = useState(100)
   const [allEvaluations, setAllEvaluations] = useState<Evaluation[]>([])
 
+  // Evaluator display names (username → full name)
+  const [evaluatorNames, setEvaluatorNames] = useState<Record<string, string>>({})
+
   // UI states
   const [hasChanges, setHasChanges] = useState(false)
   const [showBackWarning, setShowBackWarning] = useState(false)
@@ -122,6 +125,7 @@ export default function EvaluatePage() {
     }
     setUser(userData)
     fetchCompetitors()
+    fetchEvaluatorNames()
   }, [router])
 
   useEffect(() => {
@@ -162,6 +166,22 @@ export default function EvaluatePage() {
     return () => clearInterval(interval)
   }, [selectedCompetitor])
 
+
+  const fetchEvaluatorNames = async () => {
+    try {
+      const supabase = createClient()
+      const { data } = await supabase.from('users').select('username, name')
+      if (data) {
+        const map: Record<string, string> = {}
+        data.forEach((u: { username: string; name: string | null }) => {
+          if (u.name) map[u.username] = u.name
+        })
+        setEvaluatorNames(map)
+      }
+    } catch {
+      // silently ignore
+    }
+  }
 
   const fetchCompetitors = async () => {
     try {
@@ -1847,7 +1867,7 @@ export default function EvaluatePage() {
                                   textOverflow: 'ellipsis',
                                   whiteSpace: 'nowrap'
                                 }}>
-                                  {ev.evaluator_name}
+                                  {evaluatorNames[ev.evaluator_name] || ev.evaluator_name}
                                 </div>
                                 <div style={{ fontSize: 'clamp(7px, 0.8vw, 9px)', color: 'rgba(240,253,244,0.6)', lineHeight: '1.5' }}>
                                   <div>تنبيه: {ev.tanbih_count} • فتح: {ev.fateh_count}</div>
