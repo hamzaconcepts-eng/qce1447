@@ -60,7 +60,7 @@ export default function DashboardPage() {
   }
 
   const canRegister = user.role === 'admin'
-  const canView = user.role === 'admin' || user.role === 'evaluator'
+  const canView = user.role === 'admin'
   const canEvaluate = user.role === 'admin' || user.role === 'evaluator'
 
   return (
