@@ -324,31 +324,17 @@ export default function EvaluatePage() {
         final_score: finalScore
       }
 
-      let savedEvaluation
+      const { data, error } = await supabase
+        .from('evaluations')
+        .upsert(
+          { ...evaluationData, updated_at: new Date().toISOString() },
+          { onConflict: 'competitor_id,evaluator_name' }
+        )
+        .select()
+        .single()
 
-      if (existingEvaluation) {
-        const { data, error } = await supabase
-          .from('evaluations')
-          .update({
-            ...evaluationData,
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', existingEvaluation.id)
-          .select()
-          .single()
-
-        if (error) throw error
-        savedEvaluation = data
-      } else {
-        const { data, error } = await supabase
-          .from('evaluations')
-          .insert([evaluationData])
-          .select()
-          .single()
-
-        if (error) throw error
-        savedEvaluation = data
-      }
+      if (error) throw error
+      const savedEvaluation = data
 
       await supabase
         .from('competitors')
