@@ -379,9 +379,14 @@ export default function EvaluatePage() {
       setTimeout(() => setShowSaveSuccess(false), 3000)
     } catch (error) {
       console.error('Error saving evaluation:', error)
-      setSaveError(error instanceof Error ? error.message : String(error))
+      const msg = error instanceof Error
+        ? error.message
+        : (error as { message?: string })?.message
+          || (error as { details?: string })?.details
+          || JSON.stringify(error)
+      setSaveError(msg)
       setSaving(false)
-      setTimeout(() => setSaveError(null), 5000)
+      setTimeout(() => setSaveError(null), 8000)
     }
   }
 
