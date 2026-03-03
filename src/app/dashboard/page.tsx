@@ -7,6 +7,7 @@ import Image from 'next/image'
 interface User {
   id: string
   username: string
+  name: string
   role: 'admin' | 'evaluator' | 'viewer'
 }
 
@@ -320,7 +321,7 @@ export default function DashboardPage() {
               backgroundClip: 'text',
               marginBottom: 'clamp(4px, 0.6vh, 6px)'
             }}>
-              {user.username}
+              {user.name || user.username}
             </p>
             <p style={{
               color: '#4ADE80',
