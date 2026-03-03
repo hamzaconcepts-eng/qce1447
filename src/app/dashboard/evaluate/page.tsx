@@ -143,8 +143,9 @@ export default function EvaluatePage() {
     existingEvaluationRef.current = existingEvaluation
   }, [existingEvaluation])
 
-  // Debounced auto-save: writes to DB 1.5 s after the last button tap so the
-  // other evaluator's Realtime subscription can pick up the live data.
+  // Debounced auto-save: writes to DB immediately (0 ms) after a button tap.
+  // The debounce timer still ensures that if React fires two renders in the
+  // same frame only the last state is written, preventing duplicate requests.
   useEffect(() => {
     if (!hasChanges || !selectedCompetitor || !user) return
 
@@ -193,15 +194,15 @@ export default function EvaluatePage() {
       } catch (err) {
         console.error('Auto-save error:', err)
       }
-    }, 300)
+    }, 0)
 
     return () => {
       if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current)
     }
   }, [tanbihCount, fatehCount, tashkeelCount, tajweedCount, waqfCount, hasChanges, selectedCompetitor, user])
 
-  // Realtime subscription: refresh the other evaluator's row whenever their
-  // DB record changes (INSERT or UPDATE), so both screens stay in sync.
+  // Realtime subscription — instant updates when the evaluations table is
+  // added to the Supabase Realtime publication in the dashboard.
   useEffect(() => {
     if (!selectedCompetitor || !user) return
 
@@ -214,9 +215,7 @@ export default function EvaluatePage() {
         (payload) => {
           const changed = payload.new as Evaluation
           if (!changed?.evaluator_name) return
-          // Ignore our own auto-save echo; our live data is already in displayedEvaluations
           if (changed.evaluator_name === user.username) return
-          // Only process rows for the currently open competitor
           if (changed.competitor_id !== selectedCompetitor.id) return
 
           setAllEvaluations(prev => [
@@ -230,6 +229,35 @@ export default function EvaluatePage() {
     return () => {
       supabase.removeChannel(channel)
     }
+  }, [selectedCompetitor?.id, user?.username])
+
+  // Polling fallback — guaranteed sync every 300 ms regardless of whether
+  // Realtime is configured. Only fetches the other evaluator's rows so it
+  // never overwrites the current user's live local state.
+  useEffect(() => {
+    if (!selectedCompetitor || !user) return
+
+    const refresh = async () => {
+      try {
+        const supabase = createClient()
+        const { data } = await supabase
+          .from('evaluations')
+          .select('*')
+          .eq('competitor_id', selectedCompetitor.id)
+          .neq('evaluator_name', user.username)
+
+        if (!data) return
+        const others = data as Evaluation[]
+        setAllEvaluations(prev => {
+          const myRow = prev.find(e => e.evaluator_name === user.username)
+          return myRow ? [myRow, ...others] : others
+        })
+      } catch { /* silent — polling will retry on the next tick */ }
+    }
+
+    refresh() // immediate check on competitor open
+    const interval = setInterval(refresh, 300)
+    return () => clearInterval(interval)
   }, [selectedCompetitor?.id, user?.username])
 
   const fetchCompetitors = async () => {
