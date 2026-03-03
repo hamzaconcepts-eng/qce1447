@@ -383,7 +383,7 @@ export default function DashboardPage() {
               تسجيل متسابق جديد
             </button>
 
-            {/* View Registered Competitors - Admin & Evaluator */}
+            {/* View Registered Competitors - Admin Only */}
             <button
               onClick={() => canView && router.push('/dashboard/competitors')}
               disabled={!canView}
@@ -397,27 +397,26 @@ export default function DashboardPage() {
                 fontSize: 'clamp(12px, 1.4vw, 14px)',
                 fontWeight: '700',
                 fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                cursor: canView ? 'pointer' : 'not-allowed',
+                cursor: canView ? 'pointer' : 'default',
                 transition: 'all 0.3s ease',
                 opacity: canView ? 0.7 : 0.5,
+                pointerEvents: canView ? 'auto' : 'none',
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
-                if (canView) {
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)'
-                  e.currentTarget.style.color = '#0A0F0A'
-                  e.currentTarget.style.border = 'none'
-                  e.currentTarget.style.opacity = '1'
-                  e.currentTarget.style.boxShadow = '0 6px 24px rgba(200,162,78,0.5)'
-                }
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.background = 'linear-gradient(135deg, #B8922E, #D4AF5E)'
+                e.currentTarget.style.color = '#0A0F0A'
+                e.currentTarget.style.border = 'none'
+                e.currentTarget.style.opacity = '1'
+                e.currentTarget.style.boxShadow = '0 6px 24px rgba(200,162,78,0.5)'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)'
                 e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.color = canView ? '#D4AF5E' : 'rgba(240, 253, 244, 0.3)'
-                e.currentTarget.style.border = canView ? '1px solid rgba(200, 162, 78, 0.3)' : '1px solid rgba(200, 162, 78, 0.12)'
-                e.currentTarget.style.opacity = canView ? '0.7' : '0.5'
+                e.currentTarget.style.color = '#D4AF5E'
+                e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.3)'
+                e.currentTarget.style.opacity = '0.7'
                 e.currentTarget.style.boxShadow = 'none'
               }}
             >
