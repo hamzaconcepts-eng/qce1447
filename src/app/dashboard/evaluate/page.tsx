@@ -356,13 +356,17 @@ export default function EvaluatePage() {
 
       setExistingEvaluation(savedEvaluation)
 
-      // Refetch all evaluations ordered by created_at so boxes reflect save order
-      const { data: allEvals } = await supabase
-        .from('evaluations')
-        .select('*')
-        .eq('competitor_id', selectedCompetitor.id)
-        .order('created_at', { ascending: true })
-      setAllEvaluations((allEvals || []) as Evaluation[])
+      // Merge saved evaluation into state, ordered by created_at so boxes
+      // reflect save order: first saver → right box (index 0), second → left (index 1)
+      setAllEvaluations(prev => {
+        const withoutMe = prev.filter(e => e.evaluator_name !== user.username)
+        const merged = [...withoutMe, savedEvaluation]
+        return merged.sort((a, b) => {
+          const aTime = a.created_at ? new Date(a.created_at).getTime() : 0
+          const bTime = b.created_at ? new Date(b.created_at).getTime() : 0
+          return aTime - bTime
+        })
+      })
 
       setHasChanges(false)
       setShowSaveSuccess(true)
