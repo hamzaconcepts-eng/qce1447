@@ -193,7 +193,7 @@ export default function EvaluatePage() {
       } catch (err) {
         console.error('Auto-save error:', err)
       }
-    }, 1500)
+    }, 300)
 
     return () => {
       if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current)
