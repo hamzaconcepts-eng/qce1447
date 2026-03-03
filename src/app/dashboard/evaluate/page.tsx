@@ -81,6 +81,7 @@ export default function EvaluatePage() {
   const [showSaveSuccess, setShowSaveSuccess] = useState(false)
   const [showAlreadyEvaluated, setShowAlreadyEvaluated] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
 
 
   const levels = [
@@ -368,6 +369,7 @@ export default function EvaluatePage() {
         })
       })
 
+      setSaveError(null)
       setHasChanges(false)
       setShowSaveSuccess(true)
       setSaving(false)
@@ -377,7 +379,9 @@ export default function EvaluatePage() {
       setTimeout(() => setShowSaveSuccess(false), 3000)
     } catch (error) {
       console.error('Error saving evaluation:', error)
+      setSaveError(error instanceof Error ? error.message : String(error))
       setSaving(false)
+      setTimeout(() => setSaveError(null), 5000)
     }
   }
 
@@ -866,9 +870,20 @@ export default function EvaluatePage() {
   }
 
   // Build the displayed evaluators list (2 slots).
-  // Ordered by created_at (ascending): first saver → right box, second saver → left box (RTL).
+  // allEvaluations (loaded on competitor select) holds other evaluators' saved rows.
+  // After the current user saves, existingEvaluation is set and injected directly —
+  // this doesn't depend on the setAllEvaluations update completing.
   const displayedEvaluations: (Evaluation | null)[] = [null, null]
   allEvaluations.forEach((ev, idx) => { if (idx < 2) displayedEvaluations[idx] = ev })
+  if (selectedCompetitor && existingEvaluation) {
+    const mySlot = allEvaluations.findIndex(e => e.evaluator_name === user.username)
+    if (mySlot >= 0) {
+      displayedEvaluations[mySlot] = existingEvaluation
+    } else {
+      const empty = displayedEvaluations.findIndex(s => s === null)
+      if (empty >= 0) displayedEvaluations[empty] = existingEvaluation
+    }
+  }
 
   return (
     <>
@@ -1666,6 +1681,30 @@ export default function EvaluatePage() {
                     maxWidth: '85vw'
                   }}>
                     ✓ تم حفظ التقييم بنجاح
+                  </div>
+                )}
+
+                {saveError && (
+                  <div style={{
+                    position: 'fixed',
+                    top: '15px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    background: 'rgba(239, 68, 68, 0.12)',
+                    backdropFilter: 'blur(16px)',
+                    WebkitBackdropFilter: 'blur(16px)',
+                    padding: '8px 20px',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                    textAlign: 'center',
+                    color: '#FCA5A5',
+                    border: '1px solid rgba(239, 68, 68, 0.3)',
+                    fontWeight: '700',
+                    zIndex: 1000,
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+                    maxWidth: '85vw'
+                  }}>
+                    ✗ خطأ في الحفظ: {saveError}
                   </div>
                 )}
 
