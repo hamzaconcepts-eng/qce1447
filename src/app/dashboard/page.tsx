@@ -375,9 +375,9 @@ export default function DashboardPage() {
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)'
                 e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.color = '#D4AF5E'
-                e.currentTarget.style.border = '1px solid rgba(200, 162, 78, 0.3)'
-                e.currentTarget.style.opacity = '0.7'
+                e.currentTarget.style.color = canRegister ? '#D4AF5E' : 'rgba(240, 253, 244, 0.3)'
+                e.currentTarget.style.border = canRegister ? '1px solid rgba(200, 162, 78, 0.3)' : '1px solid rgba(200, 162, 78, 0.12)'
+                e.currentTarget.style.opacity = canRegister ? '0.7' : '0.5'
                 e.currentTarget.style.boxShadow = 'none'
               }}
             >
