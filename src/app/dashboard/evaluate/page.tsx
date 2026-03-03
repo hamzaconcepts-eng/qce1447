@@ -136,6 +136,32 @@ export default function EvaluatePage() {
     calculateFinalScore()
   }, [tanbihCount, fatehCount, tashkeelCount, tajweedCount, waqfCount])
 
+  // Poll evaluations for the selected competitor every 4 seconds so each
+  // evaluator sees the other's box appear in real-time after they save.
+  useEffect(() => {
+    if (!selectedCompetitor) return
+
+    const pollEvaluations = async () => {
+      try {
+        const supabase = createClient()
+        const { data } = await supabase
+          .from('evaluations')
+          .select('*')
+          .eq('competitor_id', selectedCompetitor.id)
+          .order('created_at', { ascending: true })
+
+        if (data) {
+          setAllEvaluations(data as Evaluation[])
+        }
+      } catch {
+        // silently ignore poll errors
+      }
+    }
+
+    const interval = setInterval(pollEvaluations, 4000)
+    return () => clearInterval(interval)
+  }, [selectedCompetitor])
+
 
   const fetchCompetitors = async () => {
     try {
