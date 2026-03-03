@@ -356,9 +356,10 @@ export default function DashboardPage() {
                 fontSize: 'clamp(12px, 1.4vw, 14px)',
                 fontWeight: '700',
                 fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                cursor: canRegister ? 'pointer' : 'not-allowed',
+                cursor: canRegister ? 'pointer' : 'default',
                 transition: 'all 0.3s ease',
                 opacity: canRegister ? 0.7 : 0.5,
+                pointerEvents: canRegister ? 'auto' : 'none',
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
