@@ -32,6 +32,7 @@ interface Evaluation {
   fateh_count: number
   tashkeel_count: number
   tajweed_count: number
+  waqf_count: number
   final_score: number
   created_at?: string
   updated_at?: string
@@ -72,6 +73,7 @@ export default function EvaluatePage() {
   const [tajweedCount, setTajweedCount] = useState(0)
   const [waqfCount, setWaqfCount] = useState(0)
   const [finalScore, setFinalScore] = useState(100)
+  const [allEvaluations, setAllEvaluations] = useState<Evaluation[]>([])
 
   // UI states
   const [hasChanges, setHasChanges] = useState(false)
@@ -249,19 +251,23 @@ export default function EvaluatePage() {
     await updateActiveEvaluation(competitor)
 
     const supabase = createClient()
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('evaluations')
       .select('*')
       .eq('competitor_id', competitor.id)
-      .single()
+      .order('created_at', { ascending: true })
 
-    if (data && !error) {
-      setExistingEvaluation(data)
-      setTanbihCount(data.tanbih_count)
-      setFatehCount(data.fateh_count)
-      setTashkeelCount(data.tashkeel_count)
-      setTajweedCount(data.tajweed_count)
-      setWaqfCount(data.waqf_count || 0)
+    const evaluations = (data || []) as Evaluation[]
+    setAllEvaluations(evaluations)
+
+    const myEval = evaluations.find(e => e.evaluator_name === user?.username)
+    if (myEval) {
+      setExistingEvaluation(myEval)
+      setTanbihCount(myEval.tanbih_count)
+      setFatehCount(myEval.fateh_count)
+      setTashkeelCount(myEval.tashkeel_count)
+      setTajweedCount(myEval.tajweed_count)
+      setWaqfCount(myEval.waqf_count || 0)
       setShowAlreadyEvaluated(true)
     } else {
       setExistingEvaluation(null)
@@ -348,6 +354,10 @@ export default function EvaluatePage() {
 
       // Update existing evaluation with the saved data
       setExistingEvaluation(savedEvaluation)
+      setAllEvaluations(prev => [
+        ...prev.filter(e => e.evaluator_name !== user.username),
+        savedEvaluation
+      ])
       setHasChanges(false)
       setShowSaveSuccess(true)
       setSaving(false)
@@ -755,23 +765,23 @@ export default function EvaluatePage() {
               <div class="score-section">
                 <div class="score-label">• الدرجة النهائية •</div>
                 <div class="final-score ${
-                  finalScore >= 95 ? 'score-green' : 
-                  finalScore >= 90 ? 'score-yellow' : 
+                  finalScore >= 95 ? 'score-green' :
+                  finalScore >= 90 ? 'score-yellow' :
                   'score-red'
                 }">
                   ${finalScore}
                 </div>
-                
+
                 <div class="signature-section">
                   <div class="signature-space"></div>
                   <div class="signature-line"></div>
                   <div class="signature-name">مركز رياض العلم</div>
                 </div>
               </div>
-              
+
               <div class="breakdown-side">
                 <div class="breakdown-title">تفصيل الأخطاء</div>
-                
+
                 <div class="breakdown-item">
                   <div class="breakdown-label">تنبيه</div>
                   <div class="breakdown-value">
@@ -779,15 +789,15 @@ export default function EvaluatePage() {
                     <div class="breakdown-deduction">-${tanbihCount} درجة</div>
                   </div>
                 </div>
-                
+
                 <div class="breakdown-item">
                   <div class="breakdown-label">فتح</div>
                   <div class="breakdown-value">
                     <div class="breakdown-count">${fatehCount}</div>
-                    <div class="breakdown-deduction">-${fatehCount * 2} درجة</div>
+                    <div class="breakdown-deduction">-${fatehCount} درجة</div>
                   </div>
                 </div>
-                
+
                 <div class="breakdown-item">
                   <div class="breakdown-label">تشكيل</div>
                   <div class="breakdown-value">
@@ -795,12 +805,20 @@ export default function EvaluatePage() {
                     <div class="breakdown-deduction">-${tashkeelCount} درجة</div>
                   </div>
                 </div>
-                
+
                 <div class="breakdown-item">
                   <div class="breakdown-label">تجويد</div>
                   <div class="breakdown-value">
                     <div class="breakdown-count">${tajweedCount}</div>
-                    <div class="breakdown-deduction">-${tajweedCount * 0.5} درجة</div>
+                    <div class="breakdown-deduction">-${tajweedCount} درجة</div>
+                  </div>
+                </div>
+
+                <div class="breakdown-item">
+                  <div class="breakdown-label">الوقف والابتداء</div>
+                  <div class="breakdown-value">
+                    <div class="breakdown-count">${waqfCount}</div>
+                    <div class="breakdown-deduction">-${waqfCount} درجة</div>
                   </div>
                 </div>
               </div>
@@ -1608,7 +1626,7 @@ export default function EvaluatePage() {
                     boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
                     maxWidth: '85vw'
                   }}>
-                    ⚠️ تم تقييم هذا المتسابق مسبقاً
+                    ⚠️ لديك تقييم سابق لهذا المتسابق - يمكنك تحديثه
                   </div>
                 )}
 
@@ -1636,7 +1654,7 @@ export default function EvaluatePage() {
                   </div>
                 )}
 
-                {/* TOP LEFT - Evaluation Rules */}
+                {/* TOP LEFT - Rules + Evaluators Panel */}
                 <div style={{
                   gridColumn: '1 / 2',
                   gridRow: '1 / 2',
@@ -1646,46 +1664,167 @@ export default function EvaluatePage() {
                   padding: 'clamp(10px, 1.5vh, 16px)',
                   border: '1px solid rgba(34, 197, 94, 0.15)',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: 'clamp(8px, 1vw, 12px)'
                 }}>
-                  <h3 style={{
-                    fontSize: 'clamp(13px, 1.6vw, 17px)',
-                    fontWeight: '700',
-                    color: '#F0FDF4',
-                    margin: '0 0 clamp(6px, 0.8vh, 10px) 0',
-                    textAlign: 'center',
-                    lineHeight: '1.2',
-                    background: 'linear-gradient(135deg, #C8A24E, #E0C478, #D4AF5E)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text'
-                  }}>
-                    ضوابط التقييم
-                  </h3>
-                  <div style={{
-                    fontSize: 'clamp(9px, 1.05vw, 11px)',
-                    color: 'rgba(240, 253, 244, 0.7)',
-                    lineHeight: '1.6',
-                    textAlign: 'right'
-                  }}>
-                    <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                      • يُعطى كل متسابق <strong style={{ color: '#C8A24E' }}>3 أسئلة</strong> من القرآن الكريم
-                    </p>
-                    <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                      • <strong style={{ color: '#C8A24E' }}>تنبيه:</strong> خصم درجة واحدة (-1) لكل خطأ
-                    </p>
-                    <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                      • <strong style={{ color: '#C8A24E' }}>فتح:</strong> خصم درجة واحدة (-1) لكل خطأ
-                    </p>
-                    <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                      • <strong style={{ color: '#C8A24E' }}>تشكيل:</strong> خصم درجة واحدة (-1) لكل خطأ
-                    </p>
-                    <p style={{ margin: '0 0 clamp(3px, 0.5vh, 5px) 0' }}>
-                      • <strong style={{ color: '#C8A24E' }}>تجويد:</strong> خصم درجة واحدة (-1) لكل خطأ
-                    </p>
-                    <p style={{ margin: 0 }}>
-                      • <strong style={{ color: '#C8A24E' }}>الوقف والابتداء:</strong> خصم درجة واحدة (-1) لكل خطأ
-                    </p>
+                  {/* LEFT: Evaluation Rules */}
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <h3 style={{
+                      fontSize: 'clamp(11px, 1.3vw, 15px)',
+                      fontWeight: '700',
+                      color: '#F0FDF4',
+                      margin: '0 0 clamp(5px, 0.7vh, 8px) 0',
+                      textAlign: 'center',
+                      lineHeight: '1.2',
+                      background: 'linear-gradient(135deg, #C8A24E, #E0C478, #D4AF5E)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text'
+                    }}>
+                      ضوابط التقييم
+                    </h3>
+                    <div style={{
+                      fontSize: 'clamp(8px, 0.9vw, 10px)',
+                      color: 'rgba(240, 253, 244, 0.7)',
+                      lineHeight: '1.6',
+                      textAlign: 'right'
+                    }}>
+                      <p style={{ margin: '0 0 clamp(2px, 0.4vh, 4px) 0' }}>
+                        • يُعطى كل متسابق <strong style={{ color: '#C8A24E' }}>3 أسئلة</strong>
+                      </p>
+                      <p style={{ margin: '0 0 clamp(2px, 0.4vh, 4px) 0' }}>
+                        • <strong style={{ color: '#C8A24E' }}>تنبيه:</strong> (-1) لكل خطأ
+                      </p>
+                      <p style={{ margin: '0 0 clamp(2px, 0.4vh, 4px) 0' }}>
+                        • <strong style={{ color: '#C8A24E' }}>فتح:</strong> (-1) لكل خطأ
+                      </p>
+                      <p style={{ margin: '0 0 clamp(2px, 0.4vh, 4px) 0' }}>
+                        • <strong style={{ color: '#C8A24E' }}>تشكيل:</strong> (-1) لكل خطأ
+                      </p>
+                      <p style={{ margin: '0 0 clamp(2px, 0.4vh, 4px) 0' }}>
+                        • <strong style={{ color: '#C8A24E' }}>تجويد:</strong> (-1) لكل خطأ
+                      </p>
+                      <p style={{ margin: 0 }}>
+                        • <strong style={{ color: '#C8A24E' }}>الوقف والابتداء:</strong> (-1) لكل خطأ
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* RIGHT: Evaluators Summary */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(4px, 0.5vh, 6px)' }}>
+                    <div style={{
+                      fontSize: 'clamp(11px, 1.3vw, 15px)',
+                      fontWeight: '700',
+                      textAlign: 'center',
+                      background: 'linear-gradient(135deg, #C8A24E, #E0C478, #D4AF5E)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                      marginBottom: 'clamp(2px, 0.3vh, 4px)',
+                      flexShrink: 0
+                    }}>
+                      المقيّمون
+                    </div>
+
+                    {/* Evaluator 1 + Evaluator 2 */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(4px, 0.5vw, 6px)', flex: 1 }}>
+                      {[0, 1].map(idx => {
+                        const ev = allEvaluations[idx]
+                        const scoreColor = ev
+                          ? (ev.final_score >= 95 ? '#4ADE80' : ev.final_score >= 90 ? '#D4AF5E' : '#FCA5A5')
+                          : 'rgba(200,162,78,0.4)'
+                        return (
+                          <div key={idx} style={{
+                            background: ev ? 'rgba(200, 162, 78, 0.08)' : 'rgba(255,255,255,0.03)',
+                            borderRadius: '8px',
+                            padding: 'clamp(5px, 0.7vh, 8px)',
+                            border: ev ? '1px solid rgba(200, 162, 78, 0.2)' : '1px solid rgba(255,255,255,0.06)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '2px',
+                            overflow: 'hidden'
+                          }}>
+                            {ev ? (
+                              <>
+                                <div style={{
+                                  fontWeight: '700',
+                                  color: '#C8A24E',
+                                  fontSize: 'clamp(8px, 0.9vw, 11px)',
+                                  textAlign: 'center',
+                                  borderBottom: '1px solid rgba(200,162,78,0.2)',
+                                  paddingBottom: '2px',
+                                  marginBottom: '2px',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                  whiteSpace: 'nowrap'
+                                }}>
+                                  {ev.evaluator_name}
+                                </div>
+                                <div style={{ fontSize: 'clamp(7px, 0.8vw, 9px)', color: 'rgba(240,253,244,0.6)', lineHeight: '1.5' }}>
+                                  <div>تنبيه: {ev.tanbih_count} • فتح: {ev.fateh_count}</div>
+                                  <div>تشكيل: {ev.tashkeel_count} • تجويد: {ev.tajweed_count}</div>
+                                  <div>وقف: {ev.waqf_count || 0}</div>
+                                </div>
+                                <div style={{
+                                  fontWeight: '800',
+                                  color: scoreColor,
+                                  fontSize: 'clamp(13px, 1.5vw, 18px)',
+                                  textAlign: 'center',
+                                  marginTop: '2px',
+                                  lineHeight: '1'
+                                }}>
+                                  {ev.final_score}
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                <div style={{
+                                  fontWeight: '600',
+                                  color: 'rgba(200,162,78,0.4)',
+                                  fontSize: 'clamp(8px, 0.9vw, 10px)',
+                                  textAlign: 'center',
+                                  flexShrink: 0
+                                }}>
+                                  المقيّم {idx === 0 ? '١' : '٢'}
+                                </div>
+                                <div style={{
+                                  color: 'rgba(240,253,244,0.2)',
+                                  fontSize: 'clamp(7px, 0.8vw, 9px)',
+                                  textAlign: 'center',
+                                  flex: 1,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center'
+                                }}>
+                                  لم يُقيَّم بعد
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        )
+                      })}
+                    </div>
+
+                    {/* Average score — shown when both have evaluated */}
+                    {allEvaluations.length >= 2 && (
+                      <div style={{
+                        textAlign: 'center',
+                        paddingTop: 'clamp(3px, 0.4vh, 5px)',
+                        borderTop: '1px solid rgba(200,162,78,0.2)',
+                        flexShrink: 0
+                      }}>
+                        <span style={{ fontSize: 'clamp(8px, 0.9vw, 10px)', color: 'rgba(240,253,244,0.55)' }}>المتوسط: </span>
+                        <span style={{
+                          fontWeight: '800',
+                          color: '#C8A24E',
+                          fontSize: 'clamp(12px, 1.4vw, 16px)'
+                        }}>
+                          {Number((allEvaluations.reduce((s, e) => s + e.final_score, 0) / allEvaluations.length).toFixed(1))}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -2516,7 +2655,7 @@ export default function EvaluatePage() {
                   {/* Score Display - EXPANDABLE */}
                   <div style={{
                     background: finalScore >= 95 ? 'rgba(34, 197, 94, 0.12)' : finalScore >= 90 ? 'rgba(200, 162, 78, 0.12)' : 'rgba(220, 38, 38, 0.12)',
-                    padding: 'clamp(18px, 2.8vh, 32px)',
+                    padding: 'clamp(12px, 2vh, 24px)',
                     borderRadius: '10px',
                     backdropFilter: 'blur(10px)',
                     textAlign: 'center',
@@ -2524,12 +2663,17 @@ export default function EvaluatePage() {
                     border: finalScore >= 95 ? '1px solid rgba(34, 197, 94, 0.3)' : finalScore >= 90 ? '1px solid rgba(200, 162, 78, 0.3)' : '1px solid rgba(220, 38, 38, 0.3)',
                     flex: 1,
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    gap: 'clamp(4px, 0.6vh, 8px)',
                     minHeight: 0
                   }}>
+                    <div style={{ fontSize: 'clamp(9px, 1vw, 11px)', color: 'rgba(240,253,244,0.5)', fontWeight: '600' }}>
+                      درجتي
+                    </div>
                     <div style={{
-                      fontSize: 'clamp(50px, 7.5vw, 90px)',
+                      fontSize: 'clamp(44px, 6.5vw, 80px)',
                       fontWeight: '800',
                       color: finalScore >= 95 ? '#4ADE80' : finalScore >= 90 ? '#D4AF5E' : '#FCA5A5',
                       lineHeight: '1',
@@ -2537,6 +2681,26 @@ export default function EvaluatePage() {
                     }}>
                       {finalScore}
                     </div>
+                    {/* Average score: shown when at least one OTHER evaluator has a saved score */}
+                    {allEvaluations.filter(e => e.evaluator_name !== user?.username).length > 0 && (() => {
+                      const others = allEvaluations.filter(e => e.evaluator_name !== user?.username)
+                      const avg = Number(((finalScore + others.reduce((s, e) => s + e.final_score, 0)) / (others.length + 1)).toFixed(1))
+                      return (
+                        <div style={{ borderTop: '1px solid rgba(200,162,78,0.2)', paddingTop: 'clamp(4px, 0.5vh, 6px)', width: '100%' }}>
+                          <div style={{ fontSize: 'clamp(8px, 0.9vw, 10px)', color: 'rgba(240,253,244,0.45)', marginBottom: '2px' }}>
+                            متوسط المقيّمين
+                          </div>
+                          <div style={{
+                            fontSize: 'clamp(22px, 3vw, 38px)',
+                            fontWeight: '800',
+                            color: '#C8A24E',
+                            lineHeight: '1'
+                          }}>
+                            {avg}
+                          </div>
+                        </div>
+                      )
+                    })()}
                   </div>
 
                   {/* Save Button */}
