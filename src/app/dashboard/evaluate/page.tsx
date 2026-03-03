@@ -85,6 +85,8 @@ export default function EvaluatePage() {
   // Refs used by the debounced auto-save (avoids stale closures)
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const existingEvaluationRef = useRef<Evaluation | null>(null)
+  // Prevents two concurrent INSERT requests (which would conflict in the DB)
+  const insertInProgressRef = useRef(false)
 
   const levels = [
     'المستوى الأول: المرحلة الجامعية | الحج والمؤمنون',
@@ -176,19 +178,32 @@ export default function EvaluatePage() {
             .eq('id', existing.id)
             .select()
             .single()
-          if (data) setExistingEvaluation(data)
-        } else {
-          const { data } = await supabase
-            .from('evaluations')
-            .insert([payload])
-            .select()
-            .single()
           if (data) {
+            // Update ref immediately so the next timer sees the correct row
+            existingEvaluationRef.current = data
             setExistingEvaluation(data)
-            setAllEvaluations(prev => [
-              ...prev.filter(e => e.evaluator_name !== user.username),
-              data
-            ])
+          }
+        } else if (!insertInProgressRef.current) {
+          // Guard: only one INSERT at a time — prevents duplicate-key conflicts
+          // when the user taps faster than the network round-trip completes
+          insertInProgressRef.current = true
+          try {
+            const { data } = await supabase
+              .from('evaluations')
+              .insert([payload])
+              .select()
+              .single()
+            if (data) {
+              // Update ref immediately before the React render cycle
+              existingEvaluationRef.current = data
+              setExistingEvaluation(data)
+              setAllEvaluations(prev => [
+                ...prev.filter(e => e.evaluator_name !== user.username),
+                data
+              ])
+            }
+          } finally {
+            insertInProgressRef.current = false
           }
         }
       } catch (err) {
@@ -252,7 +267,7 @@ export default function EvaluatePage() {
           const myRow = prev.find(e => e.evaluator_name === user.username)
           return myRow ? [myRow, ...others] : others
         })
-      } catch { /* silent — polling will retry on the next tick */ }
+      } catch (err) { console.error('Polling error:', err) }
     }
 
     refresh() // immediate check on competitor open
@@ -372,6 +387,7 @@ export default function EvaluatePage() {
     setSelectedCompetitor(competitor)
     setHasChanges(false)
     setShowSaveSuccess(false)
+    insertInProgressRef.current = false
 
     // NEW: Update active evaluation to show on live stats dashboard
     await updateActiveEvaluation(competitor)
