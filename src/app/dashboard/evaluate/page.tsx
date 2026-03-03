@@ -2,7 +2,7 @@
 
 // Google Fonts loaded via next/font or global CSS
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase'
@@ -82,6 +82,10 @@ export default function EvaluatePage() {
   const [showAlreadyEvaluated, setShowAlreadyEvaluated] = useState(false)
   const [saving, setSaving] = useState(false)
 
+  // Refs used by the debounced auto-save (avoids stale closures)
+  const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const existingEvaluationRef = useRef<Evaluation | null>(null)
+
   const levels = [
     'المستوى الأول: المرحلة الجامعية | الحج والمؤمنون',
     'المستوى الثاني: الصفوف 10-12 | الشعراء والنمل',
@@ -133,6 +137,100 @@ export default function EvaluatePage() {
   useEffect(() => {
     calculateFinalScore()
   }, [tanbihCount, fatehCount, tashkeelCount, tajweedCount, waqfCount])
+
+  // Keep ref in sync so the auto-save timer always sees the latest value
+  useEffect(() => {
+    existingEvaluationRef.current = existingEvaluation
+  }, [existingEvaluation])
+
+  // Debounced auto-save: writes to DB 1.5 s after the last button tap so the
+  // other evaluator's Realtime subscription can pick up the live data.
+  useEffect(() => {
+    if (!hasChanges || !selectedCompetitor || !user) return
+
+    if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current)
+
+    autoSaveTimerRef.current = setTimeout(async () => {
+      try {
+        const supabase = createClient()
+        const currentScore = Math.max(
+          0,
+          100 - (tanbihCount + fatehCount + tashkeelCount + tajweedCount + waqfCount)
+        )
+        const payload = {
+          competitor_id: selectedCompetitor.id,
+          evaluator_name: user.username,
+          tanbih_count: tanbihCount,
+          fateh_count: fatehCount,
+          tashkeel_count: tashkeelCount,
+          tajweed_count: tajweedCount,
+          waqf_count: waqfCount,
+          final_score: currentScore
+        }
+        const existing = existingEvaluationRef.current
+        if (existing?.id) {
+          const { data } = await supabase
+            .from('evaluations')
+            .update({ ...payload, updated_at: new Date().toISOString() })
+            .eq('id', existing.id)
+            .select()
+            .single()
+          if (data) setExistingEvaluation(data)
+        } else {
+          const { data } = await supabase
+            .from('evaluations')
+            .insert([payload])
+            .select()
+            .single()
+          if (data) {
+            setExistingEvaluation(data)
+            setAllEvaluations(prev => [
+              ...prev.filter(e => e.evaluator_name !== user.username),
+              data
+            ])
+          }
+        }
+      } catch (err) {
+        console.error('Auto-save error:', err)
+      }
+    }, 1500)
+
+    return () => {
+      if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current)
+    }
+  }, [tanbihCount, fatehCount, tashkeelCount, tajweedCount, waqfCount, hasChanges, selectedCompetitor, user])
+
+  // Realtime subscription: refresh the other evaluator's row whenever their
+  // DB record changes (INSERT or UPDATE), so both screens stay in sync.
+  useEffect(() => {
+    if (!selectedCompetitor || !user) return
+
+    const supabase = createClient()
+    const channel = supabase
+      .channel(`evaluations-competitor-${selectedCompetitor.id}`)
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'evaluations' },
+        (payload) => {
+          const changed = payload.new as Evaluation
+          if (!changed?.evaluator_name) return
+          // Ignore our own auto-save echo; our live data is already in displayedEvaluations
+          if (changed.evaluator_name === user.username) return
+          // Only process rows for the currently open competitor
+          if (changed.competitor_id !== selectedCompetitor.id) return
+
+          setAllEvaluations(prev => [
+            ...prev.filter(e => e.evaluator_name !== changed.evaluator_name),
+            changed
+          ])
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [selectedCompetitor?.id, user?.username])
 
   const fetchCompetitors = async () => {
     try {
