@@ -24,7 +24,7 @@ interface Result {
   fateh_count: number
   tashkeel_count: number
   tajweed_count: number
-  evaluator_name: string
+  evaluator_count: number
   created_at: string
 }
 
@@ -102,8 +102,7 @@ export default function ResultsPage() {
   const fetchResults = async () => {
     try {
       const supabase = createClient()
-      
-      // Join evaluations with competitors
+
       const { data, error } = await supabase
         .from('evaluations')
         .select(`
@@ -116,27 +115,57 @@ export default function ResultsPage() {
             mobile
           )
         `)
-        .order('final_score', { ascending: false })
+        .order('created_at', { ascending: true })
 
       if (error) throw error
 
-      // Flatten the data
-      const flattenedResults = (data || []).map((evaluation: any) => ({
-        id: evaluation.id,
-        competitor_id: evaluation.competitor_id,
-        full_name: evaluation.competitors.full_name,
-        gender: evaluation.competitors.gender,
-        level: evaluation.competitors.level,
-        city: evaluation.competitors.city,
-        mobile: evaluation.competitors.mobile,
-        final_score: evaluation.final_score,
-        tanbih_count: evaluation.tanbih_count,
-        fateh_count: evaluation.fateh_count,
-        tashkeel_count: evaluation.tashkeel_count,
-        tajweed_count: evaluation.tajweed_count,
-        evaluator_name: evaluation.evaluator_name,
-        created_at: evaluation.created_at
-      }))
+      // Group by competitor_id — one row per competitor, averaged when 2 evaluators
+      const grouped: { [key: string]: any } = {}
+      for (const ev of (data || []) as any[]) {
+        const cid = ev.competitor_id
+        if (!grouped[cid]) {
+          grouped[cid] = {
+            competitor_id: cid,
+            full_name: ev.competitors.full_name,
+            gender: ev.competitors.gender,
+            level: ev.competitors.level,
+            city: ev.competitors.city,
+            mobile: ev.competitors.mobile,
+            scores: [],
+            tanbih_total: 0,
+            fateh_total: 0,
+            tashkeel_total: 0,
+            tajweed_total: 0,
+            created_at: ev.created_at
+          }
+        }
+        grouped[cid].scores.push(ev.final_score)
+        grouped[cid].tanbih_total += ev.tanbih_count
+        grouped[cid].fateh_total += ev.fateh_count
+        grouped[cid].tashkeel_total += ev.tashkeel_count
+        grouped[cid].tajweed_total += ev.tajweed_count
+      }
+
+      const flattenedResults = Object.values(grouped).map((g: any) => {
+        const count = g.scores.length
+        const avgScore = g.scores.reduce((a: number, b: number) => a + b, 0) / count
+        return {
+          id: g.competitor_id,
+          competitor_id: g.competitor_id,
+          full_name: g.full_name,
+          gender: g.gender,
+          level: g.level,
+          city: g.city,
+          mobile: g.mobile,
+          final_score: Number(avgScore.toFixed(1)),
+          tanbih_count: Math.round(g.tanbih_total / count),
+          fateh_count: Math.round(g.fateh_total / count),
+          tashkeel_count: Math.round(g.tashkeel_total / count),
+          tajweed_count: Math.round(g.tajweed_total / count),
+          evaluator_count: count,
+          created_at: g.created_at
+        }
+      })
 
       setResults(flattenedResults)
       setLoading(false)
