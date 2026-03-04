@@ -75,6 +75,10 @@ export default function EvaluatePage() {
   const [finalScore, setFinalScore] = useState(100)
   const [allEvaluations, setAllEvaluations] = useState<Evaluation[]>([])
 
+  // Special penalty toggles
+  const [questionChangeActive, setQuestionChangeActive] = useState(false)
+  const [scoreZeroActive, setScoreZeroActive] = useState(false)
+
   // Evaluator display names (username → full name)
   const [evaluatorNames, setEvaluatorNames] = useState<Record<string, string>>({})
 
@@ -138,7 +142,7 @@ export default function EvaluatePage() {
 
   useEffect(() => {
     calculateFinalScore()
-  }, [tanbihCount, fatehCount, tashkeelCount, tajweedCount, waqfCount])
+  }, [tanbihCount, fatehCount, tashkeelCount, tajweedCount, waqfCount, questionChangeActive, scoreZeroActive])
 
   // Poll evaluations for the selected competitor every 4 seconds so each
   // evaluator sees the other's box appear in real-time after they save.
@@ -281,8 +285,15 @@ export default function EvaluatePage() {
   const currentCompetitors = filteredCompetitors.slice(startIndex, endIndex)
 
   const calculateFinalScore = () => {
+    if (scoreZeroActive) {
+      setFinalScore(0)
+      return
+    }
     const deduction = tanbihCount + fatehCount + tashkeelCount + tajweedCount + waqfCount
-    const score = Math.max(0, 100 - deduction)
+    let score = Math.max(0, 100 - deduction)
+    if (questionChangeActive) {
+      score = Math.max(0, score - 5)
+    }
     setFinalScore(Number(score.toFixed(1)))
   }
 
@@ -295,6 +306,8 @@ export default function EvaluatePage() {
     setSelectedCompetitor(competitor)
     setHasChanges(false)
     setShowSaveSuccess(false)
+    setQuestionChangeActive(false)
+    setScoreZeroActive(false)
 
     // NEW: Update active evaluation to show on live stats dashboard
     await updateActiveEvaluation(competitor)
@@ -2808,6 +2821,114 @@ export default function EvaluatePage() {
                         </div>
                       )
                     })()}
+                  </div>
+
+                  {/* Toggle Buttons Row */}
+                  <div style={{ display: 'flex', gap: 'clamp(6px, 0.8vw, 10px)', flexShrink: 0 }}>
+
+                    {/* Yellow Toggle: تغيير السؤال خصم 5 درجات */}
+                    <button
+                      onClick={() => { setQuestionChangeActive(prev => !prev); setHasChanges(true) }}
+                      style={{
+                        flex: 1,
+                        padding: 'clamp(8px, 1.2vh, 13px) clamp(6px, 0.8vw, 10px)',
+                        background: questionChangeActive
+                          ? 'linear-gradient(135deg, #92400e, #d97706)'
+                          : 'rgba(217, 119, 6, 0.08)',
+                        color: questionChangeActive ? '#fff' : '#d97706',
+                        border: questionChangeActive
+                          ? '1.5px solid #d97706'
+                          : '1.5px solid rgba(217, 119, 6, 0.4)',
+                        borderRadius: '10px',
+                        fontSize: 'clamp(9px, 1vw, 11px)',
+                        fontWeight: '700',
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                        cursor: 'pointer',
+                        textAlign: 'center',
+                        lineHeight: '1.35',
+                        transition: 'all 0.25s ease',
+                        boxShadow: questionChangeActive
+                          ? '0 4px 16px rgba(217, 119, 6, 0.45), inset 0 1px 0 rgba(255,255,255,0.15)'
+                          : '0 2px 6px rgba(0,0,0,0.2)',
+                        letterSpacing: '0.2px',
+                        position: 'relative',
+                        overflow: 'hidden'
+                      }}
+                    >
+                      {questionChangeActive && (
+                        <span style={{
+                          position: 'absolute',
+                          top: '4px',
+                          left: '6px',
+                          fontSize: '8px',
+                          background: 'rgba(255,255,255,0.25)',
+                          borderRadius: '4px',
+                          padding: '1px 4px',
+                          fontWeight: '800',
+                          letterSpacing: '0.3px'
+                        }}>✓ مفعّل</span>
+                      )}
+                      <span style={{ display: 'block', fontSize: 'clamp(14px, 1.6vw, 18px)', marginBottom: '2px' }}>🔄</span>
+                      تغيير السؤال
+                      <span style={{
+                        display: 'block',
+                        fontSize: 'clamp(9px, 1vw, 11px)',
+                        opacity: 0.85,
+                        marginTop: '1px'
+                      }}>خصم 5 درجات</span>
+                    </button>
+
+                    {/* Red Toggle: تصفير الدرجة */}
+                    <button
+                      onClick={() => { setScoreZeroActive(prev => !prev); setHasChanges(true) }}
+                      style={{
+                        flex: 1,
+                        padding: 'clamp(8px, 1.2vh, 13px) clamp(6px, 0.8vw, 10px)',
+                        background: scoreZeroActive
+                          ? 'linear-gradient(135deg, #7f1d1d, #dc2626)'
+                          : 'rgba(220, 38, 38, 0.08)',
+                        color: scoreZeroActive ? '#fff' : '#f87171',
+                        border: scoreZeroActive
+                          ? '1.5px solid #dc2626'
+                          : '1.5px solid rgba(220, 38, 38, 0.4)',
+                        borderRadius: '10px',
+                        fontSize: 'clamp(9px, 1vw, 11px)',
+                        fontWeight: '700',
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                        cursor: 'pointer',
+                        textAlign: 'center',
+                        lineHeight: '1.35',
+                        transition: 'all 0.25s ease',
+                        boxShadow: scoreZeroActive
+                          ? '0 4px 16px rgba(220, 38, 38, 0.5), inset 0 1px 0 rgba(255,255,255,0.1)'
+                          : '0 2px 6px rgba(0,0,0,0.2)',
+                        letterSpacing: '0.2px',
+                        position: 'relative',
+                        overflow: 'hidden'
+                      }}
+                    >
+                      {scoreZeroActive && (
+                        <span style={{
+                          position: 'absolute',
+                          top: '4px',
+                          left: '6px',
+                          fontSize: '8px',
+                          background: 'rgba(255,255,255,0.2)',
+                          borderRadius: '4px',
+                          padding: '1px 4px',
+                          fontWeight: '800',
+                          letterSpacing: '0.3px'
+                        }}>✓ مفعّل</span>
+                      )}
+                      <span style={{ display: 'block', fontSize: 'clamp(14px, 1.6vw, 18px)', marginBottom: '2px' }}>🚫</span>
+                      تصفير الدرجة
+                      <span style={{
+                        display: 'block',
+                        fontSize: 'clamp(9px, 1vw, 11px)',
+                        opacity: 0.85,
+                        marginTop: '1px'
+                      }}>الدرجة = صفر</span>
+                    </button>
                   </div>
 
                   {/* Save Button */}
