@@ -38,7 +38,12 @@ export default function DashboardPage() {
       router.push('/')
       return
     }
-    setUser(JSON.parse(userStr))
+    const parsedUser = JSON.parse(userStr)
+    if (parsedUser.role === 'evaluator') {
+      router.push('/dashboard/evaluate')
+      return
+    }
+    setUser(parsedUser)
   }, [router])
 
   const handleLogout = () => {
