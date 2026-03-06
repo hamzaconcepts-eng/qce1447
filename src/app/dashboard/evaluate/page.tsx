@@ -956,7 +956,7 @@ export default function EvaluatePage() {
   }
 
   const isMobile = screenWidth < 768
-  const isTablet = screenWidth >= 768 && screenWidth < 1100
+  const isTablet = screenWidth >= 768 && screenWidth < 1400
 
   return (
     <>
@@ -2071,9 +2071,11 @@ export default function EvaluatePage() {
                   gridRow: '2 / 3',
                   display: 'grid',
                   gridTemplateColumns: '1fr 1fr',
-                  gridTemplateRows: '1fr 1fr auto',
+                  gridTemplateRows: '1fr 1fr 1fr',
                   gap: isTablet ? 'clamp(5px, 0.8vw, 10px)' : 'clamp(8px, 1.2vw, 14px)',
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  height: '100%',
+                  minHeight: 0
                 }}>
                   
                   {/* تنبيه */}
@@ -2089,6 +2091,7 @@ export default function EvaluatePage() {
                     border: '1px solid rgba(34, 197, 94, 0.2)',
                     overflow: 'hidden',
                     boxSizing: 'border-box',
+                    minHeight: 0,
                     transition: 'all 0.3s ease'
                   }}>
                     <div style={{ textAlign: 'center', marginBottom: isTablet ? 'clamp(4px, 0.6vh, 7px)' : 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
@@ -2235,6 +2238,7 @@ export default function EvaluatePage() {
                     border: '1px solid rgba(34, 197, 94, 0.2)',
                     overflow: 'hidden',
                     boxSizing: 'border-box',
+                    minHeight: 0,
                     transition: 'all 0.3s ease'
                   }}>
                     <div style={{ textAlign: 'center', marginBottom: isTablet ? 'clamp(4px, 0.6vh, 7px)' : 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
@@ -2379,6 +2383,7 @@ export default function EvaluatePage() {
                     border: '1px solid rgba(34, 197, 94, 0.2)',
                     overflow: 'hidden',
                     boxSizing: 'border-box',
+                    minHeight: 0,
                     transition: 'all 0.3s ease'
                   }}>
                     <div style={{ textAlign: 'center', marginBottom: isTablet ? 'clamp(4px, 0.6vh, 7px)' : 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
@@ -2523,6 +2528,7 @@ export default function EvaluatePage() {
                     border: '1px solid rgba(34, 197, 94, 0.2)',
                     overflow: 'hidden',
                     boxSizing: 'border-box',
+                    minHeight: 0,
                     transition: 'all 0.3s ease'
                   }}>
                     <div style={{ textAlign: 'center', marginBottom: isTablet ? 'clamp(4px, 0.6vh, 7px)' : 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
@@ -2668,6 +2674,7 @@ export default function EvaluatePage() {
                     border: '1px solid rgba(34, 197, 94, 0.2)',
                     overflow: 'hidden',
                     boxSizing: 'border-box',
+                    minHeight: 0,
                     transition: 'all 0.3s ease'
                   }}>
                     <div style={{ textAlign: 'center', marginBottom: isTablet ? 'clamp(4px, 0.6vh, 7px)' : 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
@@ -2796,6 +2803,8 @@ export default function EvaluatePage() {
                 <div style={{
                   gridColumn: '2 / 3',
                   gridRow: '2 / 3',
+                  height: '100%',
+                  minHeight: 0,
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 'clamp(6px, 1vh, 10px)',
