@@ -79,6 +79,9 @@ export default function EvaluatePage() {
   const [questionChangeActive, setQuestionChangeActive] = useState(false)
   const [scoreZeroActive, setScoreZeroActive] = useState(false)
 
+  // Responsive layout
+  const [screenWidth, setScreenWidth] = useState(1200)
+
   // Evaluator display names (username → full name)
   const [evaluatorNames, setEvaluatorNames] = useState<Record<string, string>>({})
 
@@ -104,6 +107,7 @@ export default function EvaluatePage() {
     const setVH = () => {
       const vh = window.innerHeight * 0.01
       document.documentElement.style.setProperty('--vh', `${vh}px`)
+      setScreenWidth(window.innerWidth)
     }
     
     setVH()
@@ -951,6 +955,9 @@ export default function EvaluatePage() {
     }
   }
 
+  const isMobile = screenWidth < 768
+  const isTablet = screenWidth >= 768 && screenWidth < 1100
+
   return (
     <>
       {/* Animated Background */}
@@ -1685,7 +1692,43 @@ export default function EvaluatePage() {
             </>
           ) : (
             <>
-              {/* Evaluation Screen - CORRECT LAYOUT */}
+              {/* SHARED ALERTS — position:fixed, visible on all screen sizes */}
+              {showAlreadyEvaluated && (
+                <div style={{
+                  position: 'fixed', top: '15px', left: '50%', transform: 'translateX(-50%)',
+                  background: 'rgba(200,162,78,0.12)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+                  padding: '8px 20px', borderRadius: '8px', fontSize: '12px', textAlign: 'center',
+                  color: '#D4AF5E', border: '1px solid rgba(200,162,78,0.3)',
+                  zIndex: 2000, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', maxWidth: '85vw'
+                }}>
+                  ⚠️ لديك تقييم سابق لهذا المتسابق - يمكنك تحديثه
+                </div>
+              )}
+              {showSaveSuccess && (
+                <div style={{
+                  position: 'fixed', top: '15px', left: '50%', transform: 'translateX(-50%)',
+                  background: 'rgba(34,197,94,0.12)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+                  padding: '8px 20px', borderRadius: '8px', fontSize: '12px', textAlign: 'center',
+                  color: '#4ADE80', border: '1px solid rgba(34,197,94,0.3)', fontWeight: '700',
+                  zIndex: 2000, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', maxWidth: '85vw'
+                }}>
+                  ✓ تم حفظ التقييم بنجاح
+                </div>
+              )}
+              {saveError && (
+                <div style={{
+                  position: 'fixed', top: '15px', left: '50%', transform: 'translateX(-50%)',
+                  background: 'rgba(239,68,68,0.12)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+                  padding: '8px 20px', borderRadius: '8px', fontSize: '12px', textAlign: 'center',
+                  color: '#FCA5A5', border: '1px solid rgba(239,68,68,0.3)', fontWeight: '700',
+                  zIndex: 2000, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', maxWidth: '85vw'
+                }}>
+                  ✗ خطأ في الحفظ: {saveError}
+                </div>
+              )}
+
+              {/* DESKTOP / TABLET LAYOUT */}
+              {!isMobile && (
               <div style={{
                 position: 'fixed',
                 top: 0,
@@ -1693,86 +1736,14 @@ export default function EvaluatePage() {
                 right: 0,
                 bottom: 0,
                 display: 'grid',
-                gridTemplateColumns: '1fr clamp(260px, 27vw, 360px)',
-                gridTemplateRows: 'auto 1fr',
-                gap: 'clamp(8px, 1.2vw, 14px)',
+                gridTemplateColumns: isTablet ? '1fr clamp(200px, 25vw, 260px)' : '1fr clamp(260px, 27vw, 360px)',
+                gridTemplateRows: '42% 1fr',
+                gap: 'clamp(6px, 1vw, 12px)',
                 padding: 'clamp(6px, 1vh, 12px)',
                 overflow: 'hidden',
                 boxSizing: 'border-box',
                 background: '#0A0F0A'
               }}>
-                
-                {/* FIXED ALERTS */}
-                {showAlreadyEvaluated && (
-                  <div style={{
-                    position: 'fixed',
-                    top: '15px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    background: 'rgba(200, 162, 78, 0.12)',
-                    backdropFilter: 'blur(16px)',
-                    WebkitBackdropFilter: 'blur(16px)',
-                    padding: '8px 20px',
-                    borderRadius: '8px',
-                    fontSize: '12px',
-                    textAlign: 'center',
-                    color: '#D4AF5E',
-                    border: '1px solid rgba(200, 162, 78, 0.3)',
-                    zIndex: 1000,
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                    maxWidth: '85vw'
-                  }}>
-                    ⚠️ لديك تقييم سابق لهذا المتسابق - يمكنك تحديثه
-                  </div>
-                )}
-
-                {showSaveSuccess && (
-                  <div style={{
-                    position: 'fixed',
-                    top: '15px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    background: 'rgba(34, 197, 94, 0.12)',
-                    backdropFilter: 'blur(16px)',
-                    WebkitBackdropFilter: 'blur(16px)',
-                    padding: '8px 20px',
-                    borderRadius: '8px',
-                    fontSize: '12px',
-                    textAlign: 'center',
-                    color: '#4ADE80',
-                    border: '1px solid rgba(34, 197, 94, 0.3)',
-                    fontWeight: '700',
-                    zIndex: 1000,
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                    maxWidth: '85vw'
-                  }}>
-                    ✓ تم حفظ التقييم بنجاح
-                  </div>
-                )}
-
-                {saveError && (
-                  <div style={{
-                    position: 'fixed',
-                    top: '15px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    background: 'rgba(239, 68, 68, 0.12)',
-                    backdropFilter: 'blur(16px)',
-                    WebkitBackdropFilter: 'blur(16px)',
-                    padding: '8px 20px',
-                    borderRadius: '8px',
-                    fontSize: '12px',
-                    textAlign: 'center',
-                    color: '#FCA5A5',
-                    border: '1px solid rgba(239, 68, 68, 0.3)',
-                    fontWeight: '700',
-                    zIndex: 1000,
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                    maxWidth: '85vw'
-                  }}>
-                    ✗ خطأ في الحفظ: {saveError}
-                  </div>
-                )}
 
                 {/* TOP LEFT - Rules + Evaluators Panel */}
                 <div style={{
@@ -3026,6 +2997,199 @@ export default function EvaluatePage() {
                   </button>
                 </div>
               </div>
+              )} {/* end !isMobile desktop/tablet layout */}
+
+              {/* MOBILE LAYOUT */}
+              {isMobile && (
+                <div style={{
+                  position: 'fixed',
+                  top: 0, left: 0, right: 0, bottom: 0,
+                  overflowY: 'auto',
+                  overflowX: 'hidden',
+                  background: '#0A0F0A',
+                  padding: '10px',
+                  paddingBottom: '24px',
+                  boxSizing: 'border-box',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px',
+                  WebkitOverflowScrolling: 'touch'
+                }}>
+
+                  {/* Header: Logo + Name + Details */}
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: '12px',
+                    background: 'rgba(34,197,94,0.06)', borderRadius: '12px',
+                    padding: '12px', border: '1px solid rgba(34,197,94,0.15)', flexShrink: 0
+                  }}>
+                    <div style={{
+                      width: '44px', height: '44px', flexShrink: 0,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      borderRadius: '50%', background: 'linear-gradient(135deg,#0B1F0E,#0A0F0A)',
+                      border: '2px solid #C8A24E', boxShadow: '0 0 16px rgba(200,162,78,0.3)'
+                    }}>
+                      <Image
+                        src="/images/logo.svg" alt="Logo" width={44} height={44}
+                        style={{ width: '65%', height: '65%', objectFit: 'contain', filter: 'brightness(0) saturate(100%) invert(79%) sepia(18%) saturate(1234%) hue-rotate(359deg) brightness(95%) contrast(88%)' }}
+                        priority
+                      />
+                    </div>
+                    <div style={{ flex: 1, textAlign: 'center' }}>
+                      <div style={{ fontSize: '10px', color: 'rgba(240,253,244,0.5)', marginBottom: '2px' }}>تقييم المتسابقين</div>
+                      <div style={{ fontSize: '17px', fontWeight: '800', lineHeight: '1.1', background: 'linear-gradient(135deg,#C8A24E,#E0C478,#D4AF5E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                        {selectedCompetitor?.full_name}
+                      </div>
+                      <div style={{ fontSize: '10px', color: 'rgba(240,253,244,0.6)', marginTop: '3px' }}>
+                        {selectedCompetitor?.gender === 'male' ? 'ذكر' : 'أنثى'} • {selectedCompetitor?.level} • {selectedCompetitor?.city}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Penalty toggle pills */}
+                  <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+                    <button
+                      onClick={() => { setQuestionChangeActive(prev => !prev); setHasChanges(true) }}
+                      style={{
+                        flex: 1, padding: '10px 8px',
+                        background: questionChangeActive ? 'rgba(217,119,6,0.1)' : 'linear-gradient(135deg,#78350f,#d97706)',
+                        color: questionChangeActive ? 'rgba(217,119,6,0.5)' : '#fff',
+                        border: questionChangeActive ? '1.5px solid rgba(217,119,6,0.25)' : '1.5px solid rgba(251,191,36,0.6)',
+                        borderRadius: '10px', fontSize: '12px', fontWeight: '700',
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                        cursor: 'pointer', textAlign: 'center', lineHeight: '1.4',
+                        boxShadow: questionChangeActive ? 'none' : '0 3px 10px rgba(217,119,6,0.35)',
+                        opacity: questionChangeActive ? 0.55 : 1, transition: 'all 0.2s ease'
+                      }}
+                    >
+                      🔄 تغيير السؤال<br />
+                      <span style={{ fontSize: '10px', opacity: 0.85 }}>خصم 5 درجات</span>
+                    </button>
+                    <button
+                      onClick={() => { setScoreZeroActive(prev => !prev); setHasChanges(true) }}
+                      style={{
+                        flex: 1, padding: '10px 8px',
+                        background: scoreZeroActive ? 'rgba(220,38,38,0.1)' : 'linear-gradient(135deg,#7f1d1d,#dc2626)',
+                        color: scoreZeroActive ? 'rgba(220,38,38,0.5)' : '#fff',
+                        border: scoreZeroActive ? '1.5px solid rgba(220,38,38,0.25)' : '1.5px solid rgba(252,165,165,0.5)',
+                        borderRadius: '10px', fontSize: '12px', fontWeight: '700',
+                        fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                        cursor: 'pointer', textAlign: 'center', lineHeight: '1.4',
+                        boxShadow: scoreZeroActive ? 'none' : '0 3px 10px rgba(220,38,38,0.35)',
+                        opacity: scoreZeroActive ? 0.55 : 1, transition: 'all 0.2s ease'
+                      }}
+                    >
+                      🚫 تصفير الدرجة<br />
+                      <span style={{ fontSize: '10px', opacity: 0.85 }}>الدرجة = صفر</span>
+                    </button>
+                  </div>
+
+                  {/* Score display */}
+                  <div style={{
+                    background: finalScore >= 95 ? 'rgba(34,197,94,0.12)' : finalScore >= 90 ? 'rgba(200,162,78,0.12)' : 'rgba(220,38,38,0.12)',
+                    borderRadius: '12px', padding: '14px', textAlign: 'center', flexShrink: 0,
+                    border: finalScore >= 95 ? '1px solid rgba(34,197,94,0.3)' : finalScore >= 90 ? '1px solid rgba(200,162,78,0.3)' : '1px solid rgba(220,38,38,0.3)',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.3)'
+                  }}>
+                    <div style={{ fontSize: '10px', color: 'rgba(240,253,244,0.5)', marginBottom: '4px' }}>درجتي</div>
+                    <div style={{ fontSize: '56px', fontWeight: '800', lineHeight: '1', color: finalScore >= 95 ? '#4ADE80' : finalScore >= 90 ? '#D4AF5E' : '#FCA5A5', textShadow: finalScore >= 95 ? '0 0 30px rgba(74,222,128,0.3)' : finalScore >= 90 ? '0 0 30px rgba(212,175,94,0.3)' : '0 0 30px rgba(252,165,165,0.3)' }}>
+                      {finalScore}
+                    </div>
+                    {allEvaluations.filter(e => e.evaluator_name !== user?.username).length > 0 && (() => {
+                      const others = allEvaluations.filter(e => e.evaluator_name !== user?.username)
+                      const avg = Number(((finalScore + others.reduce((s, e) => s + e.final_score, 0)) / (others.length + 1)).toFixed(1))
+                      return (
+                        <div style={{ borderTop: '1px solid rgba(200,162,78,0.2)', paddingTop: '8px', marginTop: '8px' }}>
+                          <div style={{ fontSize: '10px', color: 'rgba(240,253,244,0.45)', marginBottom: '2px' }}>متوسط المقيّمين</div>
+                          <div style={{ fontSize: '28px', fontWeight: '800', color: '#C8A24E', lineHeight: '1' }}>{avg}</div>
+                        </div>
+                      )
+                    })()}
+                  </div>
+
+                  {/* Counter cards — 2-column grid */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', flexShrink: 0 }}>
+                    {(([
+                      { label: 'تنبيه', count: tanbihCount, inc: () => incrementCount('tanbih'), dec: () => decrementCount('tanbih'), span: false },
+                      { label: 'فتح', count: fatehCount, inc: () => incrementCount('fateh'), dec: () => decrementCount('fateh'), span: false },
+                      { label: 'تشكيل', count: tashkeelCount, inc: () => incrementCount('tashkeel'), dec: () => decrementCount('tashkeel'), span: false },
+                      { label: 'تجويد', count: tajweedCount, inc: () => incrementCount('tajweed'), dec: () => decrementCount('tajweed'), span: false },
+                      { label: 'الوقف والابتداء', count: waqfCount, inc: () => incrementCount('waqf'), dec: () => decrementCount('waqf'), span: true },
+                    ]) as { label: string; count: number; inc: () => void; dec: () => void; span: boolean }[]).map(({ label, count, inc, dec, span }) => (
+                      <div key={label} style={{
+                        gridColumn: span ? 'span 2' : undefined,
+                        background: 'rgba(34,197,94,0.08)', borderRadius: '12px',
+                        padding: '12px', border: '1px solid rgba(34,197,94,0.2)',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                      }}>
+                        <div style={{ textAlign: 'center', marginBottom: '8px' }}>
+                          <div style={{ fontSize: '18px', fontWeight: '900', color: '#F0FDF4', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif', lineHeight: '1' }}>{label}</div>
+                          <div style={{ fontSize: '11px', color: 'rgba(240,253,244,0.6)', marginTop: '3px' }}>{count === 0 ? '(-0)' : `(-${count})`}</div>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', height: '54px' }}>
+                          <button
+                            onClick={inc}
+                            style={{ flex: 1, height: '100%', background: 'transparent', color: '#C8A24E', border: '1px solid rgba(200,162,78,0.4)', borderRadius: '10px', fontSize: '26px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            onTouchStart={(e) => { e.currentTarget.style.background = 'linear-gradient(135deg,#B8922E,#D4AF5E)'; e.currentTarget.style.color = '#0A0F0A' }}
+                            onTouchEnd={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#C8A24E' }}
+                          >+</button>
+                          <div style={{ fontSize: '32px', fontWeight: '900', color: '#F0FDF4', minWidth: '40px', textAlign: 'center', lineHeight: '1' }}>{count}</div>
+                          <button
+                            onClick={dec}
+                            style={{ flex: 1, height: '100%', background: 'transparent', color: '#C8A24E', border: '1px solid rgba(200,162,78,0.4)', borderRadius: '10px', fontSize: '26px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            onTouchStart={(e) => { e.currentTarget.style.background = 'linear-gradient(135deg,#B8922E,#D4AF5E)'; e.currentTarget.style.color = '#0A0F0A' }}
+                            onTouchEnd={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#C8A24E' }}
+                          >−</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Save button */}
+                  <button
+                    onClick={handleSave} disabled={saving}
+                    style={{
+                      padding: '14px',
+                      background: saving ? 'rgba(200,162,78,0.5)' : 'linear-gradient(135deg,#B8922E,#D4AF5E)',
+                      color: saving ? 'rgba(10,15,10,0.6)' : '#0A0F0A',
+                      border: 'none', borderRadius: '10px', fontSize: '16px', fontWeight: '700',
+                      fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                      cursor: saving ? 'not-allowed' : 'pointer',
+                      boxShadow: saving ? 'none' : '0 4px 16px rgba(200,162,78,0.4)',
+                      flexShrink: 0
+                    }}
+                  >
+                    {saving ? 'جاري الحفظ...' : 'حفظ التقييم'}
+                  </button>
+
+                  {/* Print PDF button */}
+                  <button
+                    onClick={handlePrintScoreCard}
+                    style={{
+                      padding: '11px', background: 'rgba(200,162,78,0.06)', color: '#D4AF5E',
+                      border: '1px solid rgba(200,162,78,0.3)', borderRadius: '8px',
+                      fontSize: '13px', fontWeight: '700', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                      cursor: 'pointer', display: 'flex', alignItems: 'center',
+                      justifyContent: 'center', gap: '6px', flexShrink: 0
+                    }}
+                  >
+                    <span>📄</span><span>طباعة الشهادة PDF</span>
+                  </button>
+
+                  {/* Back button */}
+                  <button
+                    onClick={handleBackToList}
+                    style={{
+                      padding: '12px', background: 'transparent', color: '#D4AF5E',
+                      border: '1px solid rgba(200,162,78,0.3)', borderRadius: '8px',
+                      fontSize: '14px', fontWeight: '700', fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
+                      cursor: 'pointer', flexShrink: 0, opacity: 0.75, marginBottom: '10px'
+                    }}
+                  >
+                    العودة إلى قائمة المتسابقين
+                  </button>
+
+                </div>
+              )} {/* end isMobile */}
             </>
           )}
 
