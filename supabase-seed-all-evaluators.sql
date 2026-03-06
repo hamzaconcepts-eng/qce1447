@@ -24,6 +24,8 @@
 -- | المقيمة الثامنة      | eval8      | 7876     |
 -- | المقيمة التاسعة      | eval9      | 9049     |
 -- | المقيمة العاشرة      | eval10     | 6120     |
+-- | مروة الوهيبية        | mwaheibi   | 5926     |
+-- | عتاب المجيزية        | emujaizi   | 1581     |
 
 INSERT INTO users (username, password_hash, role, name) VALUES
   ('kfarsi',    '$2b$10$qopSPEW4jcunQ4rjRSK0IeA0hnapxo.zgrqII.GfU15w6Dfltb/ya', 'evaluator', 'خالد الفارسي'),
@@ -45,5 +47,7 @@ INSERT INTO users (username, password_hash, role, name) VALUES
   ('eval7',     '$2b$10$a0rge59o5nSslSs1ykBWZeWz5DXeJ0cUmC1SEk3fdaDEDZ5QlwQKa',  'evaluator', 'المقيمة السابعة'),
   ('eval8',     '$2b$10$JEPcsMpNMqO.5jQj8w/yBu1X8B9BUEGuh9T97khYYOd.VRk2ElgyC',  'evaluator', 'المقيمة الثامنة'),
   ('eval9',     '$2b$10$t///I2YXP4kD8QWzowW/reKDsD/wlexQJZYmpPjtSDge84GOiyViG',   'evaluator', 'المقيمة التاسعة'),
-  ('eval10',    '$2b$10$MjhHoUQTF0MH9S5KSZCm4elsNyEMXuy1BZAHuf.xgHf3c1rkD5xXi',  'evaluator', 'المقيمة العاشرة')
+  ('eval10',    '$2b$10$MjhHoUQTF0MH9S5KSZCm4elsNyEMXuy1BZAHuf.xgHf3c1rkD5xXi',  'evaluator', 'المقيمة العاشرة'),
+  ('mwaheibi',  '$2b$10$XOwx.0n4pMAkvKO5cvIMZOUAbbvRhP.fTdB3.9xziPREQgZsAbWVq',  'evaluator', 'مروة الوهيبية'),
+  ('emujaizi',  '$2b$10$QphVQ.9zdRss8C0t7Giasu6lFGnxGb8oTxbYauidxv8BfL9WcBKpq',  'evaluator', 'عتاب المجيزية')
 ON CONFLICT (username) DO UPDATE SET password_hash = EXCLUDED.password_hash;
