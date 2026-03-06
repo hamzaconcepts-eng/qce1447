@@ -1737,7 +1737,7 @@ export default function EvaluatePage() {
                 bottom: 0,
                 display: 'grid',
                 gridTemplateColumns: isTablet ? '1fr clamp(200px, 25vw, 260px)' : '1fr clamp(260px, 27vw, 360px)',
-                gridTemplateRows: '42% 1fr',
+                gridTemplateRows: '32% 1fr',
                 gap: 'clamp(6px, 1vw, 12px)',
                 padding: 'clamp(6px, 1vh, 12px)',
                 overflow: 'hidden',
@@ -1752,13 +1752,13 @@ export default function EvaluatePage() {
                   background: 'rgba(34, 197, 94, 0.08)',
                   borderRadius: '10px',
                   backdropFilter: 'blur(10px)',
-                  padding: 'clamp(10px, 1.5vh, 16px)',
+                  padding: 'clamp(8px, 1vh, 12px)',
                   border: '1px solid rgba(34, 197, 94, 0.15)',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
                   overflow: 'hidden',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: 'clamp(8px, 1vw, 12px)'
+                  gap: 'clamp(5px, 0.6vh, 8px)'
                 }}>
 
                   {/* Inner row: rules + evaluators */}
@@ -1922,103 +1922,57 @@ export default function EvaluatePage() {
                   </div>
                   </div>{/* end inner row */}
 
-                  {/* Penalty Toggles */}
-                  <div style={{ display: 'flex', gap: 'clamp(6px, 0.8vw, 10px)', flexShrink: 0 }}>
+                  {/* Penalty Toggles — compact single-line pills */}
+                  <div style={{ display: 'flex', gap: 'clamp(5px, 0.7vw, 8px)', flexShrink: 0 }}>
 
-                    {/* Yellow Toggle: تغيير السؤال — خصم 5 */}
+                    {/* Yellow Toggle */}
                     <button
                       onClick={() => { setQuestionChangeActive(prev => !prev); setHasChanges(true) }}
                       style={{
                         flex: 1,
-                        padding: 'clamp(7px, 1vh, 11px) clamp(6px, 0.8vw, 10px)',
-                        background: questionChangeActive
-                          ? 'rgba(217, 119, 6, 0.1)'
-                          : 'linear-gradient(135deg, #78350f, #d97706)',
-                        color: questionChangeActive ? 'rgba(217,119,6,0.5)' : '#fff',
-                        border: questionChangeActive
-                          ? '1.5px solid rgba(217, 119, 6, 0.25)'
-                          : '1.5px solid rgba(251,191,36,0.6)',
-                        borderRadius: '10px',
-                        fontSize: 'clamp(9px, 1vw, 11px)',
+                        padding: 'clamp(5px, 0.7vh, 8px) clamp(6px, 0.8vw, 10px)',
+                        background: questionChangeActive ? 'rgba(217,119,6,0.1)' : 'linear-gradient(135deg,#78350f,#d97706)',
+                        color: questionChangeActive ? 'rgba(217,119,6,0.45)' : '#fff',
+                        border: questionChangeActive ? '1.5px solid rgba(217,119,6,0.2)' : '1.5px solid rgba(251,191,36,0.55)',
+                        borderRadius: '8px',
+                        fontSize: 'clamp(9px, 0.9vw, 11px)',
                         fontWeight: '700',
                         fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                         cursor: 'pointer',
                         textAlign: 'center',
-                        lineHeight: '1.35',
-                        transition: 'all 0.25s ease',
-                        boxShadow: questionChangeActive
-                          ? 'none'
-                          : '0 4px 14px rgba(217,119,6,0.5), inset 0 1px 0 rgba(255,255,255,0.15)',
-                        letterSpacing: '0.2px',
-                        position: 'relative',
-                        overflow: 'hidden',
-                        opacity: questionChangeActive ? 0.55 : 1
+                        whiteSpace: 'nowrap',
+                        transition: 'all 0.2s ease',
+                        boxShadow: questionChangeActive ? 'none' : '0 3px 10px rgba(217,119,6,0.4)',
+                        opacity: questionChangeActive ? 0.5 : 1
                       }}
                     >
-                      {questionChangeActive && (
-                        <span style={{
-                          position: 'absolute',
-                          top: '4px',
-                          left: '6px',
-                          fontSize: '8px',
-                          background: 'rgba(217,119,6,0.2)',
-                          borderRadius: '4px',
-                          padding: '1px 4px',
-                          fontWeight: '800',
-                          color: 'rgba(217,119,6,0.7)'
-                        }}>✓ مُطبَّق</span>
-                      )}
-                      <span style={{ display: 'block', fontSize: 'clamp(13px, 1.5vw, 17px)', marginBottom: '2px' }}>🔄</span>
-                      تغيير السؤال
-                      <span style={{ display: 'block', opacity: 0.9, marginTop: '1px' }}>خصم 5 درجات</span>
+                      {questionChangeActive ? '✓ ' : '🔄 '}تغيير السؤال
+                      <span style={{ opacity: 0.8, marginRight: '4px', fontSize: 'clamp(8px, 0.8vw, 10px)' }}>(−5)</span>
                     </button>
 
-                    {/* Red Toggle: تصفير الدرجة */}
+                    {/* Red Toggle */}
                     <button
                       onClick={() => { setScoreZeroActive(prev => !prev); setHasChanges(true) }}
                       style={{
                         flex: 1,
-                        padding: 'clamp(7px, 1vh, 11px) clamp(6px, 0.8vw, 10px)',
-                        background: scoreZeroActive
-                          ? 'rgba(220, 38, 38, 0.1)'
-                          : 'linear-gradient(135deg, #7f1d1d, #dc2626)',
-                        color: scoreZeroActive ? 'rgba(220,38,38,0.5)' : '#fff',
-                        border: scoreZeroActive
-                          ? '1.5px solid rgba(220, 38, 38, 0.25)'
-                          : '1.5px solid rgba(252,165,165,0.5)',
-                        borderRadius: '10px',
-                        fontSize: 'clamp(9px, 1vw, 11px)',
+                        padding: 'clamp(5px, 0.7vh, 8px) clamp(6px, 0.8vw, 10px)',
+                        background: scoreZeroActive ? 'rgba(220,38,38,0.1)' : 'linear-gradient(135deg,#7f1d1d,#dc2626)',
+                        color: scoreZeroActive ? 'rgba(220,38,38,0.45)' : '#fff',
+                        border: scoreZeroActive ? '1.5px solid rgba(220,38,38,0.2)' : '1.5px solid rgba(252,165,165,0.45)',
+                        borderRadius: '8px',
+                        fontSize: 'clamp(9px, 0.9vw, 11px)',
                         fontWeight: '700',
                         fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
                         cursor: 'pointer',
                         textAlign: 'center',
-                        lineHeight: '1.35',
-                        transition: 'all 0.25s ease',
-                        boxShadow: scoreZeroActive
-                          ? 'none'
-                          : '0 4px 14px rgba(220,38,38,0.5), inset 0 1px 0 rgba(255,255,255,0.1)',
-                        letterSpacing: '0.2px',
-                        position: 'relative',
-                        overflow: 'hidden',
-                        opacity: scoreZeroActive ? 0.55 : 1
+                        whiteSpace: 'nowrap',
+                        transition: 'all 0.2s ease',
+                        boxShadow: scoreZeroActive ? 'none' : '0 3px 10px rgba(220,38,38,0.4)',
+                        opacity: scoreZeroActive ? 0.5 : 1
                       }}
                     >
-                      {scoreZeroActive && (
-                        <span style={{
-                          position: 'absolute',
-                          top: '4px',
-                          left: '6px',
-                          fontSize: '8px',
-                          background: 'rgba(220,38,38,0.15)',
-                          borderRadius: '4px',
-                          padding: '1px 4px',
-                          fontWeight: '800',
-                          color: 'rgba(220,38,38,0.7)'
-                        }}>✓ مُطبَّق</span>
-                      )}
-                      <span style={{ display: 'block', fontSize: 'clamp(13px, 1.5vw, 17px)', marginBottom: '2px' }}>🚫</span>
-                      تصفير الدرجة
-                      <span style={{ display: 'block', opacity: 0.9, marginTop: '1px' }}>الدرجة = صفر</span>
+                      {scoreZeroActive ? '✓ ' : '🚫 '}تصفير الدرجة
+                      <span style={{ opacity: 0.8, marginRight: '4px', fontSize: 'clamp(8px, 0.8vw, 10px)' }}>(=0)</span>
                     </button>
                   </div>
 
