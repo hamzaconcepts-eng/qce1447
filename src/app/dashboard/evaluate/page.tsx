@@ -1737,9 +1737,9 @@ export default function EvaluatePage() {
                 bottom: 0,
                 display: 'grid',
                 gridTemplateColumns: isTablet ? '1fr clamp(200px, 25vw, 260px)' : '1fr clamp(260px, 27vw, 360px)',
-                gridTemplateRows: '32% 1fr',
-                gap: 'clamp(6px, 1vw, 12px)',
-                padding: 'clamp(6px, 1vh, 12px)',
+                gridTemplateRows: isTablet ? '24% 1fr' : '32% 1fr',
+                gap: isTablet ? 'clamp(4px, 0.7vw, 8px)' : 'clamp(6px, 1vw, 12px)',
+                padding: isTablet ? 'clamp(4px, 0.6vh, 8px)' : 'clamp(6px, 1vh, 12px)',
                 overflow: 'hidden',
                 boxSizing: 'border-box',
                 background: '#0A0F0A'
@@ -1758,7 +1758,7 @@ export default function EvaluatePage() {
                   overflow: 'hidden',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: 'clamp(5px, 0.6vh, 8px)'
+                  gap: isTablet ? 'clamp(4px, 0.5vh, 6px)' : 'clamp(5px, 0.6vh, 8px)'
                 }}>
 
                   {/* Inner row: rules + evaluators */}
@@ -2072,7 +2072,7 @@ export default function EvaluatePage() {
                   display: 'grid',
                   gridTemplateColumns: '1fr 1fr',
                   gridTemplateRows: '1fr 1fr auto',
-                  gap: 'clamp(8px, 1.2vw, 14px)',
+                  gap: isTablet ? 'clamp(5px, 0.8vw, 10px)' : 'clamp(8px, 1.2vw, 14px)',
                   overflow: 'hidden'
                 }}>
                   
@@ -2081,7 +2081,7 @@ export default function EvaluatePage() {
                     background: 'rgba(34, 197, 94, 0.08)',
                     backdropFilter: 'blur(12px)',
                     borderRadius: '12px',
-                    padding: 'clamp(12px, 1.8vh, 18px)',
+                    padding: isTablet ? 'clamp(6px, 1.2vh, 10px)' : 'clamp(12px, 1.8vh, 18px)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -2091,13 +2091,13 @@ export default function EvaluatePage() {
                     boxSizing: 'border-box',
                     transition: 'all 0.3s ease'
                   }}>
-                    <div style={{ textAlign: 'center', marginBottom: 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
+                    <div style={{ textAlign: 'center', marginBottom: isTablet ? 'clamp(4px, 0.6vh, 7px)' : 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
                       <div style={{
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
                         color: '#F0FDF4',
                         fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                        marginBottom: 'clamp(5px, 0.8vh, 8px)',
+                        marginBottom: isTablet ? 'clamp(3px, 0.5vh, 6px)' : 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
                       }}>
@@ -2227,7 +2227,7 @@ export default function EvaluatePage() {
                     background: 'rgba(34, 197, 94, 0.08)',
                     backdropFilter: 'blur(12px)',
                     borderRadius: '12px',
-                    padding: 'clamp(12px, 1.8vh, 18px)',
+                    padding: isTablet ? 'clamp(6px, 1.2vh, 10px)' : 'clamp(12px, 1.8vh, 18px)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -2237,13 +2237,13 @@ export default function EvaluatePage() {
                     boxSizing: 'border-box',
                     transition: 'all 0.3s ease'
                   }}>
-                    <div style={{ textAlign: 'center', marginBottom: 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
+                    <div style={{ textAlign: 'center', marginBottom: isTablet ? 'clamp(4px, 0.6vh, 7px)' : 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
                       <div style={{
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
                         color: '#F0FDF4',
                         fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                        marginBottom: 'clamp(5px, 0.8vh, 8px)',
+                        marginBottom: isTablet ? 'clamp(3px, 0.5vh, 6px)' : 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
                       }}>
@@ -2371,7 +2371,7 @@ export default function EvaluatePage() {
                     background: 'rgba(34, 197, 94, 0.08)',
                     backdropFilter: 'blur(12px)',
                     borderRadius: '12px',
-                    padding: 'clamp(12px, 1.8vh, 18px)',
+                    padding: isTablet ? 'clamp(6px, 1.2vh, 10px)' : 'clamp(12px, 1.8vh, 18px)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -2381,13 +2381,13 @@ export default function EvaluatePage() {
                     boxSizing: 'border-box',
                     transition: 'all 0.3s ease'
                   }}>
-                    <div style={{ textAlign: 'center', marginBottom: 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
+                    <div style={{ textAlign: 'center', marginBottom: isTablet ? 'clamp(4px, 0.6vh, 7px)' : 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
                       <div style={{
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
                         color: '#F0FDF4',
                         fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                        marginBottom: 'clamp(5px, 0.8vh, 8px)',
+                        marginBottom: isTablet ? 'clamp(3px, 0.5vh, 6px)' : 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
                       }}>
@@ -2515,7 +2515,7 @@ export default function EvaluatePage() {
                     background: 'rgba(34, 197, 94, 0.08)',
                     backdropFilter: 'blur(12px)',
                     borderRadius: '12px',
-                    padding: 'clamp(12px, 1.8vh, 18px)',
+                    padding: isTablet ? 'clamp(6px, 1.2vh, 10px)' : 'clamp(12px, 1.8vh, 18px)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -2525,13 +2525,13 @@ export default function EvaluatePage() {
                     boxSizing: 'border-box',
                     transition: 'all 0.3s ease'
                   }}>
-                    <div style={{ textAlign: 'center', marginBottom: 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
+                    <div style={{ textAlign: 'center', marginBottom: isTablet ? 'clamp(4px, 0.6vh, 7px)' : 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
                       <div style={{
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
                         color: '#F0FDF4',
                         fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                        marginBottom: 'clamp(5px, 0.8vh, 8px)',
+                        marginBottom: isTablet ? 'clamp(3px, 0.5vh, 6px)' : 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
                       }}>
@@ -2660,7 +2660,7 @@ export default function EvaluatePage() {
                     background: 'rgba(34, 197, 94, 0.08)',
                     backdropFilter: 'blur(12px)',
                     borderRadius: '12px',
-                    padding: 'clamp(12px, 1.8vh, 18px)',
+                    padding: isTablet ? 'clamp(6px, 1.2vh, 10px)' : 'clamp(12px, 1.8vh, 18px)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -2670,13 +2670,13 @@ export default function EvaluatePage() {
                     boxSizing: 'border-box',
                     transition: 'all 0.3s ease'
                   }}>
-                    <div style={{ textAlign: 'center', marginBottom: 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
+                    <div style={{ textAlign: 'center', marginBottom: isTablet ? 'clamp(4px, 0.6vh, 7px)' : 'clamp(8px, 1.2vh, 12px)', flexShrink: 0 }}>
                       <div style={{
                         fontSize: 'clamp(18px, 2.5vw, 28px)',
                         fontWeight: '900',
                         color: '#F0FDF4',
                         fontFamily: 'Noto Kufi Arabic, Sora, sans-serif',
-                        marginBottom: 'clamp(5px, 0.8vh, 8px)',
+                        marginBottom: isTablet ? 'clamp(3px, 0.5vh, 6px)' : 'clamp(5px, 0.8vh, 8px)',
                         lineHeight: '1',
                         letterSpacing: '-0.5px'
                       }}>
