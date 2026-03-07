@@ -51,6 +51,13 @@ export default function LoginPage() {
         return
       }
 
+      if (user.is_active === false) {
+        setError('هذا الحساب معطل مؤقتاً')
+        setLoading(false)
+        setTimeout(() => setError(''), 3000)
+        return
+      }
+
       const passwordMatch = await bcrypt.compare(password, user.password_hash)
 
       if (!passwordMatch) {
