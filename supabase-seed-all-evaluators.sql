@@ -27,6 +27,16 @@
 -- | مروة الوهيبية        | mwaheibi   | 5926     |
 -- | عتاب المجيزية        | emujaizi   | 1581     |
 -- | أمجد العمري          | amjad.amri | 7547     |
+-- | سامية العميرية       | somairi    | 7284     |
+-- | رحمة العميرية        | romairi    | 3951     |
+-- | هيام المعمرية        | hmamari    | 6147     |
+-- | طيبة الوضاحية        | twadahi    | 4823     |
+-- | عزاء العامرية        | amawali    | 9156     |
+-- | مريم المعولية        | mmawali    | 2738     |
+-- | فاطمة العامرية       | famri      | 5419     |
+-- | بشرى الحسنية         | bhusaini   | 8362     |
+-- | مروة الربيعية        | mrabei     | 1574     |
+-- | مروة العامرية        | mamri      | 6093     |
 
 INSERT INTO users (username, password_hash, role, name) VALUES
   ('kfarsi',    '$2b$10$qopSPEW4jcunQ4rjRSK0IeA0hnapxo.zgrqII.GfU15w6Dfltb/ya', 'evaluator', 'خالد الفارسي'),
@@ -53,3 +63,17 @@ INSERT INTO users (username, password_hash, role, name) VALUES
   ('emujaizi',  '$2b$10$QphVQ.9zdRss8C0t7Giasu6lFGnxGb8oTxbYauidxv8BfL9WcBKpq',  'evaluator', 'عتاب المجيزية'),
   ('amjad.amri','$2b$10$k4cxjDvGcz88yM9xDHCr2exZTTmLZTB/yGqHFsAGe7q4t70eF.JSK',  'evaluator', 'أمجد العمري')
 ON CONFLICT (username) DO UPDATE SET password_hash = EXCLUDED.password_hash;
+
+-- Additional female evaluators (added via pgcrypto crypt)
+INSERT INTO users (username, password_hash, role, name) VALUES
+  ('somairi',  crypt('7284', gen_salt('bf', 10)), 'evaluator', 'سامية العميرية'),
+  ('romairi',  crypt('3951', gen_salt('bf', 10)), 'evaluator', 'رحمة العميرية'),
+  ('hmamari',  crypt('6147', gen_salt('bf', 10)), 'evaluator', 'هيام المعمرية'),
+  ('twadahi',  crypt('4823', gen_salt('bf', 10)), 'evaluator', 'طيبة الوضاحية'),
+  ('amawali',  crypt('9156', gen_salt('bf', 10)), 'evaluator', 'عزاء العامرية'),
+  ('mmawali',  crypt('2738', gen_salt('bf', 10)), 'evaluator', 'مريم المعولية'),
+  ('famri',    crypt('5419', gen_salt('bf', 10)), 'evaluator', 'فاطمة العامرية'),
+  ('bhusaini', crypt('8362', gen_salt('bf', 10)), 'evaluator', 'بشرى الحسنية'),
+  ('mrabei',   crypt('1574', gen_salt('bf', 10)), 'evaluator', 'مروة الربيعية'),
+  ('mamri',    crypt('6093', gen_salt('bf', 10)), 'evaluator', 'مروة العامرية')
+ON CONFLICT (username) DO UPDATE SET password_hash = EXCLUDED.password_hash, name = EXCLUDED.name;
