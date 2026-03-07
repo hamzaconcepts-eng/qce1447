@@ -34,8 +34,6 @@
 -- | عزاء العامرية        | amawali    | 9156     |
 -- | مريم المعولية        | mmawali    | 2738     |
 -- | فاطمة العامرية       | famri      | 5419     |
--- | بشرى الحسنية         | bhusaini   | 8362     |
--- | مروة الربيعية        | mrabei     | 1574     |
 -- | مروة العامرية        | mamri      | 6093     |
 
 INSERT INTO users (username, password_hash, role, name) VALUES
@@ -73,7 +71,5 @@ INSERT INTO users (username, password_hash, role, name) VALUES
   ('amawali',  crypt('9156', gen_salt('bf', 10)), 'evaluator', 'عزاء العامرية'),
   ('mmawali',  crypt('2738', gen_salt('bf', 10)), 'evaluator', 'مريم المعولية'),
   ('famri',    crypt('5419', gen_salt('bf', 10)), 'evaluator', 'فاطمة العامرية'),
-  ('bhusaini', crypt('8362', gen_salt('bf', 10)), 'evaluator', 'بشرى الحسنية'),
-  ('mrabei',   crypt('1574', gen_salt('bf', 10)), 'evaluator', 'مروة الربيعية'),
   ('mamri',    crypt('6093', gen_salt('bf', 10)), 'evaluator', 'مروة العامرية')
 ON CONFLICT (username) DO UPDATE SET password_hash = EXCLUDED.password_hash, name = EXCLUDED.name;
